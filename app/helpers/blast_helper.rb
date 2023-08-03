@@ -76,12 +76,9 @@ module BlastHelper
 
             # BLASTn検索実行
             %x{ #{BLASTN_PATH} #{blastn_opts} }
-            puts "[test] a"
 
             # BLASTn検索終了時間表示
             puts "[BLASTn finish] " + `date +%Y/%m/%d_%H:%M:%S.%3N`
-
-            puts "[test] a"
 
         end
 
@@ -111,7 +108,6 @@ module BlastHelper
             end
 
         end
-
 
     end
 
