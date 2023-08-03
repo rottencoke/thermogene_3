@@ -1,5 +1,5 @@
 # SearchesControllerの拡張
-module SearchHelper
+module SearchesHelper
     
     include BlastHelper
     include TempuraHelper
