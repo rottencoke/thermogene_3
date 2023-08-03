@@ -53,8 +53,6 @@ module SearchesHelper
             # BLASTnの結果の場所を取得
             @blastn_result_path = @blastn_ins.acquire_blastn_result_json_path
 
-            puts "[test] blastn_result_path : " + @blastn_result_path
-
             # BLASTnの結果のファイルの中身が生成されるまで時間調整
             ## 100000 = 0.2秒
             count = 0
@@ -116,13 +114,11 @@ module SearchesHelper
 
                 # 一致した場合
                 if blastn_arr[i] == tempura_arr[j] then
-                    puts "[test] #{i}, #{j} : #{blastn_arr[i]} -- #{tempura_arr[j]}"
                     ans_arr.push(blastn_arr[i])
                     break
                 end
             end
         end
-        puts "[test] ans_arr : " + ans_arr.to_s
         return ans_arr
     end
 
@@ -373,14 +369,10 @@ module SearchesHelper
         # アライメントの長さを横幅で割ったもの
         @search_result_align_height = @blastn_result_align_align_len[i] / @search_result_align_view_width
 
-        puts "[test] @blastn_result_align_align_len[i] : " + @blastn_result_align_align_len[i].to_s
-
         ## もし余りがある場合、+1
         if  @blastn_result_align_align_len[i] % @search_result_align_view_width != 0 then
             @search_result_align_height += 1
         end
-
-        puts "[test] @search_result_align_height : " + @search_result_align_height.to_s
 
         ## 余りの値
 
@@ -395,7 +387,6 @@ module SearchesHelper
 
         ### 元の文字列を配列にする
         blastn_result_align_hseq_arr = @blastn_result_align_hseq[i]
-        puts "[test] arr : " + blastn_result_align_hseq_arr.to_s
 
         ### 繰り返しで代入
         @search_result_align_height.times do |j|
@@ -408,12 +399,8 @@ module SearchesHelper
 
             end
 
-            puts "[test] i : " + i.to_s + ", j : " + j.to_s + ", align_hseq : " + @blastn_result_align_view_hseq[i][j].to_s
-
         end
         
-        puts "[test] align_hseq : " + @blastn_result_align_view_hseq[i].to_s
-
         ## qseq
         @blastn_result_align_view_qseq = Array.new(@match_result_len, Array.new(@search_result_align_height, Array.new(@search_result_align_view_width, "")))
 
