@@ -1,0 +1,59 @@
+/* home.css */
+
+/* クラスはここより下 */
+
+/* 横並びにする */
+.flex {
+    display: flex;
+}
+
+/* 中央寄せ */
+.center {
+    margin: 0 auto;
+    width: 80%;
+    max-width: 1500px;
+}
+
+/* 中央寄せ（親要素から指定) */
+.align_center {
+    text-align: center;
+}
+
+/* 一行のフォーム */
+.form_line {
+    width: 25em;
+}
+
+/* テキストエリア */
+.form_text_area {
+    width: 25em;
+    height: 15em;
+}
+
+/* 小さいnumber_field */
+.small_number_field {
+    width: 4em;
+}
+
+/* 小さいnumber_fieldが並ぶときに親要素を用いて横並びにする */
+.form_horizontal_display {
+    display: flex;
+}
+
+.form_horizontal_display>p {
+    margin: 10px;
+    margin-bottom: 0;
+}
+
+.form_horizontal_display>label {
+    margin: 10px;
+    margin-bottom: 0;
+}
+
+/* IDはここより下に */
+
+/* search_condition_area（温度と配列） */
+#search_condition_area {
+    width: 80%;
+    /* max-width: 400px; */
+}

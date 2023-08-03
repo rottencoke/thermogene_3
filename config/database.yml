@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: thermogene_3_development
+
+test:
+  <<: *default
+  database: thermogene_3_test
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+  database: thermogene_3_production
+  username: thermogene_3
+  password: <%= ENV["THERMOGENE_3_DATABASE_PASSWORD"] %>

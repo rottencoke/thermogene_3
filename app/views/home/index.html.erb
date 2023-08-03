@@ -1,0 +1,131 @@
+<main>
+    <div id="search_area" class=" container">
+        <div id="main_title">
+            <p>
+                特定の温度に生息する微生物の遺伝子を検索します
+            </p>
+        </div>
+        <div id="search_form_area" class="">
+
+            <%= form_with(model: @search) do |f| %>
+
+                <div id="search_condition_area" class="flex center">
+                
+                    <div id="search_main_area" class=" container">
+
+                        <label for="jobtitle" class="form_label">Job Title</label>
+                        <div id="search_jobtitle">
+                            <%= f.text_field :jobtitle, id:"jobtitle", class: "form-control form_line" %>
+                        </div>
+
+                        <hr>
+
+                        <div>
+                            <div class="form_horizontal_display">
+                            <label for="temp_minimum" class="form_label">生育温度</label>
+                            <%= f.number_field :temp_minimum, id:"temp_minimum", class:"form-control small_number_field"%>
+                            <%= f.label :temp_minimum, "℃" %>
+
+                            <p>~</p>
+
+                            <%= f.number_field :temp_maximum, class:"form-control small_number_field" %>
+                            <%= f.label :temp_maximum, "℃" %>
+                            </div>
+                            <p class="fs_7">(40℃以下は今後実装予定)</p>
+                        </div>
+
+                        <hr>
+
+                        <div id="search_seqInputArea">
+                            <label for="seq" class="form_label py-3 pe-2">query配列</label>
+                            <%= f.file_field :sequence_file %>(未実装)
+                            <%= f.text_area :sequence, id:"seq", class:"form-control form_text_area" %>
+                        </div>
+                    </div>
+
+                    <div id="search_option_area" class="container gap-4">
+                        <div id="search_method">
+                            <label class="form_label">検索方法</label><br>
+                            <%= f.radio_button :search_method, :temptoseq, :checked => true %> 温度の範囲内 → 相同性でソートして表示
+                            <br>
+                            <%= f.radio_button :search_method, :seqtotemp %> 相同性の範囲内 → 温度でソートして表示 (未実装)
+                        </div>
+
+                        <hr>
+
+                        <div id="search_blast_engine">
+                            <label class="form_label">BLAST検索方法</label><br>
+                            <%= f.radio_button :search_blast_engine, :blastn, :checked => true %> BLASTn
+                            <%= f.radio_button :search_blast_engine, :tblastn %> tBLASTn (未実装)
+                        </div>
+
+                        <hr>
+
+                        <div id="search_option_identity">
+                            <div class="form_horizontal_display">
+                                <label for="identity_minimum" class="form_label">Identity (未実装)</label>
+                                <%= f.number_field :identity_minimum, id:"identity_minimum", class:"form-control small_number_field" %>
+                                <%= f.label :identity_minimum, "%" %>
+                                <p>~</p>
+                                <%= f.number_field :identity_maximum, class:"form-control small_number_field" %>
+                                <%= f.label :identity_maximum, "%" %>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div id="search_option_eValue">
+                            <div class="form_horizontal_display">
+                                <label for="eValue_minimum" class="form_label">e-Value (未実装)</label>
+                                <%= f.number_field :eValue_minimum, id:"eValue_minimum", class:"form-control small_number_field" %>
+                                <%= f.label :eValue_minimum, "%" %>
+                                <p>~</p>
+                                <%= f.number_field :eValue_maximum, class:"form-control small_number_field" %>
+                                <%= f.label :eValue_maximum, "%" %>
+                            </div>
+                            
+                        </div>
+
+                        <hr>
+
+                        <div id="search_option_qCoverage">
+                            <div class="form_horizontal_display">
+                                <label for="qCoverage_minimum" class="form_label">Query Coverage (未実装)</label>
+                                <%= f.number_field :qCoverage_minimum, id:"qCoverage_minimum", class:"form-control small_number_field" %>
+                                <%= f.label :qCoverage_minimum, "%" %>
+                                <p>~</p>
+                                <%= f.number_field :qCoverage_maximum, class:"form-control small_number_field" %>
+                                <%= f.label :qCoverage_maximum, "%" %>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div class="align_center py-5">
+                    <%= f.submit "検索開始", class: "btn btn-primary" %> 
+                </div>
+                
+                
+
+            <% end %>
+
+        </div>
+
+    </div>
+    <hr style="width: 75%" class="center">
+    <div id="explanation_area" class="container py-3">
+        <article>
+            <h3>当サイトの説明</h3>
+            <p>当サイトは、National Center of Biotechnology Information (以下、NCBI) と、TEMPURA: Database of growth TEMPeratures of Usual and RAre prokaryotes (以下、TEMPURA) を組み合わせることで、任意の生育温度を持つ微生物の内、任意の遺伝子を有するものを検索することを可能にしている。</p>
+        </article>
+        <article>
+            <p>
+                参考
+                <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">NCBI BLAST</a>,
+                <a href="http://togodb.org/db/tempura">TEMPURA: Database of growth TEMPeratures of Usual and RAre prokaryotes</a>
+            </p>
+            
+        </article>
+    </div>
+</main>
