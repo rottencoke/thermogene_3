@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    include SearchesHelper
+    include SearchHelper
     include TempuraHelper
     include BlastHelper    
     include BlastDbHelper    
