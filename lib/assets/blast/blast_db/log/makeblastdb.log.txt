@@ -1,0 +1,121 @@
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+Error: Too many positional arguments (1), the offending value: with
+Error:  (CArgException::eSynopsis) Too many positional arguments (1), the offending value: with
+
+
+Building a new DB, current time: 05/12/2023 20:55:49
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+Adding sequences from FASTA; added 3488183 sequences in 118.253 seconds.
+
+
+
+
+Building a new DB, current time: 05/19/2023 20:29:09
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+Adding sequences from FASTA; added 229247 sequences in 5.91136 seconds.
+
+
+
+
+Building a new DB, current time: 05/19/2023 20:52:28
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+Keep MBits: T
+Maximum file size: 20000000B
+Adding sequences from FASTA; added 3488183 sequences in 119.874 seconds.
+
+
+
+
+Building a new DB, current time: 05/19/2023 20:56:03
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+BLAST options error: File ./lib/assets/blast/blast_db/cds_from_genomic_mfa/raw_data.mfa is empty
+
+
+Building a new DB, current time: 05/19/2023 20:56:43
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+BLAST options error: File ./lib/assets/blast/blast_db/cds_from_genomic_mfa/raw_data.mfa is empty
+
+
+Building a new DB, current time: 05/19/2023 20:57:56
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+BLAST options error: File ./lib/assets/blast/blast_db/cds_from_genomic_mfa/raw_data.mfa is empty
+
+
+Building a new DB, current time: 05/19/2023 21:03:45
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+Adding sequences from FASTA; added 3488183 sequences in 113.628 seconds.
+
+
+
+
+Building a new DB, current time: 05/19/2023 21:13:48
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Deleted existing Nucleotide BLAST database named /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+Keep MBits: T
+Maximum file size: 20000000B
+
+
+Building a new DB, current time: 05/19/2023 21:14:13
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+Adding sequences from FASTA; added 3488183 sequences in 103.267 seconds.
+
+
+
+
+Building a new DB, current time: 05/19/2023 21:36:50
+New DB name:   /home/rottencoke/prog/thermogene/lib/assets/blast/blast_db/blast_db_nucleotide/db_230512
+New DB title:  db_tempura_40_more
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 20000000B
+Adding sequences from FASTA; added 3488183 sequences in 108.75 seconds.
+
+
