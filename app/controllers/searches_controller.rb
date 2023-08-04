@@ -4,17 +4,24 @@ class SearchesController < ApplicationController
 
     def create
 
+        # 入力されたパラメータをデータベースに登録
+        @search = Search.create(search_params)
+
+        # DBに正常に登録されたか判断
+        if @search.save
+            puts "[Search Parameter Saved Successfully]"
+            # redirect_to @search
+        else
+            puts "[Search Parameter Saved Failed]"
+        end
+
         puts puts
         puts "-----------------------------------------"
         puts "Search : " + `date +%Y/%m/%d_%H:%M:%S.%3N` + "------------------------------------------"
 
-
         # 初期化部分~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ## リクエストIDを作成
         @request_id = SecureRandom.hex(5) + "_" + `date +%Y%m%d%H%M%S`.chomp
-
-        ## 入力されたパラメータをデータベースに登録
-        @search = Search.create(search_params)
 
         ## 入力された生育温度の最小値を出力用に変数定義
         @search_temp_minimum = search_params[:temp_minimum].to_i
@@ -40,8 +47,14 @@ class SearchesController < ApplicationController
         ## BLASTn実行
         execute_blastn
 
-        # 2つの結果を比較して、全体の結果を出力する部分~~~~~~~~~~~~~
-        
+        redirect_to @search
+
+    end
+
+    def show
+
+        @search = Search.find(params[:id])
+
     end
 
     private

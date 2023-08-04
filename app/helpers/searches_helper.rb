@@ -69,6 +69,9 @@ module SearchesHelper
             # TEMPURAとBLASTnの結果比較
             @match_result_assembly = compare_tempura_blastn(@blastn_result_assembly, @tempura_result_assembly)
 
+
+            puts "[test2] @match_result_assembly : " + @match_result_assembly.to_s
+
             # 一致したassemblyについてTEMPURAとBLASTnの結果の各種変数取得
             acquire_blastn_tempura_from_assembly
 
