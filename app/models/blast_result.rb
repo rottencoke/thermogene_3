@@ -1,0 +1,2 @@
+class BlastResult < ApplicationRecord
+end

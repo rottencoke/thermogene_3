@@ -1,0 +1,2 @@
+class Tempura < ApplicationRecord
+end
