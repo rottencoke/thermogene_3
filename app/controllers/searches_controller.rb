@@ -2,6 +2,11 @@ require 'securerandom'
 
 class SearchesController < ApplicationController
 
+    include SearchesHelper
+    include TempuraHelper
+    include BlastHelper    
+    include BlastDbHelper    
+
     def create
 
         # 入力されたパラメータをデータベースに登録
