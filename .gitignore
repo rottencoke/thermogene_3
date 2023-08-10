@@ -29,3 +29,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore db/migrate/
+/db/migrate/
+
+# Ignore db/csv_data
+/db/csv_data/

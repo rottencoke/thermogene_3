@@ -66,15 +66,6 @@ module SearchesHelper
             # BLASTnの結果の内、assemblyのみを取得
             acquire_blastn_result_assembly
 
-            # TEMPURAとBLASTnの結果比較
-            @match_result_assembly = compare_tempura_blastn(@blastn_result_assembly, @tempura_result_assembly)
-
-
-            puts "[test2] @match_result_assembly : " + @match_result_assembly.to_s
-
-            # 一致したassemblyについてTEMPURAとBLASTnの結果の各種変数取得
-            acquire_blastn_tempura_from_assembly
-
         end
     end
 
@@ -103,27 +94,6 @@ module SearchesHelper
 
     end
 
-    # BLASTの検索結果からTEMPURAの結果と一致するものを取得
-    ## BLASTnのJSON出力のassembly番号をTEMPURAのものと比較する
-    def compare_tempura_blastn(blastn_arr, tempura_arr)
-
-        # 一致した結果を記録
-        ans_arr = []
-        # 繰り返し2つ組み合わせる
-        ## blastn_arrが外側
-        blastn_arr.length.times do |i|
-            # tempura_arrも繰り返して、一致するか判別
-            tempura_arr.length.times do |j|
-
-                # 一致した場合
-                if blastn_arr[i] == tempura_arr[j] then
-                    ans_arr.push(blastn_arr[i])
-                    break
-                end
-            end
-        end
-        return ans_arr
-    end
 
     # 一致したassemblyを使ってTEMPURAとBLASTnの結果を参照
     def acquire_blastn_tempura_from_assembly
@@ -166,39 +136,12 @@ module SearchesHelper
         @blastn_result_align_qseq = Array.new(@match_result_len)
         @blastn_result_align_midline = Array.new(@match_result_len)
 
-        ## TEMPURA用
-        @tempura_result_genus_and_species = Array.new(@match_result_len)
-        @tempura_result_taxonomy_id = Array.new(@match_result_len)
-        @tempura_result_strain = Array.new(@match_result_len)
-        @tempura_result_superkingdom = Array.new(@match_result_len)
-        @tempura_result_phylum = Array.new(@match_result_len)
-        @tempura_result_organism_class = Array.new(@match_result_len)
-        @tempura_result_order = Array.new(@match_result_len)
-        @tempura_result_family = Array.new(@match_result_len)
-        @tempura_result_genus = Array.new(@match_result_len)
-        @tempura_result_genome_gc = Array.new(@match_result_len)
-        @tempura_result_genome_size = Array.new(@match_result_len)
-        @tempura_result_organism_16s_accssion = Array.new(@match_result_len)
-        @tempura_result_organism_16s_gc = Array.new(@match_result_len)
-        @tempura_result_tmin = Array.new(@match_result_len)
-        @tempura_result_topt_ave = Array.new(@match_result_len)
-        @tempura_result_topt_low = Array.new(@match_result_len)
-        @tempura_result_topt_high = Array.new(@match_result_len)
-        @tempura_result_tmax = Array.new(@match_result_len)
-        @tempura_result_tmax_tmin = Array.new(@match_result_len)
-
         @match_result_len.times do |i|
 
             unless @match_result_assembly[i] == "" then 
 
                 # BLASTnの結果の各種変数の取得
                 acquire_blastn_each_results_variables(i)
-
-                # TEMPURAの結果の各種変数の取得
-                acquire_tempura_result_variables(i)
-
-                @search_result = VariablizeSearchResult.new(i, @match_result_assembly[i], @tempura_result_genus_and_species[i])
-                # , @tempura_result_taxonomy_id[i], @tempura_result_strain[i], @tempura_result_superkingdom[i], @tempura_result_phylum[i],  @tempura_result_organism_class[i], @tempura_result_order[i], @tempura_result_family[i], @tempura_result_genus[i], @tempura_result_genome_gc[i],  @tempura_result_genome_size[i], @tempura_result_organism_16s_accssion[i], @tempura_result_organism_16s_gc[i], @tempura_result_tmin[i],   @tempura_result_topt_ave[i], @tempura_result_topt_low[i], @tempura_result_topt_high[i], @tempura_result_tmax[i], @tempura_result_tmax_tmin[i],    @blastn_result_align_id[i], @blastn_result_align_accession[i], @blastn_result_align_gene[i], @blastn_result_align_location[i],     @blastn_result_bit_score[i], @blastn_result_align_score[i], @blastn_result_align_evalue[i], @blastn_result_align_identities[i],     @blastn_result_align_query_from[i], @blastn_result_align_query_to[i], @blastn_result_align_query_strand[i], @blastn_result_align_hit_from[i],   @blastn_result_align_hit_to[i], @blastn_result_align_hit_strand[i], @blastn_result_align_align_len[i], @blastn_result_align_gaps[i],  @blastn_result_align_hseq[i], @blastn_result_align_qseq[i], @blastn_result_align_midline[i])
 
             end
         
@@ -299,70 +242,6 @@ module SearchesHelper
 
     end
 
-    # TEMPURAの結果の各種変数の取得
-    def acquire_tempura_result_variables(i)
-
-        # SearchTempuraFromAssemblyのインスタンス作成
-        @tempura_result_ins = SearchTempuraFromAssembly.new(@match_result_assembly[i])
-
-        # genus_and_species
-        @tempura_result_genus_and_species[i] = @tempura_result_ins.get_tempura_result_genus_and_species
-
-        # taxonomy_id
-        @tempura_result_taxonomy_id[i] = @tempura_result_ins.get_tempura_result_taxonomy_id
-
-        # strain
-        @tempura_result_strain[i] = @tempura_result_ins.get_tempura_result_strain
-
-        # superkingdom
-        @tempura_result_superkingdom[i] = @tempura_result_ins.get_tempura_result_superkingdom
-
-        # phylum
-        @tempura_result_phylum[i] = @tempura_result_ins.get_tempura_result_phylum
-
-        # class
-        @tempura_result_organism_class[i] = @tempura_result_ins.get_tempura_result_class
-
-        # order
-        @tempura_result_order[i] = @tempura_result_ins.get_tempura_result_order
-
-        # family
-        @tempura_result_family[i] = @tempura_result_ins.get_tempura_result_family
-
-        # genus
-        @tempura_result_genus[i] = @tempura_result_ins.get_tempura_result_genus
-
-        # Genome_GC
-        @tempura_result_genome_gc[i] = @tempura_result_ins.get_tempura_result_genome_gc
-
-        # Genome_size
-        @tempura_result_genome_size[i] = @tempura_result_ins.get_tempura_result_genome_size
-
-        # 16S_accssion
-        @tempura_result_organism_16s_accssion[i] = @tempura_result_ins.get_tempura_result_16s_accssion
-
-        # 16S_GC
-        @tempura_result_organism_16s_gc[i] = @tempura_result_ins.get_tempura_result_16s_gc
-
-        # Tmin
-        @tempura_result_tmin[i] = @tempura_result_ins.get_tempura_result_tmin
-
-        # Topt_ave
-        @tempura_result_topt_ave[i] = @tempura_result_ins.get_tempura_result_topt_ave
-
-        # Topt_low
-        @tempura_result_topt_low[i] = @tempura_result_ins.get_tempura_result_topt_low
-
-        # Topt_high
-        @tempura_result_topt_high[i] = @tempura_result_ins.get_tempura_result_topt_high
-
-        # Tmax
-        @tempura_result_tmax[i] = @tempura_result_ins.get_tempura_result_tmax
-
-        # Tmax_Tmin
-        @tempura_result_tmax_tmin[i] = @tempura_result_ins.get_tempura_result_tmax_tmin
-
-    end
 
     # BLASTnのアライメントの表示用変数の取得
     def acquire_blastn_align_variables(i)
@@ -413,60 +292,5 @@ module SearchesHelper
 
     end
 
-    # ============viewのcollection用のインスタンスを作成するクラス===================
-    class VariablizeSearchResult
-
-        # 初期化
-        def initialize(id, assembly, genus_and_species)
-            # , taxonomy_id, strain, superkingdom, phylum, organism_class, order, family, genus, genome_gc, genome_size, organism_16s_accssion, organism_16s_gc, tmin, topt_ave, topt_low, topt_high, tmax, tmax_tmin, align_id, align_accession, align_gene, align_location, bit_score, align_score, align_evalue, align_identities, align_query_from, align_query_to, align_query_strand, align_hit_from, align_hit_to, align_hit_strand, align_align_len, align_gaps, align_hseq, align_qseq, align_midline)
-
-            @id = id 
-            @assembly = assembly 
-            @genus_and_species = genus_and_species 
-            # @taxonomy_id = taxonomy_id 
-            # @strain = strain 
-            # @superkingdom = superkingdom 
-            # @phylum = phylum 
-            # @class = organism_class 
-            # @order = order 
-            # @family = family 
-            # @genus = genus 
-            # @genome_gc = genome_gc 
-            # @genome_size = genome_size 
-            # @organism_16s_accssion = organism_16s_accssion 
-            # @organism_16s_gc = organism_16s_gc 
-            # @tmin = tmin 
-            # @topt_ave = topt_ave 
-            # @topt_low = topt_low 
-            # @topt_high = topt_high 
-            # @tmax = tmax 
-            # @tmax_tmin = tmax_tmin 
-            # @align_id = align_id 
-            # @align_accession = align_accession 
-            # @align_gene = align_gene 
-            # @align_location = align_location 
-            # @bit_score = bit_score 
-            # @align_score = align_score 
-            # @align_evalue = align_evalue 
-            # @align_identities = align_identities 
-            # @align_query_from = align_query_from 
-            # @align_query_to = align_query_to 
-            # @align_query_strand = align_query_strand 
-            # @align_hit_from = align_hit_from 
-            # @align_hit_to = align_hit_to 
-            # @align_hit_strand = align_hit_strand 
-            # @align_align_len = align_align_len 
-            # @align_gaps = align_gaps 
-            # @align_hseq = align_hseq 
-            # @align_qseq = align_qseq 
-            # @align_midline = align_midline
-
-        end
-
-        attr_accessor :id, :assembly, :genus_and_species
-        # , :taxonomy_id, :strain, :superkingdom, :phylum, :class, :order, :family, :genus, :genome_gc, :genome_size, :organism_16s_accssion, :organism_16s_gc, :tmin, :topt_ave, :topt_low, :topt_high, :tmax, :tmax_tmin, :align_id, :align_accession, :align_gene, :align_location, :bit_score, :align_score, :align_evalue, :align_identities, :align_query_from, :align_query_to, :align_query_strand, :align_hit_from, :align_hit_to, :align_hit_strand, :align_align_len, :align_gaps, :align_hseq, :align_qseq, :align_midline
-
-
-    end
     
 end
