@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_053229) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_10_055158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,16 +81,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_053229) do
     t.string "family"
     t.string "genus"
     t.string "assembly_or_accession"
-    t.float "Genome_GC"
-    t.float "Genome_size"
+    t.float "genome_GC"
+    t.float "genome_size"
     t.string "r16S_accssion"
     t.float "r16S_GC"
-    t.float "Tmin"
-    t.float "Topt_ave"
-    t.float "Topt_low"
-    t.float "Topt_high"
-    t.float "Tmax"
-    t.float "Tmax_Tmin"
+    t.float "tmin"
+    t.float "topt_ave"
+    t.float "topt_low"
+    t.float "topt_high"
+    t.float "tmax"
+    t.float "tmax_tmin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
