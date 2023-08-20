@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_10_055158) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_164709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_10_055158) do
     t.integer "bit_score"
     t.integer "score"
     t.string "evalue"
-    t.integer "identities"
+    t.integer "identity"
     t.integer "query_from"
     t.integer "query_to"
     t.string "query_strand"
@@ -40,17 +40,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_10_055158) do
     t.string "qseq", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "request_id"
+    t.string "program"
+    t.string "version"
+    t.string "reference"
+    t.string "db"
+    t.integer "expect"
+    t.integer "sc_match"
+    t.integer "sc_mismatch"
+    t.integer "gap_open"
+    t.integer "gap_extend"
+    t.string "filter"
+    t.string "query_id"
+    t.integer "query_len"
+    t.integer "num"
+    t.bigint "search_id", null: false
+    t.index ["search_id"], name: "index_blast_results_on_search_id"
   end
 
   create_table "results", force: :cascade do |t|
-    t.bigint "blast_result_id", null: false
-    t.bigint "tempura_id", null: false
+    t.bigint "search_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "searches_id", null: false
-    t.index ["blast_result_id"], name: "index_results_on_blast_result_id"
-    t.index ["searches_id"], name: "index_results_on_searches_id"
-    t.index ["tempura_id"], name: "index_results_on_tempura_id"
+    t.integer "tempura_id", default: [], array: true
+    t.integer "blast_result_id", default: [], array: true
+    t.index ["search_id"], name: "index_results_on_search_id"
   end
 
   create_table "searches", force: :cascade do |t|
@@ -95,7 +109,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_10_055158) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "results", "blast_results"
-  add_foreign_key "results", "searches", column: "searches_id"
-  add_foreign_key "results", "tempuras"
+  add_foreign_key "blast_results", "searches"
+  add_foreign_key "results", "searches"
 end
