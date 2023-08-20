@@ -1,4 +1,3 @@
 class Result < ApplicationRecord
-  belongs_to :blast_result
-  belongs_to :tempura
+    belongs_to :search
 end

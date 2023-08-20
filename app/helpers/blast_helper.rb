@@ -85,72 +85,260 @@ module BlastHelper
         # BLASTn検索で得られたJSONファイルを取得する
         ## BLASTn検索が終わるのには時間がかかるが、検索結果のJSONファイル自体は検索開始後すぐに得られる
         ## これをcontrollerで定期実行して監視、存在すればクライアントに送信
-        def acquire_blastn_result_json_path
+        def is_present_blastn_result
 
             # 結果の保存場所
-            blastn_opt_out = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt"
-
-            # BLASTnの結果のパス
-            ## このメソッドの返り値になる
-            blastn_result_path = blastn_opt_out + "_1.json"
+            blastn_opt_out = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
 
             # ファイルが存在するか判定
             ## 存在すればファイルのパスを返す
             ## 存在しなければnilを返す
             if File.exist?(blastn_result_path) then
-
-                return blastn_result_path
+                return true
                 puts "[BLASTn result outputted] " + `date`
-
             else
-                
-                return ""
+                return false
             end
-
         end
 
     end
 
-    # BLASTnの結果の読み込み
-    class LoadBlastnResult
+    class SaveBlastnResult
 
-        # 初期化
-        ## JSONファイルのパス
-        def initialize(blastn_result_path)
+        # BLAST結果のJSONファイルのパス
+        def initialize(request_id)
 
-            @blastn_result_path = blastn_result_path
+            @request_id = request_id
 
         end
-        attr_accessor :blastn_result_path
+        attr_accessor :request_id
 
-        ## JSONファイルの読み込み
-        def acquire_blastn_result_json_content
+        # クラス変数を定義する
+        @@blastn_result, @@blastn_result_desc = {}
+        @@blastn_result_hits = []
+        @@blastn_result_length = 0
+
+        # JSONファイルの読み込み
+        def load_blastn_result
+
+            blastn_result_path = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
 
             # JSONファイル読み込み
-            File.open(@blastn_result_path) do |file|
+            File.open(blastn_result_path) do |file|
 
                 # JSON読み込み
                 raw_hash = JSON.load(file)
 
                 # "BlastOutput2" > "report"
-                @blastn_result = raw_hash["BlastOutput2"]["report"]
+                @@blastn_result = raw_hash["BlastOutput2"]["report"]
 
                 # "BlastOutput2" > "report" > "results" > "search"
-                @blastn_result_desc = @blastn_result["results"]["search"]
+                @@blastn_result_desc = @@blastn_result["results"]["search"]
 
                 # "BlastOutput2" > "report" > "results" > "search" > "hits"
-                @blastn_result_hits = @blastn_result_desc["hits"]
+                @@blastn_result_hits = @@blastn_result_desc["hits"]
 
                 # 一定以上の相同性を有する配列の数
-                @blastn_result_length = @blastn_result_hits.length
+                @@blastn_result_length = @@blastn_result_hits.length
 
             end
         end
 
-        ## search > hits の配列の数
-        def get_blastn_result_length
-            return @blastn_result_length
+        # BLASTnの結果を保存する
+        def save_blastn_result_to_table
+
+            # 繰り返ししない変数の代入
+            ## program
+            program = @@blastn_result["program"]
+
+            ## version
+            version = @@blastn_result["version"]
+
+            ## reference
+            reference = @@blastn_result["reference"]
+
+            ## db
+            db = @@blastn_result["search_target"]["db"]
+
+            ## expect
+            expect = @@blastn_result["params"]["expect"].to_i
+
+            ## sc_match
+            sc_match = @@blastn_result["params"]["sc_match"].to_i
+
+            ## sc_mismatch
+            sc_mismatch = @@blastn_result["params"]["sc_mismatch"].to_i
+
+            ## gap_open
+            gap_open = @@blastn_result["params"]["gap_open"].to_i
+
+            ## gap_extend
+            gap_extend = @@blastn_result["params"]["gap_extend"].to_i
+
+            ## filter
+            filter = @@blastn_result["params"]["filter"]
+
+            ## query_id
+            query_id = @@blastn_result_desc["query_id"]
+
+            ## query_len
+            query_len = @@blastn_result_desc["query_len"].to_i
+
+            ## db_num
+            db_num = @@blastn_result_desc["stat"]["db_num"]
+
+            ## db_len
+            db_len = @@blastn_result_desc["stat"]["db_len"]
+
+            ## hsp_len
+            hsp_len = @@blastn_result_desc["stat"]["hsp_len"]
+
+            ## eff_space
+            eff_space = @@blastn_result_desc["stat"]["eff_space"]
+
+            ## kappa
+            kappa = @@blastn_result_desc["stat"]["kappa"]
+
+            ## lambda
+            lambda = @@blastn_result_desc["stat"]["lambda"]
+
+            ## entropy
+            entropy = @@blastn_result_desc["stat"]["entropy"]
+
+            # 繰り返しする変数の代入
+            @@blastn_result_length.times do |i|
+                
+                # title切り分ける
+                raw_arr = split_title(i)
+
+                # num
+                num = @@blastn_result_hits[i]["num"].to_i
+
+                # description > accession
+                accession = @@blastn_result_hits[i]["description"][0]["accession"]
+
+                # description > title > gene
+                gene = acquire_elem_in_array(raw_arr, "gene")
+
+                # description > title > locus_tag
+                locus_tag = acquire_elem_in_array(raw_arr, "locus_tag")
+
+                # description > title > protein
+                ## "protein="で分けるのは"protein_id"との区別のため
+                protein = acquire_elem_in_array(raw_arr, "protein=").gsub(/assembly /, "")
+
+                # description > title > protein_id
+                protein_id = acquire_elem_in_array(raw_arr, "protein_id")
+
+                # description > title > location
+                location = acquire_elem_in_array(raw_arr, "location")
+
+                # description > title > gbkey
+                gbkey = acquire_elem_in_array(raw_arr, "gbkey")
+
+                # description > title > assembly
+                assembly = get_blastn_result_align_assembly(raw_arr)
+
+                ## len
+                len = @@blastn_result_hits[i]["len"].to_i
+
+                # hsps > num
+                num = @@blastn_result_hits[i]["hsps"][0]["num"]
+
+                # hsps > bit_score
+                bit_score = @@blastn_result_hits[i]["hsps"][0]["bit_score"]
+
+                # hsps > score
+                score = @@blastn_result_hits[i]["hsps"][0]["score"]
+
+                # hsps > evalue
+                evalue = @@blastn_result_hits[i]["hsps"][0]["evalue"]
+
+                # hsps > identity
+                identity = get_blastn_result_align_identity(i)
+
+                # hsps > query_from
+                query_from = @@blastn_result_hits[i]["hsps"][0]["query_from"]
+
+                # hsps > query_to
+                query_to = @@blastn_result_hits[i]["hsps"][0]["query_to"]
+
+                # hsps > query_strand
+                query_strand = @@blastn_result_hits[i]["hsps"][0]["query_strand"]
+
+                # hsps > hit_from
+                hit_from = @@blastn_result_hits[i]["hsps"][0]["hit_from"]
+
+                # hsps > hit_to
+                hit_to = @@blastn_result_hits[i]["hsps"][0]["hit_to"]
+
+                # hsps > hit_strand
+                hit_strand = @@blastn_result_hits[i]["hsps"][0]["hit_strand"]
+
+                # hsps > align_len
+                align_len = @@blastn_result_hits[i]["hsps"][0]["align_len"]
+
+                # hsps > gaps
+                gaps = @@blastn_result_hits[i]["hsps"][0]["gaps"]
+
+                # hsps > qseq
+                ## 配列
+                qseq = @@blastn_result_hits[i]["hsps"][0]["qseq"].split("")
+
+                # hsps > hseq
+                ## 配列
+                hseq = @@blastn_result_hits[i]["hsps"][0]["hseq"].split("")
+
+                # hsps > midline
+                ## 配列 (boolean)
+                midline = get_blastn_result_align_midline(i)
+
+                # 変数のblast_resultsへの保存
+                BlastResult.create(
+                    accession: accession, 
+                    gene: gene, 
+                    locus_tag: locus_tag, 
+                    protein: protein, 
+                    protein_id: protein_id, 
+                    location: location, 
+                    gbkey: gbkey, 
+                    assembly: assembly, 
+                    bit_score: bit_score, 
+                    score: score, 
+                    evalue: evalue, 
+                    identity: identity, 
+                    query_from: query_from, 
+                    query_to: query_to, 
+                    query_strand: query_strand, 
+                    hit_from: hit_from, 
+                    hit_to: hit_to, 
+                    hit_strand: hit_strand, 
+                    align_len: align_len, 
+                    gaps: gaps, 
+                    midline: midline, 
+                    hseq: hseq, 
+                    qseq: qseq, 
+                    request_id: @request_id, 
+                    program: program, 
+                    version: version, 
+                    reference: reference, 
+                    db: db, 
+                    expect: expect, 
+                    sc_match: sc_match, 
+                    sc_mismatch: sc_mismatch, 
+                    gap_open: gap_open, 
+                    gap_extend: gap_extend, 
+                    filter: filter, 
+                    query_id: query_id, 
+                    query_len: query_len, 
+                    num: num
+                )
+
+            end
+
         end
+
+        # 各種変数の取得
 
         # 配列の中に特定の文字列が含まれているかを判定
         ## 引数：調べたい文字列
@@ -170,7 +358,7 @@ module BlastHelper
         # @blastn_result_hits[i]["title"]の中身を"] ["で分ける
         ## 返り値：配列 ( "] [" で分けられてる)
         def split_title(i)
-            str = @blastn_result_hits[i]["description"][0]["title"]
+            str = @@blastn_result_hits[i]["description"][0]["title"]
             ans = str.split("] [")
             ans_len = ans.length
 
@@ -180,240 +368,19 @@ module BlastHelper
 
             return ans
         end
-    end
-
-    # 結果を読み込んで、assemblyだけを返す
-    class AcquireBlastnAssembly < LoadBlastnResult
-
-        # 初期化
-        def initialize(blastn_result_path)
-
-            # スーパークラスのinitializeに渡す
-            super
-        end
-
-        ## description > title > assembly
-        ### assemblyが欠けてるデータにはこの処理を行わないようにする
-        ### (また後日すべてのデータにassemblyが正常に記載されているようにする)
-        def get_blastn_result_align_assembly(i)
-            raw_arr = split_title(i)
-            ans = acquire_elem_in_array(raw_arr, "assembly")
-
-            # " "を含むものは正常なassemblyではないと判断
-            if ans.include?(" ") then return nil end
-
-            return ans
-        end
-        
-    end
-
-    # BLASTnの結果の解析を行う
-    class VariablizeBlastnResult < LoadBlastnResult
-        
-        # 初期化
-        def initialize(blastn_result_path, match_result_assembly)
-
-            super(blastn_result_path)
-            @match_result_assembly = match_result_assembly
-
-        end
-
-        # 各種変数の取得
-        ## program
-        def get_blastn_result_program
-            return @blastn_result["program"]
-        end
-
-        ## version
-        def get_blastn_result_version
-            return @blastn_result["version"]
-        end
-
-        ## reference
-        def get_blastn_result_reference
-            return @blastn_result["reference"]
-        end
-
-        ## search_target > db
-        def get_blastn_result_db
-            return @blastn_result["search_target"]["db"]
-        end
-
-        ## params > expect
-        def get_blastn_result_expect
-            return @blastn_result["params"]["expect"]
-        end
-
-        ## params > sc_match
-        def get_blastn_result_sc_match
-            return @blastn_result["params"]["sc_match"]
-        end
-
-        ## params > sc_mismatch
-        def get_blastn_result_sc_mismatch
-            return @blastn_result["params"]["sc_mismatch"]
-        end
-
-        ## params > gap_open
-        def get_blastn_result_gap_open
-            return @blastn_result["params"]["gap_open"]
-        end
-
-        ## params > gap_extend
-        def get_blastn_result_gap_extend
-            return @blastn_result["params"]["gap_extend"]
-        end
-
-        ## params > filter
-        def get_blastn_result_filter
-            return @blastn_result["params"]["filter"]
-        end
-
-        ## search > query_id
-        def get_blastn_result_query_id
-            return @blastn_result_desc["query_id"]
-        end
-
-        ## search > query_len
-        def get_blastn_result_query_len
-            return @blastn_result_desc["query_len"]
-        end
-
-        # アライメントの結果の取得
-        # 0 ≤ i < @blastn_result_length
-        
-        ## description > id
-        def get_blastn_result_align_id(i)
-            return @blastn_result_hits[i]["description"][0]["id"]
-        end
-
-        ## description > accession
-        def get_blastn_result_align_accession(i)
-            return @blastn_result_hits[i]["description"][0]["accession"]
-        end
-
-        ## description > title > gene
-        def get_blastn_result_align_gene(i)
-            raw_arr = split_title(i)
-            return acquire_elem_in_array(raw_arr, "gene")
-        end
-
-        ## description > title > locus_tag
-
-        ## description > title > protein
-        ### "protein="で分けるのは"protein_id"との区別のため
-        def get_blastn_result_align_protein(i)
-            raw_arr = split_title(i)
-            return acquire_elem_in_array(raw_arr, "protein=").gsub(/assembly /, "")
-        end
-
-        ## description > title > protein_id
-        def get_blastn_result_align_protein_id(i)
-            raw_arr = split_title(i)
-            return acquire_elem_in_array(raw_arr, "protein_id")
-        end
-
-        ## description > title > location
-        def get_blastn_result_align_location(i)
-            raw_arr = split_title(i)
-            return acquire_elem_in_array(raw_arr, "location")
-        end
-
-        ## description > title > gbkey
-        def get_blastn_result_align_gbkey(i)
-            raw_arr = split_title(i)
-            return acquire_elem_in_array(raw_arr, "gbkey")
-        end
-
-        ## len
-        def get_blastn_result_align_length(i)
-            return @blastn_result_hits[i]["len"]
-        end
-
-        ## hsps > num
-        def get_blastn_result_align_num(i)
-            return @blastn_result_hits[i]["hsps"][0]["num"]
-        end
-
-        ## hsps > bit_score
-        def get_blastn_result_align_bit_score(i)
-            return @blastn_result_hits[i]["hsps"][0]["bit_score"]
-        end
-
-        ## hsps > score
-        def get_blastn_result_align_score(i)
-            return @blastn_result_hits[i]["hsps"][0]["score"]
-        end
-
-        ## hsps > evalue
-        def get_blastn_result_align_evalue(i)
-            return @blastn_result_hits[i]["hsps"][0]["evalue"]
-        end
 
         ## hsps > identity
         def get_blastn_result_align_identity(i)
-            raw_identity = @blastn_result_hits[i]["hsps"][0]["identity"].to_i.to_f
-            raw_aling_len = @blastn_result_hits[i]["hsps"][0]["align_len"].to_i.to_f
+            raw_identity = @@blastn_result_hits[i]["hsps"][0]["identity"].to_i.to_f
+            raw_aling_len = @@blastn_result_hits[i]["hsps"][0]["align_len"].to_i.to_f
             final_identity = (raw_identity.quo(raw_aling_len) * 100).ceil(3).to_s
             return final_identity
-        end
-
-        ## hsps > query_from
-        def get_blastn_result_align_query_from(i)
-            return @blastn_result_hits[i]["hsps"][0]["query_from"]
-        end
-
-        ## hsps > query_to
-        def get_blastn_result_align_query_to(i)
-            return @blastn_result_hits[i]["hsps"][0]["query_to"]
-        end
-
-        ## hsps > query_strand
-        def get_blastn_result_align_query_strand(i)
-            return @blastn_result_hits[i]["hsps"][0]["query_strand"]
-        end
-
-        ## hsps > hit_from
-        def get_blastn_result_align_hit_from(i)
-            return @blastn_result_hits[i]["hsps"][0]["hit_from"]
-        end
-
-        ## hsps > hit_to
-        def get_blastn_result_align_hit_to(i)
-            return @blastn_result_hits[i]["hsps"][0]["hit_to"]
-        end
-
-        ## hsps > hit_strand
-        def get_blastn_result_align_hit_strand(i)
-            return @blastn_result_hits[i]["hsps"][0]["hit_strand"]
-        end
-
-        ## hsps > align_len
-        def get_blastn_result_align_align_len(i)
-            return @blastn_result_hits[i]["hsps"][0]["align_len"]
-        end
-
-        ## hsps > gaps
-        def get_blastn_result_align_gaps(i)
-            return @blastn_result_hits[i]["hsps"][0]["gaps"]
-        end
-
-        ## hsps > qseq
-        ### 配列
-        def get_blastn_result_align_qseq(i)
-            return @blastn_result_hits[i]["hsps"][0]["qseq"].split("")
-        end
-
-        ## hsps > hseq
-        ### 配列
-        def get_blastn_result_align_hseq(i)
-            return @blastn_result_hits[i]["hsps"][0]["hseq"].split("")
         end
 
         ## hsps > midline
         ### 配列 (true or false)
         def get_blastn_result_align_midline(i)
-            arr = @blastn_result_hits[i]["hsps"][0]["midline"].split("")
+            arr = @@blastn_result_hits[i]["hsps"][0]["midline"].split("")
             ans = Array.new(arr.length, false)
             for i in 0..arr.length do
                 if arr[i] == "|" then
@@ -423,48 +390,32 @@ module BlastHelper
             return ans                
         end
 
-        ## stat > db_num
-        def get_blastn_result_stat_db_num
-            return @blastn_result_desc["stat"]["db_num"]
+        ## description > title > assembly
+        ### assemblyが欠けてるデータにはこの処理を行わないようにする
+        ### (また後日すべてのデータにassemblyが正常に記載されているようにする)
+        def get_blastn_result_align_assembly(raw_arr)
+            
+            ans = acquire_elem_in_array(raw_arr, "assembly")
+
+            # " "を含むものは正常なassemblyではないと判断
+            if ans.include?(" ") then return nil end
+
+            return ans
         end
 
-        ## stat > db_len
-        def get_blastn_result_stat_db_len
-            return @blastn_result_desc["stat"]["db_len"]
-        end
 
-        ## stat > hsp_len
-        def get_blastn_result_stat_hsp_len
-            return @blastn_result_desc["stat"]["hsp_len"]
-        end
-
-        ## stat > eff_space
-        def get_blastn_result_stat_eff_space
-            return @blastn_result_desc["stat"]["eff_space"]
-        end
-
-        ## stat > kappa
-        def get_blastn_result_stat_kappa
-            return @blastn_result_desc["stat"]["kappa"]
-        end
-
-        ## stat > lambda
-        def get_blastn_result_stat_lambda
-            return @blastn_result_desc["stat"]["lambda"]
-        end
-
-        ## stat > entropy
-        def get_blastn_result_stat_entropy
-            return @blastn_result_desc["stat"]["entropy"]
-        end
-
-    end
-
-    # tBLASTnの検索を行う
-    class SearchTblastn
     end
 
     # 保存期間の過ぎたJSONファイルの削除
     def delete_blast_result_json
     end
+
+    # 保存したBLASTnの結果のassemblyを取り出す
+    def acquire_blastn_assembly(request_id)
+
+        arr = BlastResult.where(request_id: request_id).map{|hash| hash[:assembly]}
+
+        return arr
+    end
+
 end
