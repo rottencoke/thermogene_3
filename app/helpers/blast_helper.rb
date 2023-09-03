@@ -93,7 +93,7 @@ module BlastHelper
             # ファイルが存在するか判定
             ## 存在すればファイルのパスを返す
             ## 存在しなければnilを返す
-            if File.exist?(blastn_result_path) then
+            if File.exist?(blastn_opt_out) then
                 return true
                 puts "[BLASTn result outputted] " + `date`
             else
@@ -145,7 +145,7 @@ module BlastHelper
         end
 
         # BLASTnの結果を保存する
-        def save_blastn_result_to_table
+        def save_blastn_result_to_table(search_id)
 
             # 繰り返ししない変数の代入
             ## program
@@ -331,12 +331,43 @@ module BlastHelper
                     filter: filter, 
                     query_id: query_id, 
                     query_len: query_len, 
-                    num: num
+                    num: num,
+                    search_id: search_id
                 )
 
             end
 
         end
+
+        # 保存期間の過ぎたJSONファイルの削除
+        def delete_blast_result_json
+        end
+
+        # 保存したBLASTnの結果のassemblyを取り出す
+        def acquire_blastn_assembly
+
+            raw_hash = BlastResult.where(request_id: @request_id)
+
+            key_to_extract = [:id, :assembly]
+
+            ans = raw_hash.map do |hash|
+
+                new_hash = {}
+
+                key_to_extract.each do |key, value|
+
+                    new_hash[key] = hash[key]
+
+                end
+
+                new_hash
+
+            end
+
+            return ans
+        end
+
+        private
 
         # 各種変数の取得
 
@@ -404,18 +435,6 @@ module BlastHelper
         end
 
 
-    end
-
-    # 保存期間の過ぎたJSONファイルの削除
-    def delete_blast_result_json
-    end
-
-    # 保存したBLASTnの結果のassemblyを取り出す
-    def acquire_blastn_assembly(request_id)
-
-        arr = BlastResult.where(request_id: request_id).map{|hash| hash[:assembly]}
-
-        return arr
     end
 
 end

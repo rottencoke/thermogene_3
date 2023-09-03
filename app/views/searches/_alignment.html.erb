@@ -1,0 +1,132 @@
+<ul class="non_dotted_ul">
+    <% paragraph_width = 50 # アライメントの横幅の文字数を設定 %>
+    <% paragraph_length = blast_result.align_len.fdiv(paragraph_width).ceil # アライメントの段落数を計算（切り上げ） %>
+    <% alignment_last = 0 # アライメントをどこまで描画したか保存 %>
+    <% alignment_interval = 10 # アライメントの数字を表示する間隔 %>
+
+    <% paragraph_length.times do |i| %>
+
+        <li class="non_dotted_li my-3">
+            <div class="flex">
+                <div class="alignment_view_header">
+                    <ul class="non_dotted_ul me-2">
+                        <li class="non_dotted_li fw-lighter fs_7 centered_li">&nbsp;</li>
+                        <li class="non_dotted_li centered_li">
+                            Query<small>&nbsp;(<%= blast_result.query_from %>~<%= blast_result.query_to%>)</small>
+                        </li>
+                        <li class="non_dotted_li centered_li">&nbsp;</li>
+                        <li class="non_dotted_li centered_li">
+                            Subject<small>&nbsp;(<%= blast_result.hit_from %>~<%= blast_result.hit_to%>)</small>
+                        </li>
+                        <li class="non_dotted_li fw-lighter fs_7 centered_li">&nbsp;</li>
+                    </ul>
+                </div>
+
+                <div class="alignment_view_content">
+                    <% paragraph_width.times do |j| # アライメントの横方向の描画 %>
+
+                        <% if alignment_last < blast_result.align_len # アライメントが最後じゃない場合 %>
+
+                            <ul class="non_dotted_ul horizontal_range_ul list_width">
+                            
+                                <%# query配列側の数字 %>
+                                <li class="alignment_query_number non_dotted_li fw-lighter fs_7 centered_li">
+
+                                    <%# query配列が小さい順に並んでる場合 %>
+                                    <% if blast_result.query_strand == "Plus" %>
+
+                                        <%# query配列で何番目か %>
+                                        <% alignment_number = blast_result.query_from + alignment_last %>
+
+                                        <%# アライメントが数字を表示する間隔の場合 %>
+                                        <% if alignment_number.modulo(alignment_interval) == 0 %>
+
+                                            <%= alignment_number %>
+
+                                        <% else # ない場合半角空白を入れる %>
+                                            &nbsp;
+                                        <% end %>
+
+                                    <%# query配列が大きい順に並んでる場合 %>
+                                    <% else %>
+
+                                        <%# query配列で何番目か %>
+                                        <% alignment_number = blast_result.query_from - alignment_last %>
+
+                                        <%# アライメントが数字を表示する間隔の場合 %>
+                                        <% if alignment_number.modulo(alignment_interval) == 0 %>
+
+                                            <%= alignment_number %>
+
+                                        <% else # ない場合半角空白を入れる %>
+                                            &nbsp;
+                                        <% end %>
+
+                                    <% end %>
+                                </li>
+
+                                <%# query配列 %>
+                                <li class="alignment_query_sequence non_dotted_li centered_li">
+                                    <%= blast_result.qseq[alignment_last] %>
+                                </li>
+
+                                <%# midline %>
+                                <li class="alignment_midline non_dotted_li ms-05 centered_li">
+                                    <% if blast_result.midline[alignment_last] # 相同性がある場合 %>
+                                        |
+                                    <% else # 相同性がない場合 %>
+                                        &nbsp;
+                                    <% end %>
+                                </li>
+
+                                <%# hit配列 %>
+                                <li class="alignment_hit_sequence non_dotted_li centered_li">
+                                    <%= blast_result.hseq[alignment_last] %>
+                                </li>
+
+                                <%# hit配列側の数字 %>
+                                <li class="alignment_hit_number non_dotted_li fw-lighter fs_7 centered_li">
+
+                                    <%# hit配列が小さい順に並んでる場合 %>
+                                    <% if blast_result.hit_strand == "Plus" %>
+
+                                        <%# hit配列で何番目か %>
+                                        <% alignment_number = blast_result.hit_from + alignment_last %>
+
+                                        <%# アライメントが数字を表示する間隔の場合 %>
+                                        <% if alignment_number.modulo(alignment_interval) == 0 %>
+
+                                            <%= alignment_number %>
+
+                                        <% else # ない場合半角空白を入れる %>
+                                            &nbsp;
+                                        <% end %>
+
+                                    <%# hit配列が大きい順に並んでる場合 %>
+                                    <% else %>
+
+                                        <%# hit配列で何番目か %>
+                                        <% alignment_number = blast_result.hit_from - alignment_last %>
+
+                                        <%# アライメントが数字を表示する間隔の場合 %>
+                                        <% if alignment_number.modulo(alignment_interval) == 0 %>
+
+                                            <%= alignment_number %>
+
+                                        <% else # ない場合半角空白を入れる %>
+                                            &nbsp;
+                                        <% end %>
+
+                                    <% end %>
+                                </li>
+
+                            </ul>
+                        <% end %>
+
+                        <% alignment_last += 1 %>
+                    <% end %>
+                </div>
+            </div>
+        </li>
+    <% end %>
+</ul>
