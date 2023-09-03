@@ -40,13 +40,13 @@ class SearchesController < ApplicationController
         @search_blastn_ins = SearchBlastn.new(@search.sequence, request_id)
         
         ## BLASTn実行
-        execute_blastn
+        execute_blastn(request_id)
 
         ## BLASTnの結果のassemblyの配列を取り出す
-        blastn_result_assembly = acquire_blastn_assembly(request_id)
+        blastn_result_assembly = @blastn_result_ins.acquire_blastn_assembly
 
-        # 両者の結果の比較
-        acquire_shared_assembly(tempura_result_assembly, blastn_result_assembly)
+        # 一致するAssemblyを取得、resultsテーブルに保存する
+        acquire_shared_assembly(@search.id, tempura_result_assembly, blastn_result_assembly)
 
         # 結果表示
         redirect_to @search
@@ -55,7 +55,36 @@ class SearchesController < ApplicationController
 
     def show
 
+        # Search
+        ## Searchをインスタンスにする
         @search = Search.find(params[:id])
+
+        # Result
+        ## Resultのidを取得する
+        result_id = @search.result_ids
+
+        ## Resultのインスタンス
+        @result = Result.find(result_id)
+
+        # Tempura
+        ## Tempuraのidをresult_idから取得する
+        tempura_ids = @result[0][:tempura_id]
+
+        ## Tempuraの情報を配列にする
+        @tempuras = []
+        tempura_ids.length.times do |i|
+            @tempuras << Tempura.find(tempura_ids[i])
+        end
+
+        # BlastResult
+        ## BlastResultのidをresult_idから取得する
+        blast_result_ids = @result[0][:blast_result_id]
+
+        ## BlastResultの情報を配列にする
+        @blast_results = []
+        blast_result_ids.length.times do |i|
+            @blast_results << BlastResult.find(blast_result_ids[i])
+        end
 
     end
 

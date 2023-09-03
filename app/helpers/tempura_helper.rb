@@ -30,6 +30,7 @@ module TempuraHelper
         end
 
         # tempurasテーブルから、検索した温度の範囲に至適生育温度が含まれているデータ（tempura_id）を取得する
+        ## idとassemblyのhash
         def search_tempura_assembly_with_optimum_growth_temp
 
             arr = Tempura.where("topt_ave >= ? and topt_ave <= ?", @tempMin, @tempMax)

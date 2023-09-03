@@ -8,7 +8,7 @@
         <div id="search_condition_content_area" class=" container">
             <div id="search_condition" class=" container">
                 <div id="search_condition_jobtitle">
-                    <%= @search.jobtitle%>
+                    <p>jobtitle : <%= @search.jobtitle%></p>
                 </div>
             </div>
             <div id="search_filter" class=" container">
@@ -16,91 +16,14 @@
         </div>
         
     </div>
-    <hr style="width: 75%" class="center">
     <div id="search_result_area" class=" container">
         <div>
             Hit数:
-            <%= @match_result_assembly.length.to_s %>
+            <%= @blast_results.length.to_s %>
         </div>
         <hr>
-        <%= (0..@match_result_assembly.length-1).each do |i| %>
-            <div class="flex container">
-                <div class="container">
-                    <table>
-                        <tr>
-                            # <%= (i+1).to_s %>
-                        </tr>
-                        <tr>
-                            <th scope="row">生物種名</th>
-                            <td><%= @tempura_result_genus_and_species[i] %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="fw-lighter fs_7">分類</th>
-                            <td class="fw-lighter fs_7">
-                                <%= @tempura_result_superkingdom[i] %>
-                                >
-                                <%= @tempura_result_phylum[i] %>
-                                >
-                                <%= @tempura_result_organism_class[i] %>
-                                >
-                                <%= @tempura_result_order[i] %>
-                                >
-                                <%= @tempura_result_family[i] %>
-                                >
-                                <%= @tempura_result_genus[i] %>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="col row">assembly</th>
-                            <td scope="col"><%= @match_result_assembly[i] %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">至適生育温度</th>
-                            <td><%= @tempura_result_topt_ave[i] %>℃</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" class="fw-lighter fs_7">(最低生育温度 ~ 最高生育温度)</th>
-                            <td class="fw-lighter fs_7">(<%= @tempura_result_tmin[i] %>℃ ~ <%= @tempura_result_tmax[i] %>℃)</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">遺伝子名</th>
-                            <td><%= @blastn_result_align_gene[i] %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">タンパク質名</th>
-                            <td><%= @blastn_result_align_protein[i] %></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">e-value</th>
-                            <td><%= @blastn_result_align_evalue[i] %></td>
-                        </th>
-                        <tr>
-                            <th scope="row">相同性</th>
-                            <td><%= @blastn_result_align_identities[i] %>%</td>
-                        </tr>
-                    </table>
-                    <hr>
-                </div>
-                <div class="container">
-                    (アライメント表示予定)
-                    
-                </div>
-            </div>
+        <% (0..@blast_results.length-1).each do |i| %>
+            <%= render partial: 'result', locals: {i: i, blast_result: @blast_results[i], tempura: @tempuras[i]} %>
         <% end %>
-    </div>
-    <hr style="width: 75%" class="center">
-    <div id="explanation_area" class="container py-3">
-        <article>
-            <h3>当サイトの説明</h3>
-            <p>当サイトは、National Center of Biotechnology Information (以下、NCBI) と、TEMPURA: Database of growth TEMPeratures of Usual and RAre prokaryotes (以下、TEMPURA) を組み合わせることで、任意の生育温度を持つ微生物の内、任意の遺伝子を有するものを検索することを可能にしている。</p>
-        </article>
-        <article>
-            <p>
-                参考
-                <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">NCBI BLAST</a>,
-                <a href="http://togodb.org/db/tempura">TEMPURA: Database of growth TEMPeratures of Usual and RAre prokaryotes</a>
-            </p>
-            
-        </article>
     </div>
 </main>

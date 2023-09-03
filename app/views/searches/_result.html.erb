@@ -1,0 +1,57 @@
+<div class="flex container">
+    <div class="container result_area">
+        <table>
+            <tr>
+                # <%= (i+1).to_s %>
+            </tr>
+            <tr>
+                <th scope="row">生物種名</th>
+                <td><%= tempura.genus_and_species %></td>
+            </tr>
+            <tr>
+                <th scope="row" class="fw-lighter fs_7">分類</th>
+                <td class="fw-lighter fs_7">
+                    <%= render partial: 'show_if_there', locals: {text: tempura.superkingdom} %>
+                    >
+                    <%= render partial: 'show_if_there', locals: {text: tempura.phylum} %>
+                    >
+                    <%= render partial: 'show_if_there', locals: {text: tempura.org_class} %>
+                    >
+                    <%= render partial: 'show_if_there', locals: {text: tempura.order} %>
+                    >
+                    <%= render partial: 'show_if_there', locals: {text: tempura.family} %>
+                    >
+                    <%= render partial: 'show_if_there', locals: {text: tempura.genus} %>
+                </td>
+            </tr>
+            <tr>
+                <th class="result_th" scope="row">至適生育温度</th>
+                <td><%= tempura.topt_ave %>℃<small>&nbsp;(<%= tempura.tmin %>℃ ~ <%= tempura.tmax %>℃)</small></td>
+            </tr>
+            <tr>
+                <th class="result_th" scope="row">遺伝子名</th>
+                <td><%= render partial: 'show_if_there', locals: {text: blast_result.gene} %></td>
+            </tr>
+            <tr>
+                <th class="result_th" scope="row">タンパク質名</th>
+                <td><%= blast_result.protein %></td>
+            </tr>
+            <tr>
+                <th class="result_th" scope="row">e-value</th>
+                <td><%= blast_result.evalue %></td>
+            </th>
+            <tr>
+                <th class="result_th" scope="row">相同性</th>
+                <td><b><%= blast_result.identity %>%</b></td>
+            </tr>
+            <tr>
+                <th class="result_th" scope="row">長さ</th>
+                <td><%= blast_result.align_len %>塩基</td>
+            </tr>
+        </table>
+    </div>
+    <div class="container alignment_area">
+        <%= render partial: 'alignment', locals: {blast_result: blast_result} %>
+    </div>
+</div>
+<hr>

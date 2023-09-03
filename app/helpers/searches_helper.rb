@@ -6,7 +6,7 @@ module SearchesHelper
 
     # BLASTn実行
     ## controllerに呼び出される、メインのメソッド
-    def execute_blastn
+    def execute_blastn(request_id)
 
         # 結果取得
         ## 結果のpathを定義
@@ -52,45 +52,52 @@ module SearchesHelper
 
         end
 
+        # Search idの取得
+        search_id = @search.id
+
         # BLASTnの結果をblast_resultsテーブルに保存する
         @blastn_result_ins = SaveBlastnResult.new(request_id)
         @blastn_result_ins.load_blastn_result
-        @blastn_result_ins.save_blastn_result_to_table
+        @blastn_result_ins.save_blastn_result_to_table(search_id)
 
     end
 
     # 一致するAssemblyを取得、resultsテーブルに保存する
-    def acquire_shared_assembly(tempura_result_assembly, blastn_result_assembly)
+    def acquire_shared_assembly(search_id, tempura_result_assembly, blastn_result_assembly)
 
         # 一致するAssemblyを取得する
         ## 一致したAssembly
         shared_assembly = []
+
+        ## 一致したAssemblyのtempuraのid
+        shared_tempura_id = []
+
+        ## BlastResultのid
+        shared_blast_result_id = []
 
         ## 一致するAssemblyを探す
         blastn_result_assembly.length.times do |i|
             
             tempura_result_assembly.length.times do |j|
 
-                if blastn_result_assembly[i] == tempura_result_assembly[j] then
+                if blastn_result_assembly[i][:assembly] == tempura_result_assembly[j][:assembly_or_accession] then
 
-                    shared_assembly << blastn_result_assembly[i]
+                    # 一致したAssemblyを代入
+                    shared_assembly << blastn_result_assembly[i][:assembly]
+
+                    # TEMPURAのid（tempura_id）を取得する
+                    shared_tempura_id << tempura_result_assembly[j][:id]
+
+                    # BlastResultのidを取得する
+                    shared_blast_result_id << blastn_result_assembly[i][:id]
+
                 end
             end
         end
 
-        # TEMPURAのid（tempura_id）を取得する
-        ## 一致したAssemblyのtempuraのid
-        shared_tempura_id = Tempura.where(assembly_or_accession: shared_assembly).map{|hash| hash[:id]}
-
-        # BlastResultのid（blast_result_id）を取得する
-        shared_blast_result_id = BlastResult.where(assembly: shared_assembly).map{|hash| hash[:id]}
-
         # resultsテーブルに保存する
-        ## Searchのidを取得する
-        search_id = @search.id
-
         ## resultsテーブルに保存する
-        Result.create(blast_result_id: shared_blast_result_id, tempura_id: shared_tempura_id, searches_id: search_id)
+        Result.create(blast_result_id: shared_blast_result_id, tempura_id: shared_tempura_id, search_id: search_id)
     
     end
 
