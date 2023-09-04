@@ -1,0 +1,65 @@
+<table>
+    <tr>
+        <th class="condition_th">Job Title</th>
+        <td>
+            <%= render partial: 'show_if_there', locals: {text: search.jobtitle} %>
+        </td>
+    </tr>
+    <tr>
+        <th class="condition_th">生育温度</th>
+        <td>
+            <%= render partial: 'show_if_there', locals: {text: search.temp_minimum} %>
+            ℃&nbsp;～&nbsp;
+            <%= render partial: 'show_if_there', locals: {text: search.temp_maximum} %>
+            ℃
+        </td>
+    </tr>
+    <tr>
+        <th class="condition_th">Query配列</th>
+        <td>
+            <div>
+                <%# 改行コードを削除 %>
+                <%= search.sequence.gsub(/(\r\n?|\n)/,"") %>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th class="condition_th">Blast Engine</th>
+        <td>
+            <%= search.search_blast_engine %>
+        </td>
+
+    </tr>
+    <tr>
+
+        <th class="condition_th">Search Method</th>
+        <td>
+            <%= search.search_method %>
+        </td>
+    </tr>
+    <tr>
+        <th class="condition_th">相同性</th>
+        <td>
+            <%= render partial: 'show_if_there', locals: {text: search.identity_minimum} %>
+            &nbsp;～&nbsp;
+            <%= render partial: 'show_if_there', locals: {text: search.identity_maximum} %>
+        </td>
+    </tr>
+    <tr>
+        <th class="condition_th">e value</th>
+        <td>
+            <%= render partial: 'show_if_there', locals: {text: search.eValue_minimum} %>
+            &nbsp;～&nbsp;
+            <%= render partial: 'show_if_there', locals: {text: search.eValue_maximum} %>
+        </td>
+    </tr>
+    <tr>
+        <th class="condition_th">Query Coverage</th>
+        <td>
+            <%= render partial: 'show_if_there', locals: {text: search.qCoverage_minimum} %>
+            &nbsp;～&nbsp;
+            <%= render partial: 'show_if_there', locals: {text: search.qCoverage_maximum} %>
+        </td>
+    </tr>
+
+</table>

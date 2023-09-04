@@ -66,8 +66,3 @@ a {
 .fs_8 {
     font-size: 0.6em;
 }
-
-/* テーブルのヘッダーの幅を指定 */
-.result_th {
-    width: 120px;
-}
