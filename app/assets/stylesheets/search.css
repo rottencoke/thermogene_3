@@ -37,3 +37,13 @@
 .list_width {
     width: 0.8em;
 }
+
+/* 結果部分のテーブルのヘッダーの幅を指定 */
+.result_th {
+    width: 120px;
+}
+
+/* 検索条件のテーブルのヘッダーの幅を指定 */
+.condition_th {
+    width: 150px;
+}

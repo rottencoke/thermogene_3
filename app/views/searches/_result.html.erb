@@ -37,16 +37,20 @@
                 <td><%= blast_result.protein %></td>
             </tr>
             <tr>
+                <th class="result_th" scope="row">長さ</th>
+                <td><%= blast_result.align_len %>塩基</td>
+            </tr>
+            <tr>
                 <th class="result_th" scope="row">e-value</th>
-                <td><%= blast_result.evalue %></td>
+                <td><b><%= blast_result.evalue %></b></td>
             </th>
             <tr>
                 <th class="result_th" scope="row">相同性</th>
                 <td><b><%= blast_result.identity %>%</b></td>
             </tr>
             <tr>
-                <th class="result_th" scope="row">長さ</th>
-                <td><%= blast_result.align_len %>塩基</td>
+                <th class="result_th" scope="row">ギャップ</th>
+                <td><%= blast_result.gaps %></td>
             </tr>
         </table>
     </div>
