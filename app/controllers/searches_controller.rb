@@ -26,7 +26,7 @@ class SearchesController < ApplicationController
 
         # 初期化部分~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ## リクエストIDを作成
-        request_id = SecureRandom.hex(5) + "_" + `date +%Y%m%d%H%M%S`.chomp
+        request_id =  `date +%Y%m%d%H%M%S`.chomp + "_" + SecureRandom.hex(5)
 
         # TEMPURA部分~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ## TEMPURA検索結果のインスタンス作成
