@@ -39,9 +39,9 @@
             <div id="search_option_area" class="container gap-4">
                 <div id="search_method">
                     <label class="form_label">検索方法</label><br>
-                    <%= f.radio_button :search_method, :temptoseq, :checked => true %> 温度の範囲内 → 相同性でソートして表示
+                    <%= f.radio_button :search_method, :temptoseq, :checked => true %> 任意の生育温度の範囲内の生物種の中から、BLAST検索を実行
                     <br>
-                    <%= f.radio_button :search_method, :seqtotemp %> 相同性の範囲内 → 温度でソートして表示 (未実装)
+                    <%= f.radio_button :search_method, :seqtotemp %> BLAST検索の結果に生育温度の情報を記載 (未実装)
                 </div>
 
                 <hr>
