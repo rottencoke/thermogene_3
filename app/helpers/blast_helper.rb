@@ -53,7 +53,7 @@ module BlastHelper
         def search_blastn
 
             # BLASTn検索開始時間表示
-            puts "[BLASTn start]  " + `date +%Y/%m/%d_%H:%M:%S.%3N`
+            puts "[BLASTn start]        " + `date +%Y/%m/%d_%H:%M:%S.%3N`
 
             # BLASTnのオプション
             ## 問い合わせ配列
@@ -78,7 +78,7 @@ module BlastHelper
             %x{ #{BLASTN_PATH} #{blastn_opts} }
 
             # BLASTn検索終了時間表示
-            puts "[BLASTn finish] " + `date +%Y/%m/%d_%H:%M:%S.%3N`
+            puts "[BLASTn finish]       " + `date +%Y/%m/%d_%H:%M:%S.%3N`
 
         end
 
@@ -88,14 +88,29 @@ module BlastHelper
         def is_present_blastn_result
 
             # 結果の保存場所
-            blastn_opt_out = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
+            blastn_result_path = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
 
             # ファイルが存在するか判定
             ## 存在すればファイルのパスを返す
             ## 存在しなければnilを返す
-            if File.exist?(blastn_opt_out) then
-                return true
-                puts "[BLASTn result outputted] " + `date`
+            if File.exist?(blastn_result_path) then
+
+                # JSONファイル読み込み
+                File.open(blastn_result_path) do |file|
+
+                    begin
+                    
+                        # JSON読み込み
+                        raw_hash = JSON.load(file)
+
+                        unless raw_hash.blank? then return true end
+
+                    rescue JSON::ParserError => e
+                        $stderr.puts "ERROR: #{e}"
+                    end
+
+                end
+
             else
                 return false
             end
