@@ -34,7 +34,11 @@
 
         <th class="condition_th">Search Method</th>
         <td>
-            <%= search.search_method %>
+            <% if search.search_method == "temptoseq" %>
+                任意の生育温度の範囲内の生物種の中から、BLAST検索を実行
+            <% else %>
+                BLAST検索の結果に生育温度の情報を記載
+            <% end %>
         </td>
     </tr>
     <tr>
