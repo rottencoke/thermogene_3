@@ -18,11 +18,9 @@ module SearchesHelper
         begin
             # BLASTn検索
             ## 結果取得をスムーズに行うために別スレッドで実行
-            # search_blastn_thread = Thread.new do
-            #     @blastn_ins.search_blastn
-            # end
-            ## 落ち着いたらthreadに入れる
-            @search_blastn_ins.search_blastn 
+            search_blastn_thread = Thread.new do
+                @search_blastn_ins.search_blastn
+            end
 
         rescue
 
@@ -37,17 +35,12 @@ module SearchesHelper
                 # BLASTnの結果のJSONファイルが出力されたらスレッドkillしてloop終了
                 if @search_blastn_ins.is_present_blastn_result then
 
-                    puts "[BLASTn JSON found] " + `date +%Y/%m/%d_%H:%M:%S.%3N`
-                    # Thread.kill(search_blastn_thread)
+                    puts "[BLASTn JSON created] " + `date +%Y/%m/%d_%H:%M:%S.%3N`
+                    Thread.kill(search_blastn_thread)
                     break
 
                 end
 
-                # 一定時間 (2秒=1000000) たったら強制終了
-                if count > 1000000 then
-                    break 
-                    puts "[BLASTn] 強制終了 " + `date +%Y/%m/%d_%H:%M:%S.%3N`
-                end
             end
 
         end
