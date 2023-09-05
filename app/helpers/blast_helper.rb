@@ -363,7 +363,7 @@ module BlastHelper
 
             raw_hash = BlastResult.where(request_id: @request_id)
 
-            key_to_extract = [:id, :assembly]
+            key_to_extract = [:id, :assembly, :identity]
 
             ans = raw_hash.map do |hash|
 
