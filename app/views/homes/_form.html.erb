@@ -31,7 +31,8 @@
 
                 <div id="search_seqInputArea">
                     <label for="seq" class="form_label py-3 pe-2">Query配列</label>
-                    <%= f.file_field :sequence_file %>(未実装)
+                    <br>
+                    <%= f.file_field :sequence_file, class:"mb-3"%>(未実装)
                     <%= f.text_area :sequence, id:"seq", class:"form-control form_text_area" %>
                 </div>
             </div>
@@ -69,12 +70,10 @@
 
                 <div id="search_option_eValue">
                     <div class="form_horizontal_display">
-                        <label for="eValue_minimum" class="form_label">e-Value (未実装)</label>
+                        <label for="eValue_minimum" class="form_label">E Value (未実装)</label>
                         <%= f.number_field :eValue_minimum, id:"eValue_minimum", class:"form-control small_number_field" %>
-                        <%= f.label :eValue_minimum, "%" %>
                         <p>~</p>
                         <%= f.number_field :eValue_maximum, class:"form-control small_number_field" %>
-                        <%= f.label :eValue_maximum, "%" %>
                     </div>
 
                 </div>
