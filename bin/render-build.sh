@@ -9,4 +9,4 @@ bundle exec rake db:migrate
 
 # TEMPURA DB構築
 chmod +x run-import-csv.sh
-./run-import-csv.sh
+run-import-csv.sh
