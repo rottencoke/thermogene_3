@@ -7,6 +7,6 @@ bundle exec rake assets:precompile
 bundle exec rake assets:clean
 bundle exec rake db:migrate
 
-# tempura db構築
-require "./lib/assets/tempura/ruby/import_csv.rb"
-ImportCsv.execute(model: Tempura, file_name: "./db/csv_data/200617_TEMPURA")
+# TEMPURA DB構築
+chmod +x run-import-csv.sh
+./run-import-csv.sh
