@@ -7,7 +7,7 @@ class CreateTempuras < ActiveRecord::Migration[7.0]
             t.string :strain
             t.string :superkingdom
             t.string :phylum
-            t.string :class
+            t.string :org_class
             t.string :order
             t.string :family
             t.string :genus
