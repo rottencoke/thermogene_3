@@ -8,5 +8,5 @@ bundle exec rake assets:clean
 bundle exec rake db:migrate
 
 # TEMPURA DB構築
-chmod +x run-import-csv.sh
-run-import-csv.sh
+chmod +x bin/run-import-csv.sh
+bin/run-import-csv.sh
