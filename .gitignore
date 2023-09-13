@@ -35,3 +35,8 @@
 
 # Ignore db/csv_data
 /db/csv_data/
+
+# Ignore fasta data
+/lib/assets/blast/blast_db/cds_from_genomic/
+/lib/assets/blast/blast_db/cds_from_genomic_mfa/
+/lib/assets/blast/blast_db/cds_from_genomic_taxonomy_id/
