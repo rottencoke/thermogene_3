@@ -16,26 +16,28 @@
 !/tmp/.keep
 
 ## Ignore pidfiles, but keep the directory.
-/tmp/pids/*
 !/tmp/pids/
+/tmp/pids/*
 !/tmp/pids/.keep
 
-## Ignore pidfiles, but keep the directory.
-/tmp/storage/*
+## Ignore storagefiles, but keep the directory.
 !/tmp/storage/
 !/tmp/storage/.keep
 
 ## Ignore files in tmp/storage/../ or in tmp/storage/../../, but keep the directory.
-/tmp/storage/blast_query/*
 !/tmp/storage/blast_query/
-/tmp/storage/blast_result/*
+/tmp/storage/blast_query/*
 !/tmp/storage/blast_result/
+/tmp/storage/blast_result/*
 !/tmp/storage/ncbi_fasta/
-/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic/
+/tmp/storage/ncbi_fasta/cds_from_genomic/*
 !/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/
-/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/*
+/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/*
 !/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/
+/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/*
 
+# Ignore public/assets
 /public/assets
 
 # Ignore master key for decrypting credentials and more.
