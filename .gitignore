@@ -24,18 +24,35 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
-## Ignore files in tmp/storage/../ or in tmp/storage/../../, but keep the directory.
+## Ignore files in /tmp/storage/blast_query/, but keep the directory.
 !/tmp/storage/blast_query/
 /tmp/storage/blast_query/*
+!/tmp/storage/blast_query/.keep
+
+## Ignore files in /tmp/storage/blast_result/, but keep the directory.
 !/tmp/storage/blast_result/
 /tmp/storage/blast_result/*
+!/tmp/storage/blast_result/.keep
+
+## Ignore files in /tmp/storage/ncbi_fasta/, but keep the directory.
 !/tmp/storage/ncbi_fasta/
+/tmp/storage/ncbi_fasta/*
+!/tmp/storage/ncbi_fasta/.keep
+
+## Ignore files in /tmp/storage/ncbi_fasta/cds_from_genomic/, but keep the directory.
 !/tmp/storage/ncbi_fasta/cds_from_genomic/
 /tmp/storage/ncbi_fasta/cds_from_genomic/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic/.keep
+
+## Ignore files in /tmp/storage/ncbi_fasta/cds_from_genomic_mfa/, but keep the directory.
 !/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/
 /tmp/storage/ncbi_fasta/cds_from_genomic_mfa/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/.keep
+
+## Ignore files in /tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/, but keep the directory.
 !/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/
 /tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/.keep
 
 # Ignore public/assets
 /public/assets
