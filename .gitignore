@@ -7,33 +7,36 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore all logfiles and tempfiles.
+# Ignore all logfiles.
 /log/*
-/tmp/*
 !/log/.keep
+
+# Ignore all tempfiles.
+/tmp/*
 !/tmp/.keep
 
-# Ignore pidfiles, but keep the directory.
+## Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
 
-# Ignore uploaded files in development.
-/storage/*
-!/storage/.keep
+## Ignore pidfiles, but keep the directory.
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
+
+## Ignore files in tmp/storage/../ or in tmp/storage/../../, but keep the directory.
+/tmp/storage/blast_query/*
+!/tmp/storage/blast_query/
+/tmp/storage/blast_result/*
+!/tmp/storage/blast_result/
+!/tmp/storage/ncbi_fasta/
+/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/
+/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/
 
 /public/assets
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-# Ignore db/csv_data
-/db/csv_data/
-
-# Ignore fasta data
-/lib/assets/blast/blast_db/cds_from_genomic/
-/lib/assets/blast/blast_db/cds_from_genomic_mfa/
-/lib/assets/blast/blast_db/cds_from_genomic_taxonomy_id/
