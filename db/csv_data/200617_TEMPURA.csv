@@ -1,4 +1,4 @@
-id,genus_and_species,taxonomy_id,strain,superkingdom,phylum,org_class,order,family,genus,assembly_or_accession,Genome_GC,Genome_size,r16S_accssion,r16S_GC,Tmin,Topt_ave,Topt_low,Topt_high,Tmax,Tmax_Tmin
+id,genus_and_species,taxonomy_id,strain,superkingdom,phylum,org_class,order,family,genus,assembly_or_accession,genome_GC,genome_size,r16S_accssion,r16S_GC,tmin,topt_ave,topt_low,topt_high,tmax,tmax_tmin
 1,Methanopyrus kandleri,2320,116,Archaea,Euryarchaeota,Methanopyri,Methanopyrales,Methanopyraceae,Methanopyrus,,,,AB301476,67.7,85,100,,,122,37
 2,"""Geogemma barossii""",1927912,121,Archaea,Crenarchaeota,Thermoprotei,Desulfurococcales,Pyrodictiaceae,Geogemma,,,,,,85,106,,,121,36
 3,Pyrolobus fumarii,54252,1A,Archaea,Crenarchaeota,Thermoprotei,Desulfurococcales,Pyrodictiaceae,Pyrolobus,GCA_000223395.1,54.9,1.8,X99555,68.4,90,106,,,113,23
