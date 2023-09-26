@@ -76,14 +76,14 @@ class SearchesController < ApplicationController
             @tempuras << Tempura.find(tempura_ids[i])
         end
 
-        # BlastResult
-        ## BlastResultのidをresult_idから取得する
-        blast_result_ids = @result[0][:blast_result_id]
+        # BlastnResult
+        ## BlastnResultのidをresult_idから取得する
+        blastn_result_ids = @result[0][:blast_result_id]
 
-        ## BlastResultの情報を配列にする
-        @blast_results = []
-        blast_result_ids.length.times do |i|
-            @blast_results << BlastResult.find(blast_result_ids[i])
+        ## BlastnResultの情報を配列にする
+        @blastn_results = []
+        blastn_result_ids.length.times do |i|
+            @blastn_results << BlastnResult.find(blastn_result_ids[i])
         end
 
     end

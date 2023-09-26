@@ -309,7 +309,7 @@ module BlastHelper
                 midline = get_blastn_result_align_midline(i)
 
                 # 変数のblast_resultsへの保存
-                BlastResult.create(
+                BlastnResult.create(
                     accession: accession, 
                     gene: gene, 
                     locus_tag: locus_tag, 
@@ -361,7 +361,7 @@ module BlastHelper
         # 保存したBLASTnの結果のassemblyを取り出す
         def acquire_blastn_assembly
 
-            raw_hash = BlastResult.where(request_id: @request_id)
+            raw_hash = BlastnResult.where(request_id: @request_id)
 
             key_to_extract = [:id, :assembly, :identity]
 
