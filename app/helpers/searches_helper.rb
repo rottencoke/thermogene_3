@@ -48,7 +48,7 @@ module SearchesHelper
         # Search idの取得
         search_id = @search.id
 
-        # BLASTnの結果をblast_resultsテーブルに保存する
+        # BLASTnの結果をblastn_resultsテーブルに保存する
         @blastn_result_ins = SaveBlastnResult.new(request_id)
         @blastn_result_ins.load_blastn_result
         @blastn_result_ins.save_blastn_result_to_table(search_id)
@@ -59,7 +59,7 @@ module SearchesHelper
     def acquire_shared_assembly(search_id, tempura_result_assembly, blastn_result_assembly)
 
         # blastの結果をidentity順に並べる
-        ## 並び変えたあとのblast_resultsのhashを保存
+        ## 並び変えたあとのblastn_resultsのhashを保存
         arranged_blastn_result_assembly = blastn_result_assembly.sort_by{|item| item[:identity] }.reverse
 
         # 一致するAssemblyを取得する
@@ -86,7 +86,7 @@ module SearchesHelper
                     shared_tempura_id << tempura_result_assembly[j][:id]
 
                     # BlastnResultのidを取得する
-                    shared_blast_result_id << arranged_blastn_result_assembly[i][:id]
+                    shared_blastn_result_id << arranged_blastn_result_assembly[i][:id]
 
                 end
             end
@@ -94,7 +94,7 @@ module SearchesHelper
 
         # resultsテーブルに保存する
         ## resultsテーブルに保存する
-        Result.create(blast_result_id: shared_blast_result_id, tempura_id: shared_tempura_id, search_id: search_id)
+        Result.create(blastn_result_id: shared_blastn_result_id, tempura_id: shared_tempura_id, search_id: search_id)
     
     end
 

@@ -78,7 +78,7 @@ class SearchesController < ApplicationController
 
         # BlastnResult
         ## BlastnResultのidをresult_idから取得する
-        blastn_result_ids = @result[0][:blast_result_id]
+        blastn_result_ids = @result[0][:blastn_result_id]
 
         ## BlastnResultの情報を配列にする
         @blastn_results = []

@@ -18,10 +18,10 @@
     <div id="search_result_area" class=" container">
         <div class="my-3">
             Hit数:
-            <%= @blast_results.length.to_s %>
+            <%= @blastn_results.length.to_s %>
         </div>
-        <% (0..@blast_results.length-1).each do |i| %>
-            <%= render partial: 'result', locals: {i: i, blast_result: @blast_results[i], tempura: @tempuras[i]} %>
+        <% (0..@blastn_results.length-1).each do |i| %>
+            <%= render partial: 'result', locals: {i: i, blastn_result: @blastn_results[i], tempura: @tempuras[i]} %>
         <% end %>
     </div>
 </main>

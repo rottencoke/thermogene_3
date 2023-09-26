@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_094703) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_103504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,6 +84,52 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_094703) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tblastn_results", force: :cascade do |t|
+    t.string "request_id"
+    t.string "program"
+    t.string "version"
+    t.string "reference"
+    t.string "db"
+    t.integer "expect"
+    t.integer "gap_open"
+    t.string "matrix"
+    t.integer "gap_extend"
+    t.string "filter"
+    t.integer "cbs"
+    t.integer "db_gencode"
+    t.string "query_id"
+    t.string "query_title"
+    t.integer "query_len"
+    t.integer "num"
+    t.string "accession"
+    t.string "gene"
+    t.string "locus_tag"
+    t.string "protein"
+    t.string "protein_id"
+    t.string "location"
+    t.string "gbkey"
+    t.string "assembly"
+    t.integer "bit_score"
+    t.integer "score"
+    t.string "evalue"
+    t.integer "identity"
+    t.integer "positive"
+    t.integer "query_from"
+    t.integer "query_to"
+    t.integer "hit_from"
+    t.integer "hit_to"
+    t.integer "hit_frame"
+    t.integer "align_len"
+    t.integer "gaps"
+    t.string "midline", default: [], array: true
+    t.string "hseq", default: [], array: true
+    t.string "qseq", default: [], array: true
+    t.bigint "search_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["search_id"], name: "index_tblastn_results_on_search_id"
+  end
+
   create_table "tempuras", force: :cascade do |t|
     t.string "genus_and_species"
     t.integer "taxonomy_id"
@@ -111,4 +157,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_094703) do
 
   add_foreign_key "blastn_results", "searches"
   add_foreign_key "results", "searches"
+  add_foreign_key "tblastn_results", "searches"
 end
