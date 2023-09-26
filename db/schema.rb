@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_103504) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_125007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,7 +63,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_103504) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "tempura_id", default: [], array: true
-    t.integer "blast_result_id", default: [], array: true
+    t.integer "blastn_result_id", default: [], array: true
+    t.integer "tblastn_result_id", default: [], array: true
     t.index ["search_id"], name: "index_results_on_search_id"
   end
 
