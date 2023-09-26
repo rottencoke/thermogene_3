@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_17_164709) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_094703) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "blast_results", force: :cascade do |t|
+  create_table "blastn_results", force: :cascade do |t|
     t.string "accession"
     t.string "gene"
     t.string "locus_tag"
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_164709) do
     t.integer "query_len"
     t.integer "num"
     t.bigint "search_id", null: false
-    t.index ["search_id"], name: "index_blast_results_on_search_id"
+    t.index ["search_id"], name: "index_blastn_results_on_search_id"
   end
 
   create_table "results", force: :cascade do |t|
@@ -109,6 +109,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_164709) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "blast_results", "searches"
+  add_foreign_key "blastn_results", "searches"
   add_foreign_key "results", "searches"
 end

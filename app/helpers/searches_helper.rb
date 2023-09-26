@@ -69,8 +69,8 @@ module SearchesHelper
         ## 一致したAssemblyのtempuraのid
         shared_tempura_id = []
 
-        ## BlastResultのid
-        shared_blast_result_id = []
+        ## BlastnResultのid
+        shared_blastn_result_id = []
 
         ## 一致するAssemblyを探す
         arranged_blastn_result_assembly.length.times do |i|
@@ -85,7 +85,7 @@ module SearchesHelper
                     # TEMPURAのid（tempura_id）を取得する
                     shared_tempura_id << tempura_result_assembly[j][:id]
 
-                    # BlastResultのidを取得する
+                    # BlastnResultのidを取得する
                     shared_blast_result_id << arranged_blastn_result_assembly[i][:id]
 
                 end
