@@ -1,0 +1,2 @@
+class TblastnResult < ApplicationRecord
+end

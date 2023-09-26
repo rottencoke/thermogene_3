@@ -12,7 +12,7 @@ module BlastHelper
 
     # BLASTの検索結果のJSONファイルを保存する場所
     ## 保存期間決めて過ぎたら削除する
-    BLAST_RESULT_PATH = "./tmp/storage/blast_result/"
+    BLASTN_RESULT_PATH = "./tmp/storage/blast_result/"
 
     # BLASTnの場所
     BLASTN_PATH = "./lib/assets/blast/ncbi_blast/blastn"
@@ -69,7 +69,7 @@ module BlastHelper
             blastn_opt_outfmt = 13
 
             ## 結果の保存場所
-            blastn_opt_out = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt"
+            blastn_opt_out = BLASTN_RESULT_PATH + "blastn_result_" + @request_id + ".txt"
 
             ## オプション全体
             blastn_opts = "-query #{blastn_opt_query} -db #{blastn_opt_db} -task #{blastn_opt_task} -outfmt #{blastn_opt_outfmt} -out #{blastn_opt_out}"
@@ -88,7 +88,7 @@ module BlastHelper
         def is_present_blastn_result
 
             # 結果の保存場所
-            blastn_result_path = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
+            blastn_result_path = BLASTN_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
 
             # ファイルが存在するか判定
             ## 存在すればファイルのパスを返す
@@ -136,7 +136,7 @@ module BlastHelper
         # JSONファイルの読み込み
         def load_blastn_result
 
-            blastn_result_path = BLAST_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
+            blastn_result_path = BLASTN_RESULT_PATH + "blastn_result_" + @request_id + ".txt_1.json"
 
             # JSONファイル読み込み
             File.open(blastn_result_path) do |file|
@@ -308,7 +308,7 @@ module BlastHelper
                 ## 配列 (boolean)
                 midline = get_blastn_result_align_midline(i)
 
-                # 変数のblast_resultsへの保存
+                # 変数のblastn_resultsへの保存
                 BlastnResult.create(
                     accession: accession, 
                     gene: gene, 
@@ -355,7 +355,7 @@ module BlastHelper
         end
 
         # 保存期間の過ぎたJSONファイルの削除
-        def delete_blast_result_json
+        def delete_blastn_result_json
         end
 
         # 保存したBLASTnの結果のassemblyを取り出す
