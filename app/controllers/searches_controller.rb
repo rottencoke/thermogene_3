@@ -4,7 +4,8 @@ class SearchesController < ApplicationController
 
     include SearchesHelper
     include TempuraHelper
-    include BlastHelper    
+    include BlastnHelper
+    include TblastnHelper
     include BlastDbHelper    
 
     def create
@@ -36,17 +37,38 @@ class SearchesController < ApplicationController
         tempura_result_assembly = @tempura_ins.search_tempura_assembly_with_optimum_growth_temp
 
         # BLAST部分~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        ## BLASTn検索結果のインスタンス作成
-        @search_blastn_ins = SearchBlastn.new(@search.sequence, request_id)
+        ## Blastnの場合
+
+        if @search.search_blast_engine == "blastn" then
+
+            puts "[test] BLASTN"
+
+            # BLASTn検索結果のインスタンス作成
+            @search_blastn_ins = SearchBlastn.new(@search.sequence, request_id)
+            
+            # BLASTn実行
+            ## BLASTnの結果のassemblyの配列を取り出す
+            blastn_result_assembly = execute_blastn(request_id)
+
+            # 一致するAssemblyを取得、resultsテーブルに保存する
+            acquire_shared_assembly(@search.id, tempura_result_assembly, blastn_result_assembly)
+
+        ## Blastnの場合
+        elsif @search.search_blast_engine == "tblastn" then
+
+            puts "[test] TBLASTN"
+            
+            # BLASTn検索結果のインスタンス作成
+            @search_tblastn_ins = SearchTblastn.new(@search.sequence, request_id)
         
-        ## BLASTn実行
-        execute_blastn(request_id)
+            # BLASTn実行
+            ## tBLASTnの結果のassemblyの配列を取り出す
+            tblastn_result_assembly = execute_tblastn(request_id)
+        
+            # 一致するAssemblyを取得、resultsテーブルに保存する
+            acquire_shared_assembly(@search.id, tempura_result_assembly, tblastn_result_assembly)
 
-        ## BLASTnの結果のassemblyの配列を取り出す
-        blastn_result_assembly = @blastn_result_ins.acquire_blastn_assembly
-
-        # 一致するAssemblyを取得、resultsテーブルに保存する
-        acquire_shared_assembly(@search.id, tempura_result_assembly, blastn_result_assembly)
+        end
 
         # 結果表示
         redirect_to @search

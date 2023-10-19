@@ -1,7 +1,8 @@
 # SearchesControllerの拡張
 module SearchesHelper
     
-    include BlastHelper
+    include BlastnHelper
+    include TblastnHelper
     include TempuraHelper
 
     # BLASTn実行
@@ -53,14 +54,71 @@ module SearchesHelper
         @blastn_result_ins.load_blastn_result
         @blastn_result_ins.save_blastn_result_to_table(search_id)
 
+        blastn_result_assembly = @blastn_result_ins.acquire_blastn_assembly()
+
+        blastn_result_assembly
+
+    end
+
+    # tBLASTn実行
+    ## controllerに呼び出される、メインのメソッド
+    def execute_tblastn(request_id)
+
+        # 結果取得
+        ## 結果のpathを定義
+        tblastn_result_path = ""
+
+        # 入力されたquery配列のファイル保存
+        @search_tblastn_ins.make_query_file
+
+        begin
+            # tBLASTn検索
+            ## 結果取得をスムーズに行うために別スレッドで実行
+            search_tblastn_thread = Thread.new do
+                @search_tblastn_ins.search_tblastn
+            end
+
+        rescue
+
+            puts "[tBLASTn ERROR] tblastn search failed"
+
+        ensure
+
+            count = 0
+            loop do
+                count += 1
+
+                # tBLASTnの結果のJSONファイルが出力されたらスレッドkillしてloop終了
+                if @search_tblastn_ins.is_present_tblastn_result then
+
+                    puts "[tBLASTn JSON created] " + `date +%Y/%m/%d_%H:%M:%S.%3N`
+                    Thread.kill(search_tblastn_thread)
+                    break
+
+                end
+
+            end
+
+        end
+
+        # Search idの取得
+        search_id = @search.id
+
+        # BLASTnの結果をblastn_resultsテーブルに保存する
+        @tblastn_result_ins = SaveTblastnResult.new(request_id)
+        @tblastn_result_ins.load_tblastn_result
+        @tblastn_result_ins.save_tblastn_result_to_table(search_id)
+
     end
 
     # 一致するAssemblyを取得、resultsテーブルに保存する
-    def acquire_shared_assembly(search_id, tempura_result_assembly, blastn_result_assembly)
+    def acquire_shared_assembly(search_id, tempura_result_assembly, blast_result_assembly)
+
+        puts "[test] blast_result_assembly : " + blast_result_assembly.to_s
 
         # blastの結果をidentity順に並べる
         ## 並び変えたあとのblastn_resultsのhashを保存
-        arranged_blastn_result_assembly = blastn_result_assembly.sort_by{|item| item[:identity] }.reverse
+        arranged_blastn_result_assembly = blast_result_assembly.sort_by{|item| item[:score] }.reverse
 
         # 一致するAssemblyを取得する
         ## 一致したAssembly（多分これ使わん）
