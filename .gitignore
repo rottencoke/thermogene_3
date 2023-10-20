@@ -44,6 +44,11 @@
 /tmp/storage/ncbi_fasta/cds_from_genomic/*
 !/tmp/storage/ncbi_fasta/cds_from_genomic/.keep
 
+## Ignore files in /tmp/storage/ncbi_fasta/cds_from_genomic_assembly/, but keep the directory.
+!/tmp/storage/ncbi_fasta/cds_from_genomic_assembly/
+/tmp/storage/ncbi_fasta/cds_from_genomic_assembly/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic_assembly/.keep
+
 ## Ignore files in /tmp/storage/ncbi_fasta/cds_from_genomic_mfa/, but keep the directory.
 !/tmp/storage/ncbi_fasta/cds_from_genomic_mfa/
 /tmp/storage/ncbi_fasta/cds_from_genomic_mfa/*
@@ -52,6 +57,12 @@
 ## Ignore files in /tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/, but keep the directory.
 !/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/
 /tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/*
+!/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/.keep
+
+## Ignore files in /tmp/storage/ncbi_fasta/cds_zip/, but keep the directory.
+!/tmp/storage/ncbi_fasta/cds_zip/
+/tmp/storage/ncbi_fasta/cds_zip/*
+!/tmp/storage/ncbi_fasta/cds_zip/.keep
 !/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/.keep
 
 # Ignore public/assets

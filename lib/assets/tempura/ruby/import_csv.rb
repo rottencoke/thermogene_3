@@ -9,7 +9,7 @@ class ImportCsv
 
         file_name ||= table_name.singularize
 
-        path = Rails.root.join("db/csv_data/#{file_name}.csv")
+        path = Rails.root.join("lib/assets/tempura/csv/#{file_name}.csv")
         
         list = []
 
