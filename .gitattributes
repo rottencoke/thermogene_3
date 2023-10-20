@@ -5,3 +5,6 @@ db/schema.rb linguist-generated
 vendor/* linguist-vendored
 *.ndb filter=lfs diff=lfs merge=lfs -text
 *.nos filter=lfs diff=lfs merge=lfs -text
+*.nhr filter=lfs diff=lfs merge=lfs -text
+*.nsq filter=lfs diff=lfs merge=lfs -text
+*.nhd filter=lfs diff=lfs merge=lfs -text
