@@ -4,7 +4,7 @@ require 'json'
 module BlastnHelper
 
     # BLAST DBの場所
-    BLAST_DB_PATH = "./lib/assets/blast/blast_db/blast_db_nucleotide/db_230512"
+    BLAST_DB_PATH = "./lib/assets/blast/blast_db/blast_db_nucleotide/db_231020"
 
     # BLASTの検索に使うQuery配列のファイルの保存場所
     ## 保存期間決めて過ぎたら削除する
