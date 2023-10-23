@@ -1,27 +1,27 @@
 <main>
-    <div id="search_condition_area" class=" container">
+    <div id="search_condition_area" class="container">
         <div id="main_title">
             <p>
                 特定の温度に生息する微生物の遺伝子の検索結果
             </p>
         </div>
-        <div id="search_condition_content_area" class=" container">
-            <div id="search_condition" class=" container">
+        <div id="search_condition_content_area" class="container">
+            <div id="search_condition" class="container">
                 <%= render partial: 'condition', locals: {search: @search} %>
             </div>
-            <div id="search_filter" class=" container">
+            <div id="search_filter" class="container">
             </div>
         </div>
         
     </div>
     <hr>
-    <div id="search_result_area" class=" container">
+    <div id="search_result_area" class="container">
         <div class="my-3">
             Hit数:
-            <%= @blastn_results.length.to_s %>
+            <%= @blast_results.length.to_s %>
         </div>
-        <% (0..@blastn_results.length-1).each do |i| %>
-            <%= render partial: 'result', locals: {i: i, blastn_result: @blastn_results[i], tempura: @tempuras[i]} %>
+        <% (0..@blast_results.length-1).each do |i| %>
+            <%= render partial: 'result', locals: {i: i, search_blast_engine: @search.search_blast_engine, blast_result: @blast_results[i], tempura: @tempuras[i]} %>
         <% end %>
     </div>
 </main>

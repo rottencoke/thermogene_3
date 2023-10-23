@@ -36,6 +36,8 @@ class SearchesController < ApplicationController
         ## TEMPURAから温度の条件に当てはまるassemblyの配列を取り出す
         tempura_result_assembly = @tempura_ins.search_tempura_assembly_with_optimum_growth_temp
 
+        puts "tempura result len #{tempura_result_assembly.length.to_s}"
+
         # BLAST部分~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ## Blastnの場合
 
@@ -64,6 +66,8 @@ class SearchesController < ApplicationController
             # BLASTn実行
             ## tBLASTnの結果のassemblyの配列を取り出す
             tblastn_result_assembly = execute_tblastn(request_id)
+
+            puts "[test searches_controller] tblastn result len #{tblastn_result_assembly.length.to_s}"
         
             # 一致するAssemblyを取得、resultsテーブルに保存する
             acquire_shared_assembly(@search.id, tempura_result_assembly, tblastn_result_assembly)
@@ -99,13 +103,29 @@ class SearchesController < ApplicationController
         end
 
         # BlastnResult
-        ## BlastnResultのidをresult_idから取得する
-        blastn_result_ids = @result[0][:blastn_result_id]
+        ## BlastResultの情報を配列にする
+        @blast_results = []
 
-        ## BlastnResultの情報を配列にする
-        @blastn_results = []
-        blastn_result_ids.length.times do |i|
-            @blastn_results << BlastnResult.find(blastn_result_ids[i])
+        case
+        ## blastnの場合
+        when @search&.search_blast_engine == "blastn"
+
+            ## BlastnResultのidをresult_idから取得する
+            blast_result_ids = @result[0][:blastn_result_id]
+
+            blast_result_ids.length.times do |i|
+                @blast_results << BlastnResult.find(blast_result_ids[i])
+            end
+        
+        ## tblastnの場合
+        when @search&.search_blast_engine == "tblastn"
+            
+            ## BlastnResultのidをresult_idから取得する
+            blast_result_ids = @result[0][:tblastn_result_id]
+
+            blast_result_ids.length.times do |i|
+                @blast_results << TblastnResult.find(blast_result_ids[i])
+            end
         end
 
     end

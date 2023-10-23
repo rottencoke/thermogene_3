@@ -17,9 +17,6 @@ module BlastnHelper
     # BLASTnの場所
     BLASTN_PATH = "./lib/assets/blast/ncbi_blast/blastn"
 
-    # テスト用のBLAST検索query配列の場所
-    BLASTN_TEST_QUERY_PATH = "./tmp/storage/blast_query/test_query_0628.txt"
-
     # blastnの検索を行う
     class SearchBlastn
     

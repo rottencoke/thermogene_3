@@ -30,32 +30,36 @@
             </tr>
             <tr>
                 <th class="result_th" scope="row">遺伝子名</th>
-                <td><%= render partial: 'show_if_there', locals: {text: blastn_result.gene} %></td>
+                <td><%= render partial: 'show_if_there', locals: {text: blast_result.gene} %></td>
             </tr>
             <tr>
                 <th class="result_th" scope="row">タンパク質名</th>
-                <td><%= blastn_result.protein %></td>
+                <td><%= blast_result.protein %></td>
             </tr>
             <tr>
                 <th class="result_th" scope="row">長さ</th>
-                <td><%= blastn_result.align_len %>塩基</td>
+                <td><%= blast_result.align_len %>塩基</td>
             </tr>
             <tr>
                 <th class="result_th" scope="row">e-value</th>
-                <td><b><%= blastn_result.evalue %></b></td>
+                <td><b><%= blast_result.evalue %></b></td>
             </th>
             <tr>
                 <th class="result_th" scope="row">相同性</th>
-                <td><b><%= blastn_result.identity %>%</b></td>
+                <td><b><%= blast_result.identity %>%</b></td>
             </tr>
             <tr>
                 <th class="result_th" scope="row">ギャップ</th>
-                <td><%= blastn_result.gaps %></td>
+                <td><%= blast_result.gaps %></td>
+            </tr>
+            <tr>
+                <th class="result_th" scope="row">bit_score</th>
+                <td><%= blast_result.bit_score %></td>
             </tr>
         </table>
     </div>
     <div class="container alignment_area">
-        <%= render partial: 'alignment', locals: {blastn_result: blastn_result} %>
+        <%= render partial: 'alignment', locals: {search_blast_engine: search_blast_engine, blast_result: blast_result} %>
     </div>
 </div>
 <hr>

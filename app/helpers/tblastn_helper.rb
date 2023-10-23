@@ -3,7 +3,7 @@ require 'json'
 module TblastnHelper
 
     # BLAST DBの場所
-    BLAST_DB_PATH = "./lib/assets/blast/blast_db/blast_db_nucleotide/db_230512"
+    BLAST_DB_PATH = "./lib/assets/blast/blast_db/blast_db_nucleotide/db_231020"
 
     # BLASTの検索に使うQuery配列のファイルの保存場所
     ## 保存期間決めて過ぎたら削除する
@@ -15,9 +15,6 @@ module TblastnHelper
 
     # tBLASTnの場所
     TBLASTN_PATH = "./lib/assets/blast/ncbi_blast/tblastn"
-
-    # テスト用のBLAST検索query配列の場所
-    BLASTN_TEST_QUERY_PATH = "./tmp/storage/blast_query/test_query_0628.txt"
 
     # tblastnの検索を行う
     class SearchTblastn
@@ -366,7 +363,7 @@ module TblastnHelper
         # 保存したtBLASTnの結果のassemblyを取り出す
         def acquire_tblastn_assembly
 
-            raw_hash = BlastnResult.where(request_id: @request_id)
+            raw_hash = TblastnResult.where(request_id: @request_id)
 
             key_to_extract = [:id, :assembly, :identity]
 
@@ -384,7 +381,7 @@ module TblastnHelper
 
             end
 
-            return ans
+            ans
         end
 
         private
