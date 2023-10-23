@@ -109,16 +109,18 @@ module SearchesHelper
         @tblastn_result_ins.load_tblastn_result
         @tblastn_result_ins.save_tblastn_result_to_table(search_id)
 
+        tblastn_result_assembly = @tblastn_result_ins.acquire_tblastn_assembly()
+
+        tblastn_result_assembly
+
     end
 
     # 一致するAssemblyを取得、resultsテーブルに保存する
     def acquire_shared_assembly(search_id, tempura_result_assembly, blast_result_assembly)
 
-        puts "[test] blast_result_assembly : " + blast_result_assembly.to_s
-
-        # blastの結果をidentity順に並べる
-        ## 並び変えたあとのblastn_resultsのhashを保存
-        arranged_blastn_result_assembly = blast_result_assembly.sort_by{|item| item[:score] }.reverse
+        # blastの結果をscore順に並べる
+        ## 並び変えたあとのblast_resultsのhashを保存
+        arranged_blast_result_assembly = blast_result_assembly.sort_by{|item| item[:bit_score] }
 
         # 一致するAssemblyを取得する
         ## 一致したAssembly（多分これ使わん）
@@ -127,32 +129,45 @@ module SearchesHelper
         ## 一致したAssemblyのtempuraのid
         shared_tempura_id = []
 
-        ## BlastnResultのid
-        shared_blastn_result_id = []
+        ## BlastResultのid
+        shared_blast_result_id = []
 
         ## 一致するAssemblyを探す
-        arranged_blastn_result_assembly.length.times do |i|
+        arranged_blast_result_assembly.length.times do |i|
             
             tempura_result_assembly.length.times do |j|
 
-                if arranged_blastn_result_assembly[i][:assembly] == tempura_result_assembly[j][:assembly_or_accession] then
+                if arranged_blast_result_assembly[i][:assembly] == tempura_result_assembly[j][:assembly_or_accession] then
 
                     # 一致したAssemblyを代入
-                    shared_assembly << arranged_blastn_result_assembly[i][:assembly]
+                    shared_assembly << arranged_blast_result_assembly[i][:assembly]
 
                     # TEMPURAのid（tempura_id）を取得する
                     shared_tempura_id << tempura_result_assembly[j][:id]
 
-                    # BlastnResultのidを取得する
-                    shared_blastn_result_id << arranged_blastn_result_assembly[i][:id]
+                    # BlastResultのidを取得する
+                    shared_blast_result_id << arranged_blast_result_assembly[i][:id]
 
                 end
             end
         end
 
         # resultsテーブルに保存する
-        ## resultsテーブルに保存する
-        Result.create(blastn_result_id: shared_blastn_result_id, tempura_id: shared_tempura_id, search_id: search_id)
+        ## まずsearchの取得
+        search_post = Search.find(search_id)
+        
+        case
+        ## Blastnの場合
+        when search_post&.search_blast_engine == "blastn"
+
+            Result.create(blastn_result_id: shared_blast_result_id, tempura_id: shared_tempura_id, search_id: search_id)
+        
+        ## tBlastnの場合
+        when search_post&.search_blast_engine == "tblastn"
+
+            Result.create(tblastn_result_id: shared_blast_result_id, tempura_id: shared_tempura_id, search_id: search_id)
+        
+        end
     
     end
 

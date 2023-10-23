@@ -140,3 +140,14 @@ Maximum file size: 3000000000B
 Adding sequences from FASTA; added 3488183 sequences in 59.0786 seconds.
 
 
+
+
+Building a new DB, current time: 10/20/2023 19:31:56
+New DB name:   /home/rottencoke/prog/thermogene_3/lib/assets/blast/blast_db/blast_db_nucleotide/db_231020
+New DB title:  species with 40 degrees or higher growth temp.
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 3488183 sequences in 70.1615 seconds.
+
+
