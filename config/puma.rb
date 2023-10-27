@@ -4,8 +4,8 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
-min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 8 }
+min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { 0 }
 threads min_threads_count, max_threads_count
 
 # Specifies the `worker_timeout` threshold that Puma will use to wait before
@@ -41,3 +41,13 @@ preload_app!
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
+
+# 開発環境用の設定
+if Rails.env.development?
+    bind "tcp://localhost:3000"
+  
+# 本番環境用の設定
+elsif Rails.env.production?
+    bind "tcp://0.0.0.0:8000"
+    
+end

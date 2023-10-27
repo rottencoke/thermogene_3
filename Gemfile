@@ -12,7 +12,7 @@ gem "stimulus-rails" # Hotwire's modest JavaScript framework
 gem "jbuilder" # Build JSON APIs with ease
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
-gem 'bootstrap', '~> 5.0.2' # bootstrap 5 -23/06/30
+gem 'bootstrap', '~> 5.3', '>= 5.3.1' # bootstrap 5 -23/06/30 assetのエラー解決のためアプデ -23/10/25
 gem 'execjs', '~> 2.8.1' # ExecJS Ruby内でjsを実行 -23/06/30
 gem 'mini_racer', platforms: :ruby # Javascriptのランタイム導入 -23/06/30
 gem 'pg', '~> 1.5', '>= 1.5.3' # PostgreSQL、Renderへのデプロイ用 -23/07/28

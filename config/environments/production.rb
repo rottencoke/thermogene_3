@@ -90,4 +90,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # LAN内の簡易的なサーバーとしてPumaを使用するために、Pumaがassetを読み込むようにする
+  config.public_file_server.enabled = true
+
 end
