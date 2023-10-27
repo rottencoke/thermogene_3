@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# 本番環境のデータベースの作成
-bin/rails db:create RAILS_ENV=production
+# 本番環境のデータベースの作成等の処理
+## DISABLE_DATABASE_ENVIRONMENT_CHECK=1はすでにあるデータベースを削除するという意味
+# bin/rails db:setup RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
 # migrationの追加があった場合必要
-bin/rails db:migrate RAILS_ENV=production
+RAILS_ENV=production bin/rails db:migrate
 
 # asset（css, image）の追加があった場合必要
-bin/rails assets:precompile RAILS_ENV=production
+RAILS_ENV=production bin/rails assets:precompile
 
-# 本番環境で8080番でサーバーを起動
-bin/rails server -e production -b 0.0.0.0 -p 8080
+# 本番環境で8000番でサーバーを起動
+bin/rails server -e production -b 0.0.0.0 -p 8000
