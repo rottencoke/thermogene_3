@@ -38,7 +38,11 @@
             </tr>
             <tr>
                 <th class="result_th" scope="row">長さ</th>
-                <td><%= blast_result.align_len %>塩基</td>
+                <td><%= blast_result.align_len %>
+                    <% if search_blast_engine=="blastn" %>塩基
+                    <% elsif search_blast_engine=="tblastn" %>残基
+                    <% end %>
+                </td>
             </tr>
             <tr>
                 <th class="result_th" scope="row">e-value</th>

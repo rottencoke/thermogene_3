@@ -18,6 +18,7 @@ gem 'mini_racer', platforms: :ruby # Javascriptのランタイム導入 -23/06/3
 gem 'pg', '~> 1.5', '>= 1.5.3' # PostgreSQL、Renderへのデプロイ用 -23/07/28
 gem "activerecord-import" # CSVファイルの内容をTempuraテーブルに移すために導入 -23/08/07
 gem 'spring', '~> 4.1', '>= 4.1.1' # Railsプロジェクトのpreloadする、$spring stopでフリーズ解消するため導入 -23/08/17
+gem 'sassc-rails'
 
 
 group :development, :test do
