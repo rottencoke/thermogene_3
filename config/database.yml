@@ -6,6 +6,8 @@ default: &default
 development:
   <<: *default
   database: thermogene_3_development
+  username: rottencoke
+  password: pass
 
 test:
   <<: *default
