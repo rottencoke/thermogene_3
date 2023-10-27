@@ -47,3 +47,14 @@
 .condition_th {
     width: 150px;
 }
+
+/* 検索条件のquery配列が横にはみ出るのを防止 */
+.text-wrap {
+    white-space: normal;
+
+    /* 必要に応じて長い単語や文字列を折り返す */
+    word-wrap: break-word;
+
+    /* あなたの好みの幅に設定してください */
+    max-width: 600px;
+}
