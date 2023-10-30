@@ -95,7 +95,8 @@
                                 </li>
 
                                 <%# hit配列 %>
-                                <li class="alignment_hit_sequence non_dotted_li centered_li">
+                                <% seq_elem_id="seq_r#{result_num}_e#{i * paragraph_width + j}" # レアコドン表示のためにidをつける%>
+                                <li class="alignment_hit_sequence non_dotted_li centered_li" id="<%= seq_elem_id %>">
                                     <%= blast_result.hseq[alignment_last] %>
                                 </li>
 
