@@ -1,3 +1,4 @@
+<%= javascript_importmap_tags %>
 <main>
     <div id="search_condition_area" class="container">
         <div id="main_title">
@@ -26,3 +27,9 @@
     </div>
 </main>
 <% puts "[render finished]" + `date +%Y/%m/%d_%H:%M:%S.%3N` %>
+
+<script type="module">
+    import { show_rare_codons } from "functions/show_rare_codons/main";
+    
+    show_rare_codons();
+</script>
