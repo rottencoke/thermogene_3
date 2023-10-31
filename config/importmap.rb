@@ -6,9 +6,10 @@ pin "@hotwired/stimulus", to: "stimulus.min.js", preload: true
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
 pin_all_from "app/javascript/controllers", under: "controllers"
 
-# レアコドン表示のファイル読み込み
-pin "functions/show_rare_codons/main", to: "functions/show_rare_codons/main.js"
-pin "axios", to: "https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"
-# pin "#lib/adapters/http.js", to: "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/@empty.js"
-# pin "#lib/platform/node/classes/FormData.js", to: "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/@empty.js"
-# pin "#lib/platform/node/index.js", to: "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/@empty.js"
+# javascriptファイル読み込み
+pin "show_rare_codons", to: "functions/show_rare_codons/main.js"
+pin "rare_codons", to: "functions/show_rare_codons/rare_codons.js"
+pin "text_color", to: "functions/show_rare_codons/text_color.js"
+pin "get_blastn_result", to: "functions/get_data/get_blastn_result.js"
+pin "get_result", to: "functions/get_data/get_result.js"
+pin "get_search_id", to: "functions/get_data/get_search_id.js"
