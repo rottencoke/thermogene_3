@@ -63,7 +63,6 @@
 !/tmp/storage/ncbi_fasta/cds_zip/
 /tmp/storage/ncbi_fasta/cds_zip/*
 !/tmp/storage/ncbi_fasta/cds_zip/.keep
-!/tmp/storage/ncbi_fasta/cds_from_genomic_taxonomy_id/.keep
 
 # Ignore public/assets
 /public/assets

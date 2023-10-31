@@ -1,13 +1,13 @@
-import { get_blastn_result } from '../get_data/get_blastn_result';
+import { get_blastn_result } from 'get_blastn_result';
 
 //search_idの取得
-import { get_result } from './../get_data/get_result'
+import { get_result } from 'get_result'
 
 // 大腸菌レアコドン
-import { RARE_CODONS_E_COLI } from './rare_codons';
+import { RARE_CODONS_E_COLI } from 'rare_codons';
 
 // レアコドンの文字のカラーコード
-import { COLOR_RARE_CODON } from './text_color';
+import { COLOR_RARE_CODON } from 'text_color';
 
 
 // メインの関数
