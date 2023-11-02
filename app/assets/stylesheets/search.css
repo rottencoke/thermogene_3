@@ -1,11 +1,11 @@
 /* ./search/show */
 /* 結果とアライメント部分の横幅 */
 .result_area {
-    width: 40%;
+    width: 34%;
 }
 
 .alignment_area {
-    width: 60%;
+    width: 66%;
 }
 
 /* リストの点なくす */
