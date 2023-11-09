@@ -25,7 +25,7 @@
                 <div class="alignment_view_content">
                     <% paragraph_width.times do |j| # アライメントの横方向の描画 %>
 
-                        <% if alignment_last < blast_result.align_len # アライメントが最後じゃない場合 %>
+                        <% if alignment_last < blast_result.align_len # blast_result_align_lenを超える分は処理しなくていい %>
 
                             <ul class="non_dotted_ul horizontal_range_ul list_width">
                             
