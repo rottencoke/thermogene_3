@@ -1,3 +1,5 @@
+import { sort_results_by_bit_score_in_descending_order } from 'sort_results_by_bit_score';
+
 // ソート管理画面の表示の管理
 export function control_sort() {
 
@@ -69,7 +71,6 @@ export function control_sort() {
         // 要素の取得
         const sort_select = document.getElementById('sort_select');
         const sort_order = document.getElementById('sort_order');
-        const sort_add = document.getElementById('sort_add');
         const sort_add_condition = document.getElementById('sort_add_condition');
         const sort_add_condition_select = document.getElementById('sort_add_condition_select');
         const sort_add_condition_order = document.getElementById('sort_add_condition_order');
@@ -104,6 +105,39 @@ export function control_sort() {
             sort_add_condition_default_description.style.display = 'inline-block';
         } else {
             sort_add_condition_default_description.style.display = 'none';
+        }
+
+        // ソートの関数呼び出し
+        switch (value_sort_select + '-' + value_sort_order) {
+            
+            case 'growth_temperature-descending_order':
+                console.log("growth_temperature-descending_order");
+                break;
+            
+            case 'growth_temperature-ascending_order':
+                console.log("growth_temperature-ascending_order");
+                break;
+            
+            case 'homology-descending_order':
+                console.log("homology-descending_order");
+                break;
+            
+            case 'homology-ascending_order':
+                console.log("homology-ascending_order");
+                break;
+            
+            case 'bit_score-descending_order':
+                console.log("bit_score-descending_order");
+                sort_results_by_bit_score_in_descending_order();
+                break;
+            
+            case 'bit_score-ascending_order':
+                console.log("bit_score-ascending_order");
+                break;
+            
+            default:
+                console.log('その組み合わせはありません');
+                break; 
         }
 
     }
