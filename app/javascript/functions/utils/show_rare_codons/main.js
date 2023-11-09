@@ -29,14 +29,12 @@ export async function show_rare_codons() {
             if (if_nucl_rare_codon) {
 
                 // レアコドンのidの要素を色を変える
-                change_color_of_rare_codon(rare_codon_position, i, j);
+                change_color_of_rare_codon(i, j);
             }
-        })
+        });
 
 
     });
-
-    console.log("");
 
 };
 
@@ -136,8 +134,6 @@ function split_to_codon_arr(result) {
 // 返り値の例 : [true, true, true, false, false, false, ...]
 function identify_rare_codon(codon_arr, result) {
 
-    console.log("codon arr : " + codon_arr);
-
     // hit配列の向き
     const hit_strand = result.hit_strand;
     let rare_codon_arr;
@@ -168,12 +164,11 @@ function check_rare_codon(codon_arr, rare_codon_arr) {
         };
     };
 
-    console.log("rare_codon_position:", rare_codon_position);
     return rare_codon_position;
 };
 
 // レアコドンのhtml要素に対してcssプロパティを適用する
-function change_color_of_rare_codon(rare_codon_position, i, j) {
+function change_color_of_rare_codon(i, j) {
 
     let element_name = `seq_r${i}_e${j}`
     let element = document.getElementById(element_name);

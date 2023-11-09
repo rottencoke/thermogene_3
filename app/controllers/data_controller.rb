@@ -2,6 +2,13 @@ class DataController < ApplicationController
 
     # Search取得用
     def get_search
+
+        search_id = params[:search_id].to_s
+
+        @search = Search.find(search_id)
+
+        render json: @search
+
     end
 
     # Result取得用
@@ -34,6 +41,17 @@ class DataController < ApplicationController
         @tblastn_result = TblastnResult.find(tblastn_result_id)
 
         render json: @tblastn_result
+
+    end
+
+    # Tempura取得用
+    def get_tempura
+
+        tempura_id = params[:tempura_id]
+
+        @tempura = Tempura.find(tempura_id)
+
+        render json: @tempura
 
     end
 end

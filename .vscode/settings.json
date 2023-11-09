@@ -1,0 +1,5 @@
+{
+    "editor.parameterHints.enabled": false,
+    "editor.suggest.showTypeParameters": false,
+    "breadcrumbs.showTypeParameters": false
+}

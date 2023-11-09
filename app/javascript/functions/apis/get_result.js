@@ -3,8 +3,6 @@ import { get_search_id } from 'get_search_id'; // search_idの取得
 // APIを使用する際は値の定義とレスポンスのタイミングが異なるので非同期処理を使用
 export async function get_result() {
 
-    console.log("get_result started");
-
     // search_idを取得
     const search_id = get_search_id();
 
