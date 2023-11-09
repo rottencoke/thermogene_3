@@ -7,7 +7,7 @@ export async function render_condition() {
     const search = await get_search();
 
     // <header>のメインタイトル
-    const main_title = "特定の温度に生息する微生物の遺伝子の検索結果";
+    const condition_title = "検索条件です";
 
     // <table>のヘッダー
     const th_search_id = "SEARCH ID";
@@ -38,11 +38,7 @@ export async function render_condition() {
 
     return /*html*/`
         <div id="search_condition_area" class="container">
-            <div id="main_title">
-                <p>
-                    ${main_title}
-                </p>
-            </div>
+            <p>${condition_title}</p>
             <div id="search_condition_content_area" class="container">
                 <div id="search_condition" class="container">
                     <table>

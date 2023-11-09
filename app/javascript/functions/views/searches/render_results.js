@@ -19,6 +19,9 @@ export async function render_results() {
     // result_table()で得られるHTML構文を入れる
     let html_results = ``;
 
+    // 結果タイトル
+    const result_table_title = "検索結果です";
+
     // arr_tempura_id_sortedの長さ分繰り返す
     for (const [index, tempura_id] of arr_tempura_id_sorted.entries()) {
 
@@ -37,6 +40,7 @@ export async function render_results() {
     html_results = /*html*/`
         <div id="search_result_area" class="container">
             <div class="my-3">
+                <p>${result_table_title}</p>
                 Hit数:${arr_tempura_id_sorted.length}
             </div>
             ${html_results}
