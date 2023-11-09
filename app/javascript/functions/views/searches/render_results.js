@@ -1,4 +1,4 @@
-import { sort_results_by_bit_score_in_descending_order } from 'sort_results';
+import { sort_results_by_bit_score_in_descending_order } from 'sort_results_by_bit_score';
 import { render_result_table } from 'render_result_table';
 import { render_alignment } from 'render_alignment';
 

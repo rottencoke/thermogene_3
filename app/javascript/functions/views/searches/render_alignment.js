@@ -156,14 +156,21 @@ export async function render_alignment(obj, index) {
 
         /// blastn
         if (blast_engine == "blastn") { 
-            if (blast_result_midline[alignment_last]) midline = "|";
-            else midline = "&nbsp;";
+            if (blast_result_midline[alignment_last]) {
+                midline = "|";
+            } else {
+                midline = "&nbsp;";
+            }
         }
         /// tblastn
         else if (blast_engine == "tblastn") { 
-            if (blast_result_midline[alignment_last] = ~ /^[A-Z]+$/) midline = "|";
-            else if (blast_result_midline[alignment_last] == "+") midline = "+";
-            else midline = "&nbsp;";
+            if (/^[A-Z]$/.test(blast_result_midline[alignment_last])) {
+                midline = "|";
+            } else if (blast_result_midline[alignment_last] == "+") {
+                midline = "+";
+            } else {
+                midline = "&nbsp;";
+            }
         }
 
         // アライメントが数字を表示する間隔の場合、その数字を返す

@@ -1,0 +1,73 @@
+
+/* ソート管理画面 */
+.modal {
+    display: none;
+    position: absolute; /* 画面全体を覆うのではなく、特定の位置に表示 */
+    z-index: 2;
+    width: auto;
+    height: auto;
+    background-color: #fefefe;
+}
+
+.hover_background_marked:hover {
+    background-color: #eeeeee;
+}
+
+.modal_content {
+    background-color: #fefefe;
+    padding: 20px;
+    margin: 0px;
+    width: 500px; 
+}
+
+/* スクロール禁止用のクラス */
+.no_scroll {
+    overflow: hidden;
+}
+
+/* 要素を文字幅に設定 */
+.text_width {
+    width: max-content;
+}
+
+/* カーソルを選択モードに変更 */
+.interactive:hover {
+    cursor: pointer;
+}
+
+/* 文字の要素の形をいい感じにする */
+.box_element_small {
+    padding: 0.3em;
+    border-radius: 0.5em;
+}
+
+/* 要素の周りに影をつける */
+.shadow_around_element {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* フレックスボックスのスタイル */
+.flex-container {
+    display: flex; /* フレックスコンテナとして定義 */
+    align-items: center; /* 子要素を垂直方向の中央に配置 */
+    gap: 10px; /* 子要素の間隔を設定 */
+}
+
+/* セレクトボックスのスタイル（必要に応じて） */
+select {
+    flex-grow: 1; /* 各セレクトボックスが利用可能なスペースを均等に使用 */
+}
+
+/* 選択したソートの種類の表示 */
+.selected_text_menu {
+    background-color: aliceblue;
+    font-size: 0.7em;
+}
+
+/* 文字を強調する */
+.highlighted_text {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: black;
+
+}
