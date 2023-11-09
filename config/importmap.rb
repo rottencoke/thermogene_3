@@ -26,7 +26,9 @@ pin "render_condition", to: "functions/views/searches/render_condition.js"
 pin "render_results", to: "functions/views/searches/render_results.js"
 pin "render_result_table", to: "functions/views/searches/render_result_table.js"
 pin "render_alignment", to: "functions/views/searches/render_alignment.js"
+pin "render_sort_control", to: "functions/views/searches/render_sort_control.js"
 pin "show_if_there", to: "functions/views/searches/show_if_there.js"
 
 ## utils/sort_results/
-pin "sort_results", to: "functions/utils/sort_results/main.js"
+pin "control_sort", to: "functions/utils/sort_results/main.js"
+pin "sort_results_by_bit_score", to: "functions/utils/sort_results/sort_results_by_bit_score.js"
