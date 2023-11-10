@@ -1,7 +1,8 @@
-import { sort_results_by_bit_score_in_descending_order } from 'sort_results_by_bit_score';
+import { set_state_sort, set_state_modal_sort, get_state_modal_sort } from "state";
+import { render_results } from "render_results";
 
 // ソート管理画面の表示の管理
-export function control_sort() {
+export async function control_sort() {
 
     // html要素の取得
     const element_sort_modal = document.getElementById('sort_modal');
@@ -14,21 +15,29 @@ export function control_sort() {
 
         show_modal(event, element_sort_add_condition);
 
+        // state_modal_sortをtrueに
+        set_state_modal_sort(true);
+
     });
     
     // ======モーダルを閉じる======
     // モーダルの外側をクリックしたときにモーダルを閉じる
-    window.addEventListener('click', function (event) {
+    window.addEventListener('click', async function (event) {
 
-        if (!element_sort_modal.contains(event.target)) {
+        if (!element_sort_modal.contains(event.target) && get_state_modal_sort()) {
 
-            listen_change_sort();
+            console.log("close modal");
 
             element_sort_modal.style.display = 'none';
-
+            
             // スクロールを再度有効に
             element_body.classList.remove('no_scroll');
             element_body.style.paddingRight = '';
+
+            // state_modal_sortをfalseに
+            set_state_modal_sort(false);
+
+            await listen_change_sort();
 
         }
     });
@@ -66,7 +75,7 @@ export function control_sort() {
 
     // ======モーダルでソートを選択======
     // プルダウンメニューの変更イベントをリスニング
-    function listen_change_sort() {
+    async function listen_change_sort() {
 
         // 要素の取得
         const sort_select = document.getElementById('sort_select');
@@ -88,9 +97,11 @@ export function control_sort() {
 
         console.log("all chosen");
 
+        // ソートの文字を表示
         if (value_sort_select == "growth_temperature") text_sort_select = "生育温度";
         else if (value_sort_select == "homology") text_sort_select = "相同性";
         else if (value_sort_select == "bit_score") text_sort_select = "bit score";
+        else if (value_sort_select == "evalue") text_sort_select = "E Value";
         sort_add_condition_select.innerText = text_sort_select;
 
         if (value_sort_order == "descending_order") text_sort_order = "降順";
@@ -112,27 +123,50 @@ export function control_sort() {
             
             case 'growth_temperature-descending_order':
                 console.log("growth_temperature-descending_order");
+                set_state_sort("growth_temperature-descending_order");
+                await render_results();
                 break;
             
             case 'growth_temperature-ascending_order':
                 console.log("growth_temperature-ascending_order");
+                set_state_sort("growth_temperature-ascending_order");
+                await render_results();
                 break;
             
             case 'homology-descending_order':
                 console.log("homology-descending_order");
+                set_state_sort("homology-descending_order");
+                await render_results();
                 break;
             
             case 'homology-ascending_order':
                 console.log("homology-ascending_order");
+                set_state_sort("homology-ascending_order");
+                await render_results();
                 break;
             
             case 'bit_score-descending_order':
                 console.log("bit_score-descending_order");
-                sort_results_by_bit_score_in_descending_order();
+                set_state_sort("bit_score-descending_order");
+                await render_results();
                 break;
             
             case 'bit_score-ascending_order':
                 console.log("bit_score-ascending_order");
+                set_state_sort("bit_score-ascending_order");
+                await render_results();
+                break;
+            
+            case 'evalue-descending_order':
+                console.log("evalue-descending_order");
+                set_state_sort("evalue-descending_order");
+                await render_results();
+                break;
+            
+            case 'evalue-ascending_order':
+                console.log("evalue-ascending_order");
+                set_state_sort("evalue-ascending_order");
+                await render_results();
                 break;
             
             default:

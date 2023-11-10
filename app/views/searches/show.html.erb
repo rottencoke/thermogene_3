@@ -1,13 +1,13 @@
 <div id="root"></div>
 
 <script type="module">
-    console.log("test in erb");
-
     import { show_rare_codons } from "show_rare_codons";
     import { render_searches } from "searches";
     import { control_sort } from "control_sort";
+    import { render_results } from "render_results";
 
     await render_searches();
+    await render_results();
     show_rare_codons();
-    control_sort();
+    await control_sort();
 </script>
