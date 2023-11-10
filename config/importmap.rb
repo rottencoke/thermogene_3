@@ -15,6 +15,9 @@ pin "get_search_id", to: "functions/apis/get_search_id.js"
 pin "get_search", to: "functions/apis/get_search.js"
 pin "get_tempura", to: "functions/apis/get_tempura.js"
 
+## state
+pin "state", to: "functions/state/state.js"
+
 ## utils/show_rare_codons/
 pin "show_rare_codons", to: "functions/utils/show_rare_codons/main.js"
 pin "rare_codons", to: "functions/utils/show_rare_codons/rare_codons.js"
