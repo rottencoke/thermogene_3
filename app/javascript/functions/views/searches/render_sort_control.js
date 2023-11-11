@@ -16,7 +16,7 @@ export function render_sort_control() {
                         <select id="sort_select">
                             <option value="bit_score">bit score</option>
                             <option value="growth_temperature">生育温度</option>
-                            <option value="homology">相同性</option>
+                            <option value="identity">相同性</option>
                             <option value="evalue">E Value</option>
                         </select>
                         <p class="pt-3">の</p>

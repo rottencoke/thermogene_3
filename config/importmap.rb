@@ -34,4 +34,5 @@ pin "show_if_there", to: "functions/views/searches/show_if_there.js"
 
 ## utils/sort_results/
 pin "control_sort", to: "functions/utils/sort_results/main.js"
-pin "sort_results_by_bit_score", to: "functions/utils/sort_results/sort_results_by_bit_score.js"
+pin "sort_results_by_blast_param", to: "functions/utils/sort_results/sort_results_by_blast_param.js"
+pin "sort_results_by_tempura_param", to: "functions/utils/sort_results/sort_results_by_tempura_param.js"

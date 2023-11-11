@@ -99,7 +99,7 @@ export async function control_sort() {
 
         // ソートの文字を表示
         if (value_sort_select == "growth_temperature") text_sort_select = "生育温度";
-        else if (value_sort_select == "homology") text_sort_select = "相同性";
+        else if (value_sort_select == "identity") text_sort_select = "相同性";
         else if (value_sort_select == "bit_score") text_sort_select = "bit score";
         else if (value_sort_select == "evalue") text_sort_select = "E Value";
         sort_add_condition_select.innerText = text_sort_select;
@@ -133,15 +133,15 @@ export async function control_sort() {
                 await render_results();
                 break;
             
-            case 'homology-descending_order':
-                console.log("homology-descending_order");
-                set_state_sort("homology-descending_order");
+            case 'identity-descending_order':
+                console.log("identity-descending_order");
+                set_state_sort("identity-descending_order");
                 await render_results();
                 break;
             
-            case 'homology-ascending_order':
-                console.log("homology-ascending_order");
-                set_state_sort("homology-ascending_order");
+            case 'identity-ascending_order':
+                console.log("identity-ascending_order");
+                set_state_sort("identity-ascending_order");
                 await render_results();
                 break;
             
