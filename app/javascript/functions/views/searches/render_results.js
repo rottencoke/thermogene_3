@@ -1,4 +1,5 @@
-import { sort_results_by_bit_score_in_descending_order, sort_results_by_bit_score_in_ascending_order } from 'sort_results_by_bit_score';
+import { sort_results_by_blast_param } from 'sort_results_by_blast_param';
+import { sort_results_by_tempura_param } from 'sort_results_by_tempura_param';
 import { render_result_table } from 'render_result_table';
 import { render_alignment } from 'render_alignment';
 import { get_state_sort } from "state";
@@ -75,28 +76,32 @@ async function get_obj_result_sorted() {
         if (state_sort === 'growth_temperature-descending_order') {
 
             console.log("growth_temperature-descending_order");
+            obj_result_sorted = await sort_results_by_tempura_param("growth_temperature", "descending");
 
         } else if (state_sort === 'growth_temperature-ascending_order') {
 
             console.log("growth_temperature-ascending_order");
+            obj_result_sorted = await sort_results_by_tempura_param("growth_temperature", "ascending");
 
-        } else if (state_sort === 'homology-descending_order') {
+        } else if (state_sort === 'identity-descending_order') {
 
-            console.log("homology-descending_order");
+            console.log("identity-descending_order");
+            obj_result_sorted = await sort_results_by_blast_param("identity", "descending");
 
-        } else if (state_sort === 'homology-ascending_order') {
+        } else if (state_sort === 'identity-ascending_order') {
 
-            console.log("homology-ascending_order");
+            console.log("identity-ascending_order");
+            obj_result_sorted = await sort_results_by_blast_param("identity", "ascending");
 
         } else if (state_sort === 'bit_score-descending_order') {
 
             console.log("bit_score-descending_order");
-            obj_result_sorted = await sort_results_by_bit_score_in_descending_order();
+            obj_result_sorted = await sort_results_by_blast_param("bit_score", "descending");
 
         } else if (state_sort === 'bit_score-ascending_order') {
 
             console.log("bit_score-ascending_order");
-            obj_result_sorted = await sort_results_by_bit_score_in_ascending_order();
+            obj_result_sorted = await sort_results_by_blast_param("bit_score", "ascending");
 
         } else if (state_sort === 'evalue-descending_order') {
 

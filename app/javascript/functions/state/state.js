@@ -1,6 +1,6 @@
 // state_sort
 /// 定義
-const state_sort_acceptable_list = ["growth_temperature-descending_order", "growth_temperature-ascending_order", "homology-descending_order", "homology-ascending_order", "bit_score-descending_order", "bit_score-ascending_order", "evalue-descending_order", "evalue-ascending_order"];
+const state_sort_acceptable_list = ["growth_temperature-descending_order", "growth_temperature-ascending_order", "identity-descending_order", "identity-ascending_order", "bit_score-descending_order", "bit_score-ascending_order", "evalue-descending_order", "evalue-ascending_order"];
 let state_sort = state_sort_acceptable_list[4];
 
 /// state_sortのgetter、値の取得用
