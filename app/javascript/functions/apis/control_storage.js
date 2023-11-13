@@ -76,8 +76,6 @@ export function load_storage(search_id, table, table_id) {
 /// blastn, tblastn, tempuraは配列の中に各idのオブジェクトを保存する
 export function save_storage(search_id, table, obj) {
 
-    console.log("save_storage");
-
     // session storageからデータの取得
     const ssdata_result_list = sessionStorage.getItem('result_list');
 
@@ -96,12 +94,9 @@ export function save_storage(search_id, table, obj) {
     // blastn, tblastn, tempuraの場合、配列の中に各idのオブジェクトを保存する
     if (table == 'blastn_result' || table == 'tblastn_result' || table == 'tempura') {
 
-        console.log("save_storage table" + table);
-        
         // 指定したtableキーがまだ存在しない場合、配列を定義して初期化
         if (!obj_ss_result_list[key_search_id][table]) {
             obj_ss_result_list[key_search_id][table] = [];
-            console.log("array defined");
         }
 
         // そのうえでobjを配列に追加

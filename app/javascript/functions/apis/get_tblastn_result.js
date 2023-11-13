@@ -54,7 +54,7 @@ export async function get_tblastn_result(tblastn_result_id) {
             midline: obj_ss_tblastn_result.midline,
             hseq: obj_ss_tblastn_result.hseq,
             qseq: obj_ss_tblastn_result.qseq
-        }
+        };
     }
     /// 保存されていない場合
     else {

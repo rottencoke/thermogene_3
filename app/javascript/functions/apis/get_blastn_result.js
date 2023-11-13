@@ -53,7 +53,7 @@ export async function get_blastn_result(blastn_result_id) {
             query_id: obj_ss_blastn_result.query_id,
             query_len: obj_ss_blastn_result.query_len,
             num: obj_ss_blastn_result.num
-        }
+        };
     }
     /// 保存されていない場合
     else {
@@ -104,7 +104,7 @@ export async function get_blastn_result(blastn_result_id) {
                 query_id: response.data.query_id,
                 query_len: response.data.query_len,
                 num: response.data.num
-            }
+            };
 
             // session storageに保存
             save_storage(search_id, 'blastn_result', obj_response);
