@@ -15,7 +15,6 @@ export async function render_results() {
         // bit_scoreを降順でソートしたobjectを取得
         // obj_result_sorted = { blastn_result_id : [], tblastn_result_id : [], tempura_id : [] }の形式
         const obj_result_sorted = await get_obj_result_sorted();
-        console.dir(obj_result_sorted);
 
         // arr_tempura_idの長さ分繰り返して、result_tableを作成する
         /// blastはどっちかわからんからややこしい
@@ -66,7 +65,6 @@ async function get_obj_result_sorted() {
 
         // stateの取得
         const state_sort = get_state_sort();
-        console.log("state_sort : " + state_sort);
         
         // 返り値、ソートされた結果
         let obj_result_sorted = {};
@@ -75,32 +73,26 @@ async function get_obj_result_sorted() {
         // state_sortの値に基づいて条件分岐
         if (state_sort === 'growth_temperature-descending_order') {
 
-            console.log("growth_temperature-descending_order");
             obj_result_sorted = await sort_results_by_tempura_param("growth_temperature", "descending");
 
         } else if (state_sort === 'growth_temperature-ascending_order') {
 
-            console.log("growth_temperature-ascending_order");
             obj_result_sorted = await sort_results_by_tempura_param("growth_temperature", "ascending");
 
         } else if (state_sort === 'identity-descending_order') {
 
-            console.log("identity-descending_order");
             obj_result_sorted = await sort_results_by_blast_param("identity", "descending");
 
         } else if (state_sort === 'identity-ascending_order') {
 
-            console.log("identity-ascending_order");
             obj_result_sorted = await sort_results_by_blast_param("identity", "ascending");
 
         } else if (state_sort === 'bit_score-descending_order') {
 
-            console.log("bit_score-descending_order");
             obj_result_sorted = await sort_results_by_blast_param("bit_score", "descending");
 
         } else if (state_sort === 'bit_score-ascending_order') {
 
-            console.log("bit_score-ascending_order");
             obj_result_sorted = await sort_results_by_blast_param("bit_score", "ascending");
 
         } else if (state_sort === 'evalue-descending_order') {
