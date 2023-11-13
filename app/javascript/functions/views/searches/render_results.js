@@ -97,11 +97,11 @@ async function get_obj_result_sorted() {
 
         } else if (state_sort === 'evalue-descending_order') {
 
-            console.log("evalue-descending_order");
+            obj_result_sorted = await sort_results_by_blast_param("evalue", "descending");
 
         } else if (state_sort === 'evalue-ascending_order') {
 
-            console.log("evalue-ascending_order");
+            obj_result_sorted = await sort_results_by_blast_param("evalue", "ascending");
 
         } else {
 

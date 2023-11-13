@@ -30,7 +30,7 @@ export async function sort_results_by_blast_param(blast_param, order) {
             arr_blastn_result_indexed.push({
                 index,
                 id: id,
-                blast_param: blastn_result[blast_param]
+                blast_param: blastn_result[blast_param].toString()
             });
         };
 
@@ -64,7 +64,7 @@ export async function sort_results_by_blast_param(blast_param, order) {
             arr_tblastn_result_indexed.push({
                 index,
                 id: id,
-                blast_param: tblastn_result[blast_param]
+                blast_param: tblastn_result[blast_param].toString()
             });
         };
 
