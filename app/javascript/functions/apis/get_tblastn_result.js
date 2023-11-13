@@ -1,173 +1,123 @@
+import { get_search_id } from 'get_search_id'; // search_idの取得
+import { load_storage, save_storage } from 'control_storage';
+
 // APIを使用する際は値の定義とレスポンスのタイミングが異なるので非同期処理を使用
 export async function get_tblastn_result(tblastn_result_id) {
 
-    try {
+    // search_idを取得
+    const search_id = get_search_id();
 
-        // APIを呼び出してblastn_resultを取得する
-        const response = await axios.get(`/data/get_tblastn_result/${tblastn_result_id}`);
+    // session storageに情報が保存されてないか確認する
+    const obj_ss_tblastn_result = load_storage(search_id, 'tblastn_result', tblastn_result_id);
 
-        // request_id
-        const response_request_id = response.data.request_id;
-
-        // program
-        const response_program = response.data.program;
-
-        // version
-        const response_version = response.data.version;
-
-        // reference
-        const response_reference = response.data.reference;
-
-        // db
-        const response_db = response.data.db;
-
-        // expect
-        const response_expect = response.data.expect;
-
-        // gap_open
-        const response_gap_open = response.data.gap_open;
-
-        // matrix
-        const response_matrix = response.data.matrix;
-
-        // gap_extend
-        const response_gap_extend = response.data.gap_extend;
-
-        // filter
-        const response_filter = response.data.filter;
-
-        // cbs
-        const response_cbs = response.data.cbs;
-
-        // db_gencode
-        const response_db_gencode = response.data.db_gencode;
-
-        // query_id
-        const response_query_id = response.data.query_id;
-
-        // query_title
-        const response_query_title = response.data.query_title;
-
-        // query_len
-        const response_query_len = response.data.query_len;
-
-        // num
-        const response_num = response.data.num;
-
-        // accession
-        const response_accession = response.data.accession;
-
-        // gene
-        const response_gene = response.data.gene;
-
-        // locus_tag
-        const response_locus_tag = response.data.locus_tag;
-
-        // protein
-        const response_protein = response.data.protein;
-
-        // protein_id
-        const response_protein_id = response.data.protein_id;
-
-        // location
-        const response_location = response.data.location;
-
-        // gbkey
-        const response_gbkey = response.data.gbkey;
-
-        // assembly
-        const response_assembly = response.data.assembly;
-
-        // bit_score
-        const response_bit_score = response.data.bit_score;
-
-        // score
-        const response_score = response.data.score;
-
-        // evalue
-        const response_evalue = response.data.evalue;
-
-        // identity
-        const response_identity = response.data.identity;
-
-        // positive
-        const response_positive = response.data.positive;
-
-        // query_from
-        const response_query_from = response.data.query_from;
-
-        // query_to
-        const response_query_to = response.data.query_to;
-
-        // hit_from
-        const response_hit_from = response.data.hit_from;
-
-        // hit_to
-        const response_hit_to = response.data.hit_to;
-
-        // hit_frame
-        const response_hit_frame = response.data.hit_frame;
-
-        // align_len
-        const response_align_len = response.data.align_len;
-
-        // gaps
-        const response_gaps = response.data.gaps;
-
-        // midline
-        const response_midline = response.data.midline;
-
-        // hseq
-        const response_hseq = response.data.hseq;
-
-        // qseq
-        const response_qseq = response.data.qseq;
-
-
+    /// 保存されている場合
+    if (obj_ss_tblastn_result) {
+        
         return {
-            request_id: response_request_id,
-            program: response_program,
-            version: response_version,
-            reference: response_reference,
-            db: response_db,
-            expect: response_expect,
-            gap_open: response_gap_open,
-            matrix: response_matrix,
-            gap_extend: response_gap_extend,
-            filter: response_filter,
-            cbs: response_cbs,
-            db_gencode: response_db_gencode,
-            query_id: response_query_id,
-            query_title: response_query_title,
-            query_len: response_query_len,
-            num: response_num,
-            accession: response_accession,
-            gene: response_gene,
-            locus_tag: response_locus_tag,
-            protein: response_protein,
-            protein_id: response_protein_id,
-            location: response_location,
-            gbkey: response_gbkey,
-            assembly: response_assembly,
-            bit_score: response_bit_score,
-            score: response_score,
-            evalue: response_evalue,
-            identity: response_identity,
-            positive: response_positive,
-            query_from: response_query_from,
-            query_to: response_query_to,
-            hit_from: response_hit_from,
-            hit_to: response_hit_to,
-            hit_frame: response_hit_frame,
-            align_len: response_align_len,
-            gaps: response_gaps,
-            midline: response_midline,
-            hseq: response_hseq,
-            qseq: response_qseq
-        };
-
-    } catch (error) {
-        console.error('Error:', error);
+            id: obj_ss_tblastn_result.id,
+            request_id: obj_ss_tblastn_result.request_id,
+            program: obj_ss_tblastn_result.program,
+            version: obj_ss_tblastn_result.version,
+            reference: obj_ss_tblastn_result.reference,
+            db: obj_ss_tblastn_result.db,
+            expect: obj_ss_tblastn_result.expect,
+            gap_open: obj_ss_tblastn_result.gap_open,
+            matrix: obj_ss_tblastn_result.matrix,
+            gap_extend: obj_ss_tblastn_result.gap_extend,
+            filter: obj_ss_tblastn_result.filter,
+            cbs: obj_ss_tblastn_result.cbs,
+            db_gencode: obj_ss_tblastn_result.db_gencode,
+            query_id: obj_ss_tblastn_result.query_id,
+            query_title: obj_ss_tblastn_result.query_title,
+            query_len: obj_ss_tblastn_result.query_len,
+            num: obj_ss_tblastn_result.num,
+            accession: obj_ss_tblastn_result.accession,
+            gene: obj_ss_tblastn_result.gene,
+            locus_tag: obj_ss_tblastn_result.locus_tag,
+            protein: obj_ss_tblastn_result.protein,
+            protein_id: obj_ss_tblastn_result.protein_id,
+            location: obj_ss_tblastn_result.location,
+            gbkey: obj_ss_tblastn_result.gbkey,
+            assembly: obj_ss_tblastn_result.assembly,
+            bit_score: obj_ss_tblastn_result.bit_score,
+            score: obj_ss_tblastn_result.score,
+            evalue: obj_ss_tblastn_result.evalue,
+            identity: obj_ss_tblastn_result.identity,
+            positive: obj_ss_tblastn_result.positive,
+            query_from: obj_ss_tblastn_result.query_from,
+            query_to: obj_ss_tblastn_result.query_to,
+            hit_from: obj_ss_tblastn_result.hit_from,
+            hit_to: obj_ss_tblastn_result.hit_to,
+            hit_frame: obj_ss_tblastn_result.hit_frame,
+            align_len: obj_ss_tblastn_result.align_len,
+            gaps: obj_ss_tblastn_result.gaps,
+            midline: obj_ss_tblastn_result.midline,
+            hseq: obj_ss_tblastn_result.hseq,
+            qseq: obj_ss_tblastn_result.qseq
+        }
     }
+    /// 保存されていない場合
+    else {
+        try {
+
+            // APIを呼び出してblastn_resultを取得する
+            const response = await axios.get(`/data/get_tblastn_result/${tblastn_result_id}`);
+
+            const obj_response = {
+                id: tblastn_result_id,
+                request_id: response.data.request_id,
+                program: response.data.program,
+                version: response.data.version,
+                reference: response.data.reference,
+                db: response.data.db,
+                expect: response.data.expect,
+                gap_open: response.data.gap_open,
+                matrix: response.data.matrix,
+                gap_extend: response.data.gap_extend,
+                filter: response.data.filter,
+                cbs: response.data.cbs,
+                db_gencode: response.data.db_gencode,
+                query_id: response.data.query_id,
+                query_title: response.data.query_title,
+                query_len: response.data.query_len,
+                num: response.data.num,
+                accession: response.data.accession,
+                gene: response.data.gene,
+                locus_tag: response.data.locus_tag,
+                protein: response.data.protein,
+                protein_id: response.data.protein_id,
+                location: response.data.location,
+                gbkey: response.data.gbkey,
+                assembly: response.data.assembly,
+                bit_score: response.data.bit_score,
+                score: response.data.score,
+                evalue: response.data.evalue,
+                identity: response.data.identity,
+                positive: response.data.positive,
+                query_from: response.data.query_from,
+                query_to: response.data.query_to,
+                hit_from: response.data.hit_from,
+                hit_to: response.data.hit_to,
+                hit_frame: response.data.hit_frame,
+                align_len: response.data.align_len,
+                gaps: response.data.gaps,
+                midline: response.data.midline,
+                hseq: response.data.hseq,
+                qseq: response.data.qseq
+
+            };
+
+            // session storageに保存
+            save_storage(search_id, 'tblastn_result', obj_response);
+
+            // 返り値
+            return obj_response;
+
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    
 
 }

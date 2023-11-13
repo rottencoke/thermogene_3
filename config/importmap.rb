@@ -8,11 +8,12 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 
 # javascriptファイル読み込み
 ## apis/
-pin "get_blastn_result", to: "functions/apis/get_blastn_result.js"
-pin "get_tblastn_result", to: "functions/apis/get_tblastn_result.js"
-pin "get_result", to: "functions/apis/get_result.js"
+pin "control_storage", to: "functions/apis/control_storage.js"
 pin "get_search_id", to: "functions/apis/get_search_id.js"
 pin "get_search", to: "functions/apis/get_search.js"
+pin "get_result", to: "functions/apis/get_result.js"
+pin "get_blastn_result", to: "functions/apis/get_blastn_result.js"
+pin "get_tblastn_result", to: "functions/apis/get_tblastn_result.js"
 pin "get_tempura", to: "functions/apis/get_tempura.js"
 
 ## state

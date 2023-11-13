@@ -26,8 +26,6 @@ export async function control_sort() {
 
         if (!element_sort_modal.contains(event.target) && get_state_modal_sort()) {
 
-            console.log("close modal");
-
             element_sort_modal.style.display = 'none';
             
             // スクロールを再度有効に
@@ -95,8 +93,6 @@ export async function control_sort() {
         // もし片方でも入力されてない場合、何も処理を行わない
         if (!(value_sort_select && value_sort_order)) return;
 
-        console.log("all chosen");
-
         // ソートの文字を表示
         if (value_sort_select == "growth_temperature") text_sort_select = "生育温度";
         else if (value_sort_select == "identity") text_sort_select = "相同性";
@@ -122,55 +118,46 @@ export async function control_sort() {
         switch (value_sort_select + '-' + value_sort_order) {
             
             case 'growth_temperature-descending_order':
-                console.log("growth_temperature-descending_order");
                 set_state_sort("growth_temperature-descending_order");
                 await render_results();
                 break;
             
             case 'growth_temperature-ascending_order':
-                console.log("growth_temperature-ascending_order");
                 set_state_sort("growth_temperature-ascending_order");
                 await render_results();
                 break;
             
             case 'identity-descending_order':
-                console.log("identity-descending_order");
                 set_state_sort("identity-descending_order");
                 await render_results();
                 break;
             
             case 'identity-ascending_order':
-                console.log("identity-ascending_order");
                 set_state_sort("identity-ascending_order");
                 await render_results();
                 break;
             
             case 'bit_score-descending_order':
-                console.log("bit_score-descending_order");
                 set_state_sort("bit_score-descending_order");
                 await render_results();
                 break;
             
             case 'bit_score-ascending_order':
-                console.log("bit_score-ascending_order");
                 set_state_sort("bit_score-ascending_order");
                 await render_results();
                 break;
             
             case 'evalue-descending_order':
-                console.log("evalue-descending_order");
                 set_state_sort("evalue-descending_order");
                 await render_results();
                 break;
             
             case 'evalue-ascending_order':
-                console.log("evalue-ascending_order");
                 set_state_sort("evalue-ascending_order");
                 await render_results();
                 break;
             
             default:
-                console.log('その組み合わせはありません');
                 break; 
         }
 
