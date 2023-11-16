@@ -7,15 +7,11 @@ import { get_state_filter } from "state";
 // ソートされた結果のidのオブジェクトをstateの条件でフィルターして返す
 export async function filter_results(obj_sorted) {
 
-    console.dir(obj_sorted);
-
     // state_filterの値を取得
     let arr_state_filter = [];
     const state_filter = get_state_filter();
-    console.log(`state_filter [${state_filter.length}] : ` + state_filter);
 
     // return obj_sorted;
-
     for (let i = 0; i < state_filter.length; i++) {
         arr_state_filter[i] = {
             filter_select: state_filter[i].split('-')[0],
@@ -26,11 +22,8 @@ export async function filter_results(obj_sorted) {
 
     // state_filterが何も設定されてないときは、そのままobjを返す
     if (state_filter.length == 0) {
-        console.log("filter設定されてないのでobjをそのままreturn");
         return obj_sorted;
     }
-
-    console.log("filter設定済み");
 
     // obj_sortedから各種idの取得、配列
     let arr_blastn_result_id_filtered = obj_sorted.arr_blastn_result_id;
@@ -130,11 +123,11 @@ export async function filter_results(obj_sorted) {
             // フィルターされたインデックスを使用してarr_blast_result_idを並び替え
             /// blastnの場合
             if (arr_blastn_result_id_filtered.length) {
-                arr_blastn_result_id_filtered = arr_tempura_id_filtered.map(item => arr_blastn_result_id_filtered[item.index]);
+                arr_blastn_result_id_filtered = arr_tempura_id_indexed_filtered.map(item => arr_blastn_result_id_filtered[item.index]);
             }
             /// tblastnの場合
             else if (arr_tblastn_result_id_filtered.length) {
-                arr_tblastn_result_id_filtered = arr_tempura_id_filtered.map(item => arr_tblastn_result_id_filtered[item.index]);
+                arr_tblastn_result_id_filtered = arr_tempura_id_indexed_filtered.map(item => arr_tblastn_result_id_filtered[item.index]);
             }
         }
     }
@@ -148,10 +141,6 @@ export async function filter_results(obj_sorted) {
     // フィルター部分の関数
     function filter_arr(arr, i) {
 
-        console.log(arr_state_filter[i].filter_limit_value);
-
-        console.log(arr);
-
         let arr_filtered = [];
 
         const num_filter_limit_value = parseInt(arr_state_filter[i].filter_limit_value);
@@ -159,16 +148,12 @@ export async function filter_results(obj_sorted) {
         /// フィルターが gte「以上」の場合
         if (arr_state_filter[i].filter_limit_type == "gte") {
             arr_filtered = arr.filter(obj => obj.param >= num_filter_limit_value);
-            // arr_filtered = arr.filter(obj => obj.param >= 100);
         }
         /// フィルターがlte「以下」の場合
         else if (arr_state_filter[i].filter_limit_type == "lte") {
             arr_filtered = arr.filter(obj => obj.param <= num_filter_limit_value);
         }
 
-        console.log(arr_filtered);
-    
-        // return arr_filtered.map(obj => obj.id);
         return arr_filtered;
     }
 }
