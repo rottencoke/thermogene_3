@@ -19,6 +19,7 @@ gem 'pg', '~> 1.5', '>= 1.5.3' # PostgreSQL、Renderへのデプロイ用 -23/07
 gem "activerecord-import" # CSVファイルの内容をTempuraテーブルに移すために導入 -23/08/07
 gem 'spring', '~> 4.1', '>= 4.1.1' # Railsプロジェクトのpreloadする、$spring stopでフリーズ解消するため導入 -23/08/17
 gem 'sassc-rails'
+gem 'font-awesome-rails' # iconの追加 -23/11/15
 
 
 group :development, :test do

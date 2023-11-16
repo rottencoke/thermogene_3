@@ -31,9 +31,14 @@ pin "render_results", to: "functions/views/searches/render_results.js"
 pin "render_result_table", to: "functions/views/searches/render_result_table.js"
 pin "render_alignment", to: "functions/views/searches/render_alignment.js"
 pin "render_sort_control", to: "functions/views/searches/render_sort_control.js"
+pin "render_filter_control", to: "functions/views/searches/render_filter_control.js"
 pin "show_if_there", to: "functions/views/searches/show_if_there.js"
 
 ## utils/sort_results/
 pin "control_sort", to: "functions/utils/sort_results/main.js"
+pin "control_filter", to: "functions/utils/filter_results/main.js"
 pin "sort_results_by_blast_param", to: "functions/utils/sort_results/sort_results_by_blast_param.js"
 pin "sort_results_by_tempura_param", to: "functions/utils/sort_results/sort_results_by_tempura_param.js"
+
+## view/icons/
+pin "icons", to: "functions/views/icons/icons.js"

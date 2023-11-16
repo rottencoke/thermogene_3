@@ -7,6 +7,7 @@
     width: auto;
     height: auto;
     background-color: #fefefe;
+    border-radius: 0.5em;
 }
 
 .hover_background_marked:hover {
@@ -35,12 +36,6 @@
     cursor: pointer;
 }
 
-/* 文字の要素の形をいい感じにする */
-.box_element_small {
-    padding: 0.3em;
-    border-radius: 0.5em;
-}
-
 /* 要素の周りに影をつける */
 .shadow_around_element {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
@@ -50,24 +45,46 @@
 .flex-container {
     display: flex; /* フレックスコンテナとして定義 */
     align-items: center; /* 子要素を垂直方向の中央に配置 */
+    justify-content: center;
     gap: 10px; /* 子要素の間隔を設定 */
 }
 
 /* セレクトボックスのスタイル（必要に応じて） */
 select {
     flex-grow: 1; /* 各セレクトボックスが利用可能なスペースを均等に使用 */
+    max-width: 150px;
 }
 
-/* 選択したソートの種類の表示 */
-.selected_text_menu {
+/* ソート系の表示のラベル */
+.sort_show_label {
     background-color: aliceblue;
-    font-size: 0.7em;
+    padding: 0.3em;
+    border-radius: 0.5em;
+    width: max-content;
+    font-size: 0.9em;
+    font-weight: bold;
 }
 
-/* 文字を強調する */
-.highlighted_text {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: black;
+/* 強調しない文字 */
+.unhighlighted_text {
+    font-size: 0.8em;
+    font-weight: normal;
+}
 
+/* svgアイコン */
+svg {
+    width: 16px;
+    height: 16px;
+    fill: #444444;
+}
+
+/* svgアイコン hover */
+svg:hover {
+    fill: #050505;
+}
+
+/* アイコンの位置調整 */
+.icon_pos {
+    position: relative;
+    top: -8px;
 }

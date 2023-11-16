@@ -150,7 +150,7 @@ export async function render_result_table(obj, index) {
                 </tr>
                 <tr>
                     <th class="result_th" scope="row">${th_identity}</th>
-                    <td>${td_identity}</td>
+                    <td>${td_identity}%</td>
                 </tr>
                 <tr>
                     <th class="result_th" scope="row">${th_gap}</th>

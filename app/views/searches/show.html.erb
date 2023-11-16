@@ -1,13 +1,14 @@
-<div id="root"></div>
-
+<main></main>
 <script type="module">
     import { show_rare_codons } from "show_rare_codons";
     import { render_searches } from "searches";
     import { control_sort } from "control_sort";
+    import { control_filter } from "control_filter";
     import { render_results } from "render_results";
 
     await render_searches();
     await render_results();
     show_rare_codons();
     await control_sort();
+    await control_filter();
 </script>
