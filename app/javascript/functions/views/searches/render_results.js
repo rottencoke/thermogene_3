@@ -1,5 +1,6 @@
 import { sort_results_by_blast_param } from 'sort_results_by_blast_param';
 import { sort_results_by_tempura_param } from 'sort_results_by_tempura_param';
+import { filter_results } from 'filter_results';
 import { render_result_table } from 'render_result_table';
 import { render_alignment } from 'render_alignment';
 import { get_state_sort } from "state";
@@ -66,8 +67,11 @@ async function get_obj_result_sorted() {
         // stateの取得
         const state_sort = get_state_sort();
         
-        // 返り値、ソートされた結果
+        // ソートされた結果
         let obj_result_sorted = {};
+
+        // ソート後の結果をフィルターにかけた結果
+        let obj_result_sorted_filtered = {};
         
         // ソートの関数呼び出し
         // state_sortの値に基づいて条件分岐
@@ -108,7 +112,9 @@ async function get_obj_result_sorted() {
             console.log('その組み合わせはありません');
         }
 
-        return obj_result_sorted;
+        obj_result_sorted_filtered = await filter_results(obj_result_sorted);
+
+        return obj_result_sorted_filtered;
         
     } catch (error) {
         // エラー処理

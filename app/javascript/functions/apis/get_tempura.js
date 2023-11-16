@@ -4,6 +4,9 @@ import { load_storage, save_storage } from 'control_storage';
 // APIを使用する際は値の定義とレスポンスのタイミングが異なるので非同期処理を使用
 export async function get_tempura(tempura_id) {
 
+    // 数字以外のidの場合return
+    if (!Number.isFinite(tempura_id)) return;
+
     // search_idを取得
     const search_id = get_search_id();
 

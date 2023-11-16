@@ -4,6 +4,9 @@ import { load_storage, save_storage } from 'control_storage';
 // APIを使用する際は値の定義とレスポンスのタイミングが異なるので非同期処理を使用
 export async function get_tblastn_result(tblastn_result_id) {
 
+    // 数字以外のidの場合return
+    if (!Number.isFinite(tblastn_result_id)) return;
+
     // search_idを取得
     const search_id = get_search_id();
 

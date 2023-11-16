@@ -39,6 +39,7 @@ pin "control_sort", to: "functions/utils/sort_results/main.js"
 pin "control_filter", to: "functions/utils/filter_results/main.js"
 pin "sort_results_by_blast_param", to: "functions/utils/sort_results/sort_results_by_blast_param.js"
 pin "sort_results_by_tempura_param", to: "functions/utils/sort_results/sort_results_by_tempura_param.js"
+pin "filter_results", to: "functions/utils/filter_results/filter_results.js"
 
 ## view/icons/
 pin "icons", to: "functions/views/icons/icons.js"
