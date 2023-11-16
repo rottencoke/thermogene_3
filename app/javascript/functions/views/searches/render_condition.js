@@ -34,8 +34,6 @@ export async function render_condition() {
     const td_evalue_maximum = show_if_there(search.evalue_maximum);
     const td_created_at = formatDate(search.created_at);
 
-    console.dir(search);
-
     return /*html*/`
         <div id="search_condition_area" class="container">
             <p>${condition_title}</p>

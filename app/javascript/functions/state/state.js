@@ -2,14 +2,14 @@
 /// 定義
 let state_modal_sort = false;
 
-/// getter
-export function get_state_modal_sort() {
-    return state_modal_sort;
-}
-
 /// setter
 export function set_state_modal_sort(new_state) {
     state_modal_sort = new_state;
+}
+
+/// getter
+export function get_state_modal_sort() {
+    return state_modal_sort;
 }
 
 // state_sort
@@ -35,6 +35,34 @@ export function set_state_sort(new_state) {
     }
 }
 
+// state_modal_filter
+/// 定義
+let state_modal_filter = false;
+
+/// setter
+export function set_state_modal_filter(new_state) {
+    state_modal_filter = new_state;
+}
+
+/// getter
+export function get_state_modal_filter() {
+    return state_modal_filter;
+}
+
 // state_filter
+/// 定義
+let state_filter = [];
+
+/// state_filterのsette
+export function set_state_filter(new_state) {
+    const num_state_filter = state_filter.length;
+    state_filter[num_state_filter] = new_state;
+    console.log("set state_filter : " + state_filter);
+}
+
+/// state_filterのgetter
+export function get_state_filter() {
+    return state_filter;
+}
 
 // state_exclude

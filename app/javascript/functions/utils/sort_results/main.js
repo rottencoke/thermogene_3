@@ -1,4 +1,4 @@
-import { set_state_sort, set_state_modal_sort, get_state_modal_sort } from "state";
+import { set_state_sort, set_state_modal_sort, get_state_modal_sort, get_state_modal_filter } from "state";
 import { render_results } from "render_results";
 
 // ソート管理画面の表示の管理
@@ -12,6 +12,9 @@ export async function control_sort() {
     // ======モーダルを表示======
     /// 選択したソートの条件の表示をクリックしたときにモーダルを表示
     element_sort_add_condition.addEventListener('click', function (event) {
+
+        // 別のモーダルが開いてたらreturn
+        if (get_state_modal_filter()) return;
 
         show_modal(event, element_sort_add_condition);
 
@@ -76,16 +79,16 @@ export async function control_sort() {
     async function listen_change_sort() {
 
         // 要素の取得
-        const sort_select = document.getElementById('sort_select');
-        const sort_order = document.getElementById('sort_order');
-        const sort_add_condition = document.getElementById('sort_add_condition');
-        const sort_add_condition_select = document.getElementById('sort_add_condition_select');
-        const sort_add_condition_order = document.getElementById('sort_add_condition_order');
-        const sort_add_condition_default_description = document.getElementById('sort_add_condition_default_description');
+        const element_sort_select = document.getElementById('sort_select');
+        const element_sort_order = document.getElementById('sort_order');
+        const element_sort_add_condition = document.getElementById('sort_add_condition');
+        const element_sort_add_condition_select = document.getElementById('sort_add_condition_select');
+        const element_sort_add_condition_order = document.getElementById('sort_add_condition_order');
+        const element_sort_add_condition_default_description = document.getElementById('sort_add_condition_default_description');
 
         // 入力されたプルダウンメニューの値を取得
-        const value_sort_select = sort_select.options[sort_select.selectedIndex].value;
-        const value_sort_order = sort_order.options[sort_order.selectedIndex].value;
+        const value_sort_select = element_sort_select.options[element_sort_select.selectedIndex].value;
+        const value_sort_order = element_sort_order.options[element_sort_order.selectedIndex].value;
 
         // 表示する文字
         let text_sort_select, text_sort_order = "";
@@ -98,71 +101,29 @@ export async function control_sort() {
         else if (value_sort_select == "identity") text_sort_select = "相同性";
         else if (value_sort_select == "bit_score") text_sort_select = "bit score";
         else if (value_sort_select == "evalue") text_sort_select = "E Value";
-        sort_add_condition_select.innerText = text_sort_select;
+        element_sort_add_condition_select.innerText = text_sort_select;
 
         if (value_sort_order == "descending_order") text_sort_order = "降順";
         else if (value_sort_order == "ascending_order") text_sort_order = "昇順";
 
-        sort_add_condition_order.innerText = text_sort_order;
+        element_sort_add_condition_order.innerText = text_sort_order;
 
-        sort_add_condition.style.display = 'block';
+        element_sort_add_condition.style.display = 'block';
 
         // bit score降順の場合のみ、デフォルトってのことを表記
         if (value_sort_select == "bit_score" && value_sort_order == "descending_order") {
-            sort_add_condition_default_description.style.display = 'inline-block';
+            element_sort_add_condition_default_description.style.display = 'inline-block';
         } else {
-            sort_add_condition_default_description.style.display = 'none';
+            element_sort_add_condition_default_description.style.display = 'none';
         }
 
         // ソートの関数呼び出し
-        switch (value_sort_select + '-' + value_sort_order) {
-            
-            case 'growth_temperature-descending_order':
-                set_state_sort("growth_temperature-descending_order");
-                await render_results();
-                break;
-            
-            case 'growth_temperature-ascending_order':
-                set_state_sort("growth_temperature-ascending_order");
-                await render_results();
-                break;
-            
-            case 'identity-descending_order':
-                set_state_sort("identity-descending_order");
-                await render_results();
-                break;
-            
-            case 'identity-ascending_order':
-                set_state_sort("identity-ascending_order");
-                await render_results();
-                break;
-            
-            case 'bit_score-descending_order':
-                set_state_sort("bit_score-descending_order");
-                await render_results();
-                break;
-            
-            case 'bit_score-ascending_order':
-                set_state_sort("bit_score-ascending_order");
-                await render_results();
-                break;
-            
-            case 'evalue-descending_order':
-                set_state_sort("evalue-descending_order");
-                await render_results();
-                break;
-            
-            case 'evalue-ascending_order':
-                set_state_sort("evalue-ascending_order");
-                await render_results();
-                break;
-            
-            default:
-                break; 
-        }
+        /// stateの作成
+        const state_sort = value_sort_select + '-' + value_sort_order;
+        /// stateの設定
+        set_state_sort(state_sort);
+        /// 結果の表示
+        await render_results();
 
     }
-
-
-
 }
