@@ -1,6 +1,6 @@
-import { set_state_filter, get_state_filter, set_state_modal_filter, get_state_modal_filter, get_state_modal_sort } from "state";
-import { render_results } from "render_results";
+import { set_state_filter, splice_state_filter, get_state_filter, set_state_modal_filter, get_state_modal_filter, get_state_modal_sort } from "state";
 import { icon_edit, icon_delete } from 'icons';
+import { render_results } from "render_results";
 
 // フィルター管理画面の表示の管理
 export async function control_filter() {
@@ -17,6 +17,7 @@ export async function control_filter() {
     const element_filter_conditions_added = document.getElementById('filter_conditions_added');
     const element_filter_form = document.getElementById('filter_form');
     const element_btn_show_filter_form = document.getElementById('btn_show_filter_form');
+    const element_icon_filter_condition = document.querySelectorAll('.icon_filter_condition');
 
     //
     // ================= イベント ====================
@@ -49,10 +50,15 @@ export async function control_filter() {
     });
 
     // ======モーダルを閉じる======
-    // モーダルの外側をクリックしたときにモーダルを閉じる
+    // モーダルの外側をクリックしたときにモーダルを閉じて、フィルターを実行
     window.addEventListener('click', async function (event) {
 
-        if (!element_filter_modal.contains(event.target) && get_state_modal_filter()) {
+        if (!element_filter_modal.contains(event.target) && get_state_modal_filter() ) {
+
+            // モーダル内のアイコンがクリックされたときにモーダルが消えるバグ対策
+            if (event.target.closest('.icon_filter_condition')) {
+                return;
+            }
 
             element_filter_modal.style.display = 'none';
             
@@ -69,8 +75,8 @@ export async function control_filter() {
                 element_filter_added_title.style.display = 'block';
             }
 
-            // フィルター実行
-            execute_filter();
+            // state_filterに従ってフィルターを実行
+            await render_results();
 
         }
     });
@@ -134,7 +140,7 @@ export async function control_filter() {
         // 入力された値の取得
         const value_filter_select = element_filter_select.options[element_filter_select.selectedIndex].value;
         const value_filter_limit_value = element_filter_limit_value.value;
-        const value_filter_limit_type = element_filter_limit_type.options[element_filter_select.selectedIndex].value;
+        const value_filter_limit_type = element_filter_limit_type.options[element_filter_limit_type.selectedIndex].value;
 
         // もしどれかが入力されていない場合、何も処理を行わない
         if (!value_filter_select || !value_filter_limit_value || !value_filter_limit_type) return;
@@ -143,22 +149,15 @@ export async function control_filter() {
         const value_state_filter = `${value_filter_select}-${value_filter_limit_value}-${value_filter_limit_type}`;
         set_state_filter(value_state_filter);
 
-        // 表示する文字を定義
-        let text_filter_select, text_filter_limit_type = "";
-
-        // フィルター条件を表示
-        if (value_filter_select == "growth_temperature") text_filter_select = "生育温度";
-        else if (value_filter_select == "identity") text_filter_select = "相同性";
-        else if (value_filter_select == "bit_score") text_filter_select = "bit score";
-        else if (value_filter_select == "evalue") text_filter_select = "E Value";
-
-        if (value_filter_limit_type == "gte") text_filter_limit_type = "以上";
-        else if (value_filter_limit_type = "lte") text_filter_limit_type = "以下";
-
+        
         // stateからすでに登録されてるフィルターの数を取得
         const number_filter_added = get_state_filter().length;
         
-        element_filter_conditions_added.innerHTML += render_filter_condition_added(number_filter_added - 1);
+        // filter_conditions_addedをある分作成する
+        element_filter_conditions_added.innerHTML = ``;
+        for (let i = 0; i < number_filter_added; i++) {
+            element_filter_conditions_added.innerHTML += render_filter_condition_added(i);
+        }
 
         // filter_conditions_addedを表示
         element_filter_conditions_added.style.display = 'block';
@@ -172,6 +171,19 @@ export async function control_filter() {
         // #filter_condition_addedを作成
         function render_filter_condition_added(index) {
 
+            // 表示する文字を定義
+            let text_filter_select, text_filter_limit_type = "";
+
+            // フィルター条件を表示
+            if (split_state_filter(index)[0] == "growth_temperature") text_filter_select = "生育温度";
+            else if (split_state_filter(index)[0] == "identity") text_filter_select = "相同性";
+            else if (split_state_filter(index)[0] == "bit_score") text_filter_select = "bit score";
+            else if (split_state_filter(index)[0] == "evalue") text_filter_select = "E Value";
+
+            if (split_state_filter(index)[2] == "gte") text_filter_limit_type = "以上";
+            else if (split_state_filter(index)[2] = "lte") text_filter_limit_type = "以下";
+
+
             // アイコン
             /// 編集アイコン
             const html_icon_edit = icon_edit;
@@ -182,10 +194,10 @@ export async function control_filter() {
             let html_filter_condition_added = /*html*/`
                 <div id="filter_condition_added_${index}" class="flex-container">
                     <div>
-                        <p>${text_filter_select}が${value_filter_limit_value}${text_filter_limit_type}</p>
+                        <p>${text_filter_select}が${split_state_filter(index)[1]}${text_filter_limit_type}</p>
                     </div>
-                    <div class="icon_pos interactive">${html_icon_edit}</div>
-                    <div class="icon_pos interactive">${html_icon_delete}</div>
+                    <div class="filter_condition_added_icon_edit icon_filter_condition interactive">${html_icon_edit}</div>
+                    <div class="filter_condition_added_icon_delete icon_filter_condition interactive">${html_icon_delete}</div>
                 </div>
             `;
 
@@ -194,12 +206,74 @@ export async function control_filter() {
 
 
         }
+
+        //
+        // =================イベント====================
+        //
+        // ======削除アイコンを押してfilterを削除======
+        document.querySelectorAll('.filter_condition_added_icon_delete').forEach((item, index) => {
+            item.addEventListener('click', function() {
+                // このアイコンの親要素を見つける
+                const parentElement = this.closest('.flex-container');
+
+                // stateを削除
+                splice_state_filter(index);
+
+                // 親要素が存在する場合、それを削除
+                if (parentElement) {
+                    parentElement.remove();
+                }
+            });
+        });
+        // ======編集アイコンを押してfilterを編集======
+        // formの表示、formの値をstateの値にして表示、stateを削除
+        document.querySelectorAll('.filter_condition_added_icon_edit').forEach((item, index) => {
+
+            item.addEventListener('click', function () {
+
+                // filter_formに値を入力
+                /// filter_select
+                element_filter_select.value = split_state_filter(index)[0];
+
+                /// value_filter_limit_value
+                element_filter_limit_value.value = split_state_filter(index)[1];
+
+                /// value_filter_limit_type
+                element_filter_limit_type.value = split_state_filter(index)[2];
+
+                // filter_formを表示
+                element_filter_form.style.display = 'flex';
+
+                // btn_show_filter_formを非表示
+                element_btn_show_filter_form.style.display = 'none';
+
+                // filter_conditions_addedを表示
+                element_filter_conditions_added.style.display = 'none';
+
+                // stateを削除
+                splice_state_filter(index);
+
+            });
+
+        });
+        
     }
 
-    // ======フィルター実行======
-    // 「フィルターを実行」をクリックしたら動く
-    async function execute_filter() {
+    // state_filterの値を取得して、3つの要素に分ける
+    function split_state_filter(index) {
 
+        // state_filterの値を取得
+        const state_filter = get_state_filter()[index];
+        
+        const state_filter_value_filter_select = state_filter.split('-')[0];
+        const state_filter_value_filter_limit_value = state_filter.split('-')[1];
+        const state_filter_value_filter_limit_type = state_filter.split('-')[2];
+
+        return [
+            state_filter_value_filter_select,
+            state_filter_value_filter_limit_value,
+            state_filter_value_filter_limit_type
+        ];
     }
     
 

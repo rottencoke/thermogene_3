@@ -84,7 +84,7 @@ svg:hover {
 }
 
 /* アイコンの位置調整 */
-.icon_pos {
+.icon_filter_condition {
     position: relative;
     top: -8px;
 }
