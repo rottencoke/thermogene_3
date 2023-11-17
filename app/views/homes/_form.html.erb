@@ -4,10 +4,10 @@
 
         <div id="search_condition_area" class="flex center">
 
-            <div id="search_main_area" class=" container">
+            <div id="search_main_area" class="container center">
 
-                <label for="jobtitle" class="form_label">Job Title</label>
                 <div id="search_jobtitle">
+                    <label for="jobtitle" class="form_label">Job Title</label>
                     <%= f.text_field :jobtitle, id:"jobtitle", class: "form-control form_line" %>
                 </div>
 
@@ -15,67 +15,30 @@
 
                 <div>
                     <div class="form_horizontal_display">
-                    <label for="temp_minimum" class="form_label">生育温度</label>
-                    <%= f.number_field :temp_minimum, id:"temp_minimum", class:"form-control small_number_field"%>
-                    <%= f.label :temp_minimum, "℃" %>
+                        <label for="temp_minimum" class="form_label">生育温度</label>
+                        <%= f.number_field :temp_minimum, id:"temp_minimum", class:"form-control small_number_field", min: 40, max: 106 %>
+                        <%= f.label :temp_minimum, "℃" %>
 
-                    <p>~</p>
+                        <p>~</p>
 
-                    <%= f.number_field :temp_maximum, class:"form-control small_number_field" %>
-                    <%= f.label :temp_maximum, "℃" %>
+                        <%= f.number_field :temp_maximum, class:"form-control small_number_field", min: 40, max: 106 %>
+                        <%= f.label :temp_maximum, "℃" %>
                     </div>
-                    <p class="fs_7">(40℃以下は今後実装予定)</p>
                 </div>
 
                 <hr>
 
                 <div id="search_seqInputArea">
                     <label for="seq" class="form_label py-3 pe-2">Query配列</label>
-                    <br>
-                    <%= f.file_field :sequence_file, class:"mb-3"%>(未実装)
                     <%= f.text_area :sequence, id:"seq", class:"form-control form_text_area" %>
                 </div>
-            </div>
-
-            <div id="search_option_area" class="container gap-4">
-                <div id="search_method">
-                    <label class="form_label">検索方法</label><br>
-                    <%= f.radio_button :search_method, :temptoseq, :checked => true %> 任意の生育温度の範囲内の生物種の中から、BLAST検索を実行
-                    <br>
-                    <%= f.radio_button :search_method, :seqtotemp %> BLAST検索の結果に生育温度の情報を記載 (未実装)
-                </div>
-
+                
                 <hr>
 
                 <div id="search_blast_engine">
                     <label class="form_label">BLAST検索方法</label><br>
                     <%= f.radio_button :search_blast_engine, :blastn, :checked => true %> BLASTn
                     <%= f.radio_button :search_blast_engine, :tblastn %> tBLASTn
-                </div>
-
-                <hr>
-
-                <div id="search_option_identity">
-                    <div class="form_horizontal_display">
-                        <label for="identity_minimum" class="form_label">Identity (未実装)</label>
-                        <%= f.number_field :identity_minimum, id:"identity_minimum", class:"form-control small_number_field" %>
-                        <%= f.label :identity_minimum, "%" %>
-                        <p>~</p>
-                        <%= f.number_field :identity_maximum, class:"form-control small_number_field" %>
-                        <%= f.label :identity_maximum, "%" %>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div id="search_option_eValue">
-                    <div class="form_horizontal_display">
-                        <label for="eValue_minimum" class="form_label">E Value (未実装)</label>
-                        <%= f.number_field :eValue_minimum, id:"eValue_minimum", class:"form-control small_number_field" %>
-                        <p>~</p>
-                        <%= f.number_field :eValue_maximum, class:"form-control small_number_field" %>
-                    </div>
-
                 </div>
             </div>
 
