@@ -5,11 +5,14 @@ header {
     background-color: aliceblue;
 }
 
-#pageTitle {
+#page_title {
     font-size: 30px;
     font-style: italic;
     font-weight: 600;
-    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+    
 }
 
 #headerTitleArea {
@@ -18,7 +21,7 @@ header {
     width: 100%;
 }
 
-#headerIcon {
+#header_icon {
     position: absolute;
     top: 0;
     left: 10px;
@@ -63,4 +66,9 @@ a {
 
 .fs_8 {
     font-size: 0.6em;
+}
+
+/* カーソルを選択モードに変更 */
+.interactive:hover {
+    cursor: pointer;
 }

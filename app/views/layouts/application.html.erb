@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Thermogene</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <head>
+        <title><%= ENV['APP_TITLE'] %></title>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag 'es-module-shims.min' %>
-    <%= javascript_importmap_tags %>
-  </head>
+        <link rel="icon" type="image/png" sizes="16x16" href="<%= image_path('icons/favicon-16x16.png') %>">
+        <link rel="icon" type="image/png" sizes="32x32" href="<%= image_path('icons/favicon-32x32.png') %>">
+        <link rel="icon" type="image/png" sizes="48x48" href="<%= image_path('icons/favicon-48x48.png') %>">
 
-  <body>
-    <%= render 'layouts/header' %> 
-    <%= yield %>
-    <%= render 'layouts/footer' %>
-    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
 
-  </body>
+        <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+        <%= javascript_include_tag 'es-module-shims.min' %>
+        <%= javascript_importmap_tags %>
+    </head>
+
+    <body>
+        <%= render 'layouts/header' %> 
+        <%= yield %>
+        <%= render 'layouts/footer' %>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+
+    </body>
+    <script type="module">
+        import {open_home_page} from 'open_home_page';
+        open_home_page();
+    </script>
 </html>

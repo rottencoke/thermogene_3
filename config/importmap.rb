@@ -45,5 +45,8 @@ pin "sort_results_by_blast_param", to: "functions/utils/sort_results/sort_result
 pin "sort_results_by_tempura_param", to: "functions/utils/sort_results/sort_results_by_tempura_param.js"
 pin "filter_results", to: "functions/utils/filter_results/filter_results.js"
 
+## utils/link_to_home/
+pin "open_home_page", to: "functions/utils/link_to_home/main.js"
+
 ## view/icons/
 pin "icons", to: "functions/views/icons/icons.js"

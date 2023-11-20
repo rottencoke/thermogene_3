@@ -20,6 +20,7 @@ gem "activerecord-import" # CSVファイルの内容をTempuraテーブルに移
 gem 'spring', '~> 4.1', '>= 4.1.1' # Railsプロジェクトのpreloadする、$spring stopでフリーズ解消するため導入 -23/08/17
 gem 'sassc-rails'
 gem 'font-awesome-rails' # iconの追加 -23/11/15
+gem 'dotenv-rails', '~> 2.8', '>= 2.8.1' # ページタイトルを環境変数で設定するために導入 -23/11/20
 
 
 group :development, :test do
