@@ -34,6 +34,10 @@ pin "render_sort_control", to: "functions/views/searches/render_sort_control.js"
 pin "render_filter_control", to: "functions/views/searches/render_filter_control.js"
 pin "show_if_there", to: "functions/views/searches/show_if_there.js"
 
+## view/release_note
+pin "render_release_notes", to: "functions/views/release_note/main.js"
+pin "release_info", to: "functions/views/release_note/release_info.js"
+
 ## utils/sort_results/
 pin "control_sort", to: "functions/utils/sort_results/main.js"
 pin "control_filter", to: "functions/utils/filter_results/main.js"
