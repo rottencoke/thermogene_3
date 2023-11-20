@@ -14,7 +14,7 @@ export async function render_condition() {
     const th_jobtitle = "JOB TITLE";
     const th_temperature = "生育温度";
     const th_sequence = "Query配列";
-    const th_search_blast_engine = "BLAST engine";
+    const th_search_blast_engine = "BLAST検索プログラム";
     const th_search_method = "検索方法";
     const th_identity = "相同性";
     const th_evalue = "E Value";
@@ -59,18 +59,6 @@ export async function render_condition() {
                         <tr>
                             <th class="condition_th">${th_search_blast_engine}</th>
                             <td>${td_search_blast_engine}</td>
-                        </tr>
-                        <tr>
-                            <th class="condition_th">${th_search_method}</th>
-                            <td>${td_search_method}</td>
-                        </tr>
-                        <tr>
-                            <th class="condition_th">${th_identity}</th>
-                            <td>${td_identity_minimum}%&nbsp;～&nbsp;${td_identity_maximum}%</td>
-                        </tr>
-                        <tr>
-                            <th class="condition_th">${th_evalue}</th>
-                            <td>${td_evalue_minimum}&nbsp;～&nbsp;${td_evalue_maximum}</td>
                         </tr>
                         <tr>
                             <th class="condition_th">${th_created_at}</th>
