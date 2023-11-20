@@ -31,11 +31,6 @@
     width: max-content;
 }
 
-/* カーソルを選択モードに変更 */
-.interactive:hover {
-    cursor: pointer;
-}
-
 /* 要素の周りに影をつける */
 .shadow_around_element {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
