@@ -18,6 +18,8 @@ export async function control_filter() {
     const element_filter_form = document.getElementById('filter_form');
     const element_btn_show_filter_form = document.getElementById('btn_show_filter_form');
     const element_icon_filter_condition = document.querySelectorAll('.icon_filter_condition');
+    const element_filter_limit_multiplier_value = document.getElementById('filter_limit_multiplier_value');
+
 
     //
     // ================= イベント ====================
@@ -81,6 +83,55 @@ export async function control_filter() {
         }
     });
 
+    // ======選択されたフィルターの種類に応じて数値入力部のレイアウトの変更======
+    // 生育温度、相同性、evalueの場合はそれぞれのレイアウトに変更する
+    element_filter_select.addEventListener("change", function () {
+        
+        // 入力されたフィルターの種類の取得
+        const value_filter_select = element_filter_select.options[element_filter_select.selectedIndex].value;
+
+        // 変更する対象の取得
+        const element_filter_unit_of_temperature = document.getElementById('filter_unit_of_temperature');
+        const element_filter_unit_of_identity = document.getElementById('filter_unit_of_identity');
+        const element_filter_unit_of_evalue = document.getElementById('filter_unit_of_evalue');
+        
+        // フィルターの種類に応じて、フィルターのフォームのレイアウトを変更する
+        switch (value_filter_select) {
+
+            /// bit_scoreの場合
+            case "bit_score":
+                element_filter_unit_of_temperature.style.display = 'none';
+                element_filter_unit_of_identity.style.display = 'none';
+                element_filter_unit_of_evalue.style.display = 'none';
+                element_filter_limit_multiplier_value.style.display = 'none';
+                break;
+            
+            /// 生育温度の場合
+            case "growth_temperature":
+                element_filter_unit_of_temperature.style.display = 'block';
+                element_filter_unit_of_identity.style.display = 'none';
+                element_filter_unit_of_evalue.style.display = 'none';
+                element_filter_limit_multiplier_value.style.display = 'none';
+                break;
+            
+            /// 相同性の場合
+            case "identity":
+                element_filter_unit_of_temperature.style.display = 'none';
+                element_filter_unit_of_identity.style.display = 'block';
+                element_filter_unit_of_evalue.style.display = 'none';
+                element_filter_limit_multiplier_value.style.display = 'none';
+                break;
+            
+            /// evalueの場合
+            case "evalue":
+                element_filter_unit_of_temperature.style.display = 'none';
+                element_filter_unit_of_identity.style.display = 'none';
+                element_filter_unit_of_evalue.style.display = 'block';
+                element_filter_limit_multiplier_value.style.display = 'block';
+                break;
+        }
+    });
+
     // ======"+"押してフィルター追加======
     element_btn_save_filter_value.addEventListener('click', function (event) {
         listen_change_filter();
@@ -141,12 +192,14 @@ export async function control_filter() {
         const value_filter_select = element_filter_select.options[element_filter_select.selectedIndex].value;
         const value_filter_limit_value = element_filter_limit_value.value;
         const value_filter_limit_type = element_filter_limit_type.options[element_filter_limit_type.selectedIndex].value;
+        const value_filter_limit_multiplier_value = element_filter_limit_multiplier_value.value;
 
         // もしどれかが入力されていない場合、何も処理を行わない
         if (!value_filter_select || !value_filter_limit_value || !value_filter_limit_type) return;
 
         // state_filterを保存
-        const value_state_filter = `${value_filter_select}-${value_filter_limit_value}-${value_filter_limit_type}`;
+        let value_state_filter = `${value_filter_select}-${value_filter_limit_value}-${value_filter_limit_type}`;
+        if (value_filter_select == "evalue") value_state_filter += `-${value_filter_limit_multiplier_value}`;
         set_state_filter(value_state_filter);
 
         
@@ -172,17 +225,36 @@ export async function control_filter() {
         function render_filter_condition_added(index) {
 
             // 表示する文字を定義
-            let text_filter_select, text_filter_limit_type = "";
+            let text_filter_select = "",
+                text_filter_unit = "",
+                text_filter_limit_multiplier_value = "",
+                text_filter_limit_type = "";
 
             // フィルター条件を表示
-            if (split_state_filter(index)[0] == "growth_temperature") text_filter_select = "生育温度";
-            else if (split_state_filter(index)[0] == "identity") text_filter_select = "相同性";
-            else if (split_state_filter(index)[0] == "bit_score") text_filter_select = "bit score";
-            else if (split_state_filter(index)[0] == "evalue") text_filter_select = "E Value";
+            switch (split_state_filter(index)[0]) {
+                case "growth_temperature":
+                    text_filter_select = "生育温度";
+                    text_filter_unit = "°C";
+                    break;
+                case "identity":
+                    text_filter_select = "相同性";
+                    text_filter_unit = "%";
+                    break;
+                case "bit_score":
+                    text_filter_select = "bit score";
+                    break;
+                case "evalue":
+                    text_filter_select = "E Value";
+                    text_filter_unit = "e-";
+                    text_filter_limit_multiplier_value = split_state_filter(index)[3];
+                    break;
+            }
 
             if (split_state_filter(index)[2] == "gte") text_filter_limit_type = "以上";
             else if (split_state_filter(index)[2] = "lte") text_filter_limit_type = "以下";
 
+            // 追加されたフィルターの条件を文字列にして返す
+            const text_filter_string = `${text_filter_select}が${split_state_filter(index)[1]}${text_filter_unit}${text_filter_limit_multiplier_value}${text_filter_limit_type}`;
 
             // アイコン
             /// 編集アイコン
@@ -194,7 +266,7 @@ export async function control_filter() {
             let html_filter_condition_added = /*html*/`
                 <div id="filter_condition_added_${index}" class="flex-container">
                     <div>
-                        <p>${text_filter_select}が${split_state_filter(index)[1]}${text_filter_limit_type}</p>
+                        <p>${text_filter_string}</p>
                     </div>
                     <div class="filter_condition_added_icon_edit icon_filter_condition interactive">${html_icon_edit}</div>
                     <div class="filter_condition_added_icon_delete icon_filter_condition interactive">${html_icon_delete}</div>
@@ -204,7 +276,6 @@ export async function control_filter() {
             // 返り値
             return html_filter_condition_added;
 
-
         }
 
         //
@@ -212,7 +283,9 @@ export async function control_filter() {
         //
         // ======削除アイコンを押してfilterを削除======
         document.querySelectorAll('.filter_condition_added_icon_delete').forEach((item, index) => {
-            item.addEventListener('click', function() {
+
+            item.addEventListener('click', function () {
+                
                 // このアイコンの親要素を見つける
                 const parentElement = this.closest('.flex-container');
 
@@ -268,11 +341,14 @@ export async function control_filter() {
         const state_filter_value_filter_select = state_filter.split('-')[0];
         const state_filter_value_filter_limit_value = state_filter.split('-')[1];
         const state_filter_value_filter_limit_type = state_filter.split('-')[2];
+        let state_filter_limit_multiplier_value = "";
+        if (state_filter.split('-')[3]) state_filter_limit_multiplier_value = state_filter.split('-')[3];
 
         return [
             state_filter_value_filter_select,
             state_filter_value_filter_limit_value,
-            state_filter_value_filter_limit_type
+            state_filter_value_filter_limit_type,
+            state_filter_limit_multiplier_value
         ];
     }
     

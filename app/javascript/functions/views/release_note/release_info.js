@@ -4,6 +4,7 @@ export const arr_release_info = [
         changes: [
             "リリース",
             "検索条件入力フォーム",
+            "NCBIゲノムデータベースの作成",
             "blastn検索",
             "tblastn検索",
             "検索結果表示",
@@ -12,6 +13,7 @@ export const arr_release_info = [
         details: [
             "初リリース。以下にリリース時の情報を記載する",
             "検索条件を入力する。項目は以下の7個。Job title、生育温度、Query配列、検索方法、BLAST検索方法、Identity、E value",
+            "TEMPURAデータベースに登録されている生物種のうち40℃以上のもののfastaファイルをNCBI BLASTのmakeblastdbを用いて、ゲノムデータベースにした。",
             "NCBI BLASTの検索機能。塩基配列データベースを用いて、入力された塩基配列に相同性を有する塩基配列を調べる。",
             "NCBI BLASTの検索機能。塩基配列データベースをアミノ酸に変換して、入力されたアミノ酸配列に相同性を有するアミノ酸配列を調べる。",
             "blastの検索の結果得られた情報をTEMPURAデータベースの情報と合わせて表示する。項目は以下の11個。生物種名、分類、至適生育温度、遺伝子名、タンパク質名、長さ、E Value、相同性、ギャップ、bit_score、アライメント。",

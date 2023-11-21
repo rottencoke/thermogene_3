@@ -12,7 +12,7 @@ export function render_sort_control() {
             </div>
             <div class="modal shadow_around_element" id="sort_modal" style="display:none;">
                 <div class="modal_content">
-                    <div class="flex-container">
+                    <div class="flex-container input-group">
                         <select id="sort_select" class="form-select w-3">
                             <option value="bit_score">bit score</option>
                             <option value="growth_temperature">生育温度</option>
