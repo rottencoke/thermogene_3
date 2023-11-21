@@ -10,28 +10,18 @@ export async function render_condition() {
     const condition_title = "検索条件です";
 
     // <table>のヘッダー
-    const th_search_id = "SEARCH ID";
     const th_jobtitle = "JOB TITLE";
     const th_temperature = "生育温度";
     const th_sequence = "Query配列";
     const th_search_blast_engine = "BLAST検索プログラム";
-    const th_search_method = "検索方法";
-    const th_identity = "相同性";
-    const th_evalue = "E Value";
     const th_created_at = "検索開始時刻";
 
     // <table>のデータ
-    const td_search_id = search.id;
     const td_jobtitle = search.jobtitle;
     const td_temperature_minimum = search.temperature_minimum;
     const td_temperature_maximum = search.temperature_maximum;
     const td_sequence = search.sequence.replace(/(\r\n?|\n)/g, "");
     const td_search_blast_engine = search.search_blast_engine;
-    const td_search_method = show_search_method(search.search_method);
-    const td_identity_minimum = show_if_there(search.identity_minimum);
-    const td_identity_maximum = show_if_there(search.identity_maximum);
-    const td_evalue_minimum = show_if_there(search.evalue_minimum);
-    const td_evalue_maximum = show_if_there(search.evalue_maximum);
     const td_created_at = formatDate(search.created_at);
 
     return /*html*/`
@@ -41,16 +31,12 @@ export async function render_condition() {
                 <div id="search_condition" class="container">
                     <table>
                         <tr>
-                            <th class="condition_th">${th_search_id}</th>
-                            <td>${td_search_id}</td>
-                        </tr>
-                        <tr>
                             <th class="condition_th">${th_jobtitle}</th>
                             <td>${td_jobtitle}</td>
                         </tr>
                         <tr>
                             <th class="condition_th">${th_temperature}</th>
-                            <td>${td_temperature_minimum}℃&nbsp;～&nbsp;${td_temperature_maximum}℃</td>
+                            <td>${td_temperature_minimum}°C&nbsp;～&nbsp;${td_temperature_maximum}°C</td>
                         </tr>
                         <tr>
                             <th class="condition_th">${th_sequence}</th>

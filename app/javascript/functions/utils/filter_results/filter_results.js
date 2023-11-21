@@ -3,26 +3,34 @@ import { get_tblastn_result } from 'get_tblastn_result';
 import { get_tempura } from 'get_tempura';
 import { get_state_filter } from "state";
 
-
 // ソートされた結果のidのオブジェクトをstateの条件でフィルターして返す
 export async function filter_results(obj_sorted) {
+
+    console.log("フィルター前");
+    console.dir(obj_sorted);
 
     // state_filterの値を取得
     let arr_state_filter = [];
     const state_filter = get_state_filter();
 
-    // return obj_sorted;
+    // state_filterが何も設定されてないときは、そのままobjを返す
+    if (state_filter.length == 0) return obj_sorted;
+
     for (let i = 0; i < state_filter.length; i++) {
+
+        // filterの値だけevalueのこともあるから別で処理する
+        let filter_limit_evalue = state_filter[i].split('-')[1];
+        if (state_filter[i].split('-')[0] == "evalue") {
+            const value_raw_evalue = `${filter_limit_evalue}e-${state_filter[i].split('-')[3]}`;
+            filter_limit_evalue = parseFloat(value_raw_evalue);
+        }
         arr_state_filter[i] = {
             filter_select: state_filter[i].split('-')[0],
-            filter_limit_value: state_filter[i].split('-')[1],
-            filter_limit_type: state_filter[i].split('-')[2]
+            filter_limit_value: filter_limit_evalue,
+            filter_limit_type: state_filter[i].split('-')[2],
         };
-    }
 
-    // state_filterが何も設定されてないときは、そのままobjを返す
-    if (state_filter.length == 0) {
-        return obj_sorted;
+        console.dir(arr_state_filter[i]);
     }
 
     // obj_sortedから各種idの取得、配列
@@ -55,8 +63,9 @@ export async function filter_results(obj_sorted) {
                     arr_blastn_result_indexed.push({
                         index,
                         id: id,
-                        param: blastn_result[filter_param].toString() // evalue用にtoString()にしてる
+                        param: parseFloat(blastn_result[filter_param]) // evalue用にparseFloat()にしてる
                     });
+                    console.log("param : " + parseFloat(blastn_result[filter_param]));
                 };
 
                 // フィルターを実行
@@ -66,7 +75,7 @@ export async function filter_results(obj_sorted) {
                 arr_blastn_result_id_filtered = arr_blastn_result_id_indexed_filtered.map(obj => obj.id);
 
                 // フィルターされたインデックスを使用してtempura_idを並び替え
-                arr_tempura_id_filtered = arr_blastn_result_indexed.map(item => arr_tempura_id_filtered[item.index]);
+                arr_tempura_id_filtered = arr_blastn_result_id_indexed_filtered.map(item => arr_tempura_id_filtered[item.index]);
 
             }
             /// [2] tblastnの場合
@@ -81,7 +90,7 @@ export async function filter_results(obj_sorted) {
                     arr_tblastn_result_indexed.push({
                         index,
                         id: id,
-                        param: tblastn_result[filter_param].toString() // evalue用にtoString()にしてる
+                        param: parseFloat(tblastn_result[filter_param]) // evalue用にparseFloat()にしてる
                     });
                 };
 
@@ -132,18 +141,23 @@ export async function filter_results(obj_sorted) {
         }
     }
 
-    return {
+    const obj_return = {
         arr_blastn_result_id: arr_blastn_result_id_filtered,
         arr_tblastn_result_id: arr_tblastn_result_id_filtered,
         arr_tempura_id: arr_tempura_id_filtered
-    }
+    };
+
+    console.log("フィルター後");
+    console.dir(obj_return);
+
+    return obj_return
 
     // フィルター部分の関数
     function filter_arr(arr, i) {
 
         let arr_filtered = [];
 
-        const num_filter_limit_value = parseInt(arr_state_filter[i].filter_limit_value);
+        const num_filter_limit_value = arr_state_filter[i].filter_limit_value;
 
         /// フィルターが gte「以上」の場合
         if (arr_state_filter[i].filter_limit_type == "gte") {
@@ -153,6 +167,9 @@ export async function filter_results(obj_sorted) {
         else if (arr_state_filter[i].filter_limit_type == "lte") {
             arr_filtered = arr.filter(obj => obj.param <= num_filter_limit_value);
         }
+
+        console.log(`arr_filtered[${i}]`);
+        console.dir(arr_filtered);
 
         return arr_filtered;
     }
