@@ -6,9 +6,6 @@ import { get_state_filter } from "state";
 // ソートされた結果のidのオブジェクトをstateの条件でフィルターして返す
 export async function filter_results(obj_sorted) {
 
-    console.log("フィルター前");
-    console.dir(obj_sorted);
-
     // state_filterの値を取得
     let arr_state_filter = [];
     const state_filter = get_state_filter();
@@ -30,7 +27,6 @@ export async function filter_results(obj_sorted) {
             filter_limit_type: state_filter[i].split('-')[2],
         };
 
-        console.dir(arr_state_filter[i]);
     }
 
     // obj_sortedから各種idの取得、配列
@@ -65,7 +61,6 @@ export async function filter_results(obj_sorted) {
                         id: id,
                         param: parseFloat(blastn_result[filter_param]) // evalue用にparseFloat()にしてる
                     });
-                    console.log("param : " + parseFloat(blastn_result[filter_param]));
                 };
 
                 // フィルターを実行
@@ -147,9 +142,6 @@ export async function filter_results(obj_sorted) {
         arr_tempura_id: arr_tempura_id_filtered
     };
 
-    console.log("フィルター後");
-    console.dir(obj_return);
-
     return obj_return
 
     // フィルター部分の関数
@@ -167,9 +159,6 @@ export async function filter_results(obj_sorted) {
         else if (arr_state_filter[i].filter_limit_type == "lte") {
             arr_filtered = arr.filter(obj => obj.param <= num_filter_limit_value);
         }
-
-        console.log(`arr_filtered[${i}]`);
-        console.dir(arr_filtered);
 
         return arr_filtered;
     }
