@@ -54,7 +54,6 @@ let state_filter = [];
 export function set_state_filter(new_state) {
     const num_state_filter = state_filter.length;
     state_filter[num_state_filter] = new_state;
-    console.log("state_filter : " + state_filter);
 }
 
 /// splicer
