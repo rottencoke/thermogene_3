@@ -10,7 +10,7 @@ export function render_setting() {
     const state_auto_save_apply = get_state_auto_save_apply();
 
     // 文字
-    const arr_text_settings = ["結果の表示設定", "テスト1", "テスト2", "テスト3"];
+    const arr_text_settings = ["結果の表示設定"];
     const text_setting_0_checkbox_auto_save_sorting = "結果表示設定を自動で保存&適用する";
 
     // 設定モーダルのタブ作成
