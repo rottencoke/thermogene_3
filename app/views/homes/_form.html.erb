@@ -37,8 +37,11 @@
 
                 <div id="search_blast_engine">
                     <label class="form_label">BLAST検索プログラム</label><br>
-                    <%= f.radio_button :search_blast_engine, :blastn, :checked => true %> BLASTn
-                    <%= f.radio_button :search_blast_engine, :tblastn %> tBLASTn
+                    <%= f.radio_button :search_blast_engine, :blastn, id:"radio_blastn", :checked => true %>
+                    <label for="radio_blastn">BLASTn</label>
+
+                    <%= f.radio_button :search_blast_engine, :tblastn, id:"radio_tblastn" %>
+                    <label for="radio_tblastn">tBLASTn</label> 
                 </div>
             </div>
 
