@@ -3,7 +3,7 @@ import { sort_results_by_tempura_param } from 'sort_results_by_tempura_param';
 import { filter_results } from 'filter_results';
 import { render_result_table } from 'render_result_table';
 import { render_alignment } from 'render_alignment';
-import { get_state_sort } from "state";
+import { get_state_sort } from 'state';
 
 // 結果全体
 export async function render_results() {
@@ -50,9 +50,9 @@ export async function render_results() {
             </div>
             ${html_results} 
         `
-
-    element_search_result_area.innerHTML = html_results;
-
+        // htmlを追加
+        element_search_result_area.innerHTML = html_results;
+        
     } catch (error) {
         // エラー処理
         console.error('データの取得中にエラーが発生しました in render_results():', error);
@@ -107,11 +107,9 @@ async function get_obj_result_sorted() {
 
             obj_result_sorted = await sort_results_by_blast_param("evalue", "ascending");
 
-        } else {
-
-            console.log('その組み合わせはありません');
         }
 
+        // フィルターにかける
         obj_result_sorted_filtered = await filter_results(obj_result_sorted);
 
         return obj_result_sorted_filtered;

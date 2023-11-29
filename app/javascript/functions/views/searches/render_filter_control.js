@@ -1,19 +1,39 @@
 import { icon_plus } from 'icons';
+import { get_state_filter } from 'state';
 
 export function render_filter_control() {
 
     // アイコン
     const html_icon_plus = icon_plus;
 
-    // フィルター管理バーのhtml
-    let html_filter_control = /*html*/`
-        <div id="filter_control_area">
+    // フィルター管理部のタイトル
+    let html_filter_control_title = ``;
+    if (get_state_filter().length) {
+        html_filter_control_title = `
+            <div id="filter_default_title" class="sort_show_label text_width hover_background_marked interactive m-4 p-2" style="display:none;">
+                ${html_icon_plus} フィルターを追加
+            </div>
+            <div id="filter_added_title" class="sort_show_label text_width hover_background_marked interactive m-4 p-2">
+                ${html_icon_plus} フィルター追加済み
+            </div>
+        `;
+    } else {
+        html_filter_control_title = `
             <div id="filter_default_title" class="sort_show_label text_width hover_background_marked interactive m-4 p-2">
                 ${html_icon_plus} フィルターを追加
             </div>
-            <div id="filter_added_title" class="sort_show_label text_width hover_background_marked interactive m-4 p-2"  style="display:none;">
-                フィルター追加済み
+            <div id="filter_added_title" class="sort_show_label text_width hover_background_marked interactive m-4 p-2" style="display:none;">
+                ${html_icon_plus} フィルター追加済み
             </div>
+        `;
+    }
+
+    // フィルター管理バーのhtml
+    let html_filter_control = /*html*/`
+        <div id="filter_control_area">
+
+            ${html_filter_control_title}
+            
             <div class="modal shadow_around_element" id="filter_modal" style="display:none;">
                 <div id="modal_filter_content" class="modal_content">
                     <div id="filter_conditions_added" class="flex-container" style="display:none;"></div>
@@ -43,7 +63,7 @@ export function render_filter_control() {
                         <div id="btn_save_filter_value" class="interactive">${html_icon_plus}</div>
                     </div>
                     <div id="btn_show_filter_form" class="mt-4 interactive" style="display:none;">
-                        <div class="flex-container">${html_icon_plus} さらにフィルターを追加</div>
+                        <div class="flex-container">${html_icon_plus} フィルターを追加</div>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,10 @@
-import { set_state_filter, splice_state_filter, get_state_filter, set_state_modal_filter, get_state_modal_filter, get_state_modal_sort } from "state";
+import { set_state_filter, splice_state_filter, get_state_filter, set_state_modal_filter, get_state_modal_filter, get_state_modals } from 'state';
 import { icon_edit, icon_delete } from 'icons';
-import { render_results } from "render_results";
+import { render_results } from 'render_results';
+import { save_setting } from 'control_setting';
 
 // フィルター管理画面の表示の管理
-export async function control_filter() {
+export async function control_modal_filter() {
     
     // html要素の取得
     const element_body = document.body;
@@ -30,7 +31,10 @@ export async function control_filter() {
     element_filter_default_title.addEventListener('click', function (event) {
 
         // 別のモーダルが開いてたらreturn
-        if (get_state_modal_sort()) return;
+        if (get_state_modals()) return;
+
+        // filter_conditions_addedをある分作成する
+        update_filter_conditions_added();
 
         show_modal(event, element_filter_default_title);
 
@@ -42,7 +46,10 @@ export async function control_filter() {
     element_filter_added_title.addEventListener('click', function (event) {
 
         // 別のモーダルが開いてたらreturn
-        if (get_state_modal_sort()) return;
+        if (get_state_modals()) return;
+
+        // filter_conditions_addedをある分作成する
+        update_filter_conditions_added();
 
         show_modal(event, element_filter_added_title);
 
@@ -72,13 +79,19 @@ export async function control_filter() {
             set_state_modal_filter(false);
 
             // state_filterがあるなら、filter_default_titleを非表示にして、filter_added_titleを表示する
-            if (get_state_filter().length > 0) {
+            if (get_state_filter().length) {
                 element_filter_default_title.style.display = 'none';
                 element_filter_added_title.style.display = 'block';
+            } else {
+                element_filter_default_title.style.display = 'block';
+                element_filter_added_title.style.display = 'none';
             }
 
             // state_filterに従ってフィルターを実行
             await render_results();
+
+            // localstorageのsettingを保存
+            save_setting();
 
         }
     });
@@ -154,6 +167,7 @@ export async function control_filter() {
 
     // ======モーダル表示======
     function show_modal(event, element) {
+
         // 他の要素へのイベントの伝播を停止
         // これによりwindowでのイベントとはならず、開いたと同時に閉じることはなくなる
         event.stopPropagation();
@@ -203,6 +217,14 @@ export async function control_filter() {
         set_state_filter(value_state_filter);
 
         
+        // filter_conditions_addedをある分作成する
+        update_filter_conditions_added();
+
+    }
+
+    // filter_conditions_addedをある分作成する
+    function update_filter_conditions_added() {
+
         // stateからすでに登録されてるフィルターの数を取得
         const number_filter_added = get_state_filter().length;
         
@@ -268,8 +290,8 @@ export async function control_filter() {
                     <div>
                         <p>${text_filter_string}</p>
                     </div>
-                    <div class="filter_condition_added_icon_edit icon_filter_condition interactive">${html_icon_edit}</div>
-                    <div class="filter_condition_added_icon_delete icon_filter_condition interactive">${html_icon_delete}</div>
+                    <div class="filter_condition_added_icon_edit icon_filter_condition interactive" icon_edit_index="${index}">${html_icon_edit}</div>
+                    <div class="filter_condition_added_icon_delete icon_filter_condition interactive" icon_delete_index="${index}">${html_icon_delete}</div>
                 </div>
             `;
 
@@ -285,12 +307,12 @@ export async function control_filter() {
         document.querySelectorAll('.filter_condition_added_icon_delete').forEach((item, index) => {
 
             item.addEventListener('click', function () {
-                
-                // このアイコンの親要素を見つける
-                const parentElement = this.closest('.flex-container');
 
                 // stateを削除
                 splice_state_filter(index);
+                
+                // このアイコンの親要素を見つける
+                const parentElement = this.closest('.flex-container');
 
                 // 親要素が存在する場合、それを削除
                 if (parentElement) {
@@ -314,6 +336,9 @@ export async function control_filter() {
                 /// value_filter_limit_type
                 element_filter_limit_type.value = split_state_filter(index)[2];
 
+                // stateを削除
+                splice_state_filter(index);
+
                 // filter_formを表示
                 element_filter_form.style.display = 'flex';
 
@@ -323,13 +348,9 @@ export async function control_filter() {
                 // filter_conditions_addedを表示
                 element_filter_conditions_added.style.display = 'none';
 
-                // stateを削除
-                splice_state_filter(index);
-
             });
 
         });
-        
     }
 
     // state_filterの値を取得して、3つの要素に分ける

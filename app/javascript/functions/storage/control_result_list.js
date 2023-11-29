@@ -39,7 +39,7 @@
 
 // storageにあれば読み込み、なければfalseを返す
 /// blastn, tblastn, tempuraのみ第3引数table_idを指定
-export function load_storage(search_id, table, table_id) {
+export function load_result_list(search_id, table, table_id) {
 
     // local storageからデータの取得
     const ssdata_result_list = localStorage.getItem('result_list');
@@ -74,7 +74,7 @@ export function load_storage(search_id, table, table_id) {
 
 // local storageに一度APIから取得したdbの情報を保存する
 /// blastn, tblastn, tempuraは配列の中に各idのオブジェクトを保存する
-export function save_storage(search_id, table, obj) {
+export function save_result_list(search_id, table, obj) {
 
     // local storageからデータの取得
     const ssdata_result_list = localStorage.getItem('result_list');
