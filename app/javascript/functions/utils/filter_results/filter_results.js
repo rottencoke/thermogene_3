@@ -1,30 +1,30 @@
 import { get_blastn_result } from 'get_blastn_result';
 import { get_tblastn_result } from 'get_tblastn_result';
 import { get_tempura } from 'get_tempura';
-import { get_state_filter } from "state";
+import { get_state_filter } from 'state';
 
 // ソートされた結果のidのオブジェクトをstateの条件でフィルターして返す
 export async function filter_results(obj_sorted) {
 
     // state_filterの値を取得
-    let arr_state_filter = [];
-    const state_filter = get_state_filter();
+    let arr_state_filter_splited = [];
+    const arr_state_filter = get_state_filter();
 
     // state_filterが何も設定されてないときは、そのままobjを返す
-    if (state_filter.length == 0) return obj_sorted;
+    if (arr_state_filter.length == 0) return obj_sorted;
 
-    for (let i = 0; i < state_filter.length; i++) {
+    for (let i = 0; i < arr_state_filter.length; i++) {
 
         // filterの値だけevalueのこともあるから別で処理する
-        let filter_limit_evalue = state_filter[i].split('-')[1];
-        if (state_filter[i].split('-')[0] == "evalue") {
-            const value_raw_evalue = `${filter_limit_evalue}e-${state_filter[i].split('-')[3]}`;
+        let filter_limit_evalue = arr_state_filter[i].split('-')[1];
+        if (arr_state_filter[i].split('-')[0] == "evalue") {
+            const value_raw_evalue = `${filter_limit_evalue}e-${arr_state_filter[i].split('-')[3]}`;
             filter_limit_evalue = parseFloat(value_raw_evalue);
         }
-        arr_state_filter[i] = {
-            filter_select: state_filter[i].split('-')[0],
+        arr_state_filter_splited[i] = {
+            filter_select: arr_state_filter[i].split('-')[0],
             filter_limit_value: filter_limit_evalue,
-            filter_limit_type: state_filter[i].split('-')[2],
+            filter_limit_type: arr_state_filter[i].split('-')[2],
         };
 
     }
@@ -39,9 +39,9 @@ export async function filter_results(obj_sorted) {
     const arr_tempura_param_acceptable = ["growth_temperature"];
 
     // arr_state_filterの数分繰り返して、フィルターを実行していく
-    for (let i = 0; i < arr_state_filter.length; i++) {
+    for (let i = 0; i < arr_state_filter_splited.length; i++) {
         
-        let filter_param = arr_state_filter[i].filter_select;
+        let filter_param = arr_state_filter_splited[i].filter_select;
 
         // blastのparamの場合
         if (arr_blast_param_acceptable.includes(filter_param)) {
@@ -149,14 +149,14 @@ export async function filter_results(obj_sorted) {
 
         let arr_filtered = [];
 
-        const num_filter_limit_value = arr_state_filter[i].filter_limit_value;
+        const num_filter_limit_value = arr_state_filter_splited[i].filter_limit_value;
 
         /// フィルターが gte「以上」の場合
-        if (arr_state_filter[i].filter_limit_type == "gte") {
+        if (arr_state_filter_splited[i].filter_limit_type == "gte") {
             arr_filtered = arr.filter(obj => obj.param >= num_filter_limit_value);
         }
         /// フィルターがlte「以下」の場合
-        else if (arr_state_filter[i].filter_limit_type == "lte") {
+        else if (arr_state_filter_splited[i].filter_limit_type == "lte") {
             arr_filtered = arr.filter(obj => obj.param <= num_filter_limit_value);
         }
 

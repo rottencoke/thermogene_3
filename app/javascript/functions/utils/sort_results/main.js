@@ -1,8 +1,9 @@
-import { set_state_sort, set_state_modal_sort, get_state_modal_sort, get_state_modal_filter } from "state";
-import { render_results } from "render_results";
+import { set_state_sort, set_state_modal_sort, get_state_modal_sort, get_state_modals } from 'state';
+import { render_results } from 'render_results';
+import { save_setting } from 'control_setting';
 
 // ソート管理画面の表示の管理
-export async function control_sort() {
+export async function control_modal_sort() {
 
     // html要素の取得
     const element_sort_modal = document.getElementById('sort_modal');
@@ -14,7 +15,7 @@ export async function control_sort() {
     element_sort_add_condition.addEventListener('click', function (event) {
 
         // 別のモーダルが開いてたらreturn
-        if (get_state_modal_filter()) return;
+        if (get_state_modals()) return;
 
         show_modal(event, element_sort_add_condition);
 
@@ -39,6 +40,9 @@ export async function control_sort() {
             set_state_modal_sort(false);
 
             await listen_change_sort();
+
+            // localstorageのsettingを保存
+            save_setting();
 
         }
     });
@@ -120,8 +124,10 @@ export async function control_sort() {
         // ソートの関数呼び出し
         /// stateの作成
         const state_sort = value_sort_select + '-' + value_sort_order;
+
         /// stateの設定
         set_state_sort(state_sort);
+        
         /// 結果の表示
         await render_results();
 

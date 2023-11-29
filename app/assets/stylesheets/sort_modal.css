@@ -1,24 +1,36 @@
-/* ソート管理画面 */
+/* ソートorフィルター管理画面 */
 .modal {
     display: none;
     position: absolute; /* 画面全体を覆うのではなく、特定の位置に表示 */
     z-index: 2;
     width: auto;
     height: auto;
-    background-color: #fefefe;
+    background-color: var(--color-background);
+    border-radius: 0.5em;
+}
+
+/* 設定モーダル */
+.modal_bigger {
+    display: none;
+    position: absolute; /* 画面全体を覆うのではなく、特定の位置に表示 */
+    z-index: 2;
+    width: 600px;
+    height: 300px;
+    background-color:var(--color-background);
     border-radius: 0.5em;
 }
 
 .hover_background_marked:hover {
-    background-color: #eeeeee;
+    background-color: var(--color-background-hover);
 }
 
+/* モーダルの中身 */
 .modal_content {
-    background-color: #fefefe;
+    background-color: var(--color-background);
     padding: 20px;
     margin: 0px;
-    width: max-content;
     min-width: 400px;
+    height: auto;
 }
 
 /* スクロール禁止用のクラス */
@@ -52,7 +64,7 @@ select {
 
 /* ソート系の表示のラベル */
 .sort_show_label {
-    background-color: aliceblue;
+    background-color: var(--color-primary);
     padding: 0.3em;
     border-radius: 0.5em;
     width: max-content;
@@ -70,16 +82,79 @@ select {
 svg {
     width: 16px;
     height: 16px;
-    fill: #444444;
+    fill: var(--color-icon);
 }
 
 /* svgアイコン hover */
 svg:hover {
-    fill: #050505;
+    fill: var(--color-icon-hover);
 }
 
 /* アイコンの位置調整 */
 .icon_filter_condition {
     position: relative;
     top: -8px;
+}
+
+/* ====== 設定モーダル内各種設定 ====== */
+
+/* 設定モーダルは要素を横並びにする */
+#modal_setting_content {
+    display: flex;
+    gap: 20px;
+}
+
+/* 設定モーダルの左側の設定の種類一覧タブ */
+#modal_setting_tabs {
+    position: relative;
+    width: 30%;
+    height: 100%;
+
+    /* 子要素を縦並びにする */
+    display: flex;
+    flex-direction: column;
+
+    /* デフォルトでできる子要素同士の10pxの隙間をなくす */
+    gap: 0;
+}
+
+.modal_setting_tab {
+    width: 100%;
+
+    /* 枠線は丸く */
+    border-radius: 8px;
+
+    /* 文字中央寄せ */
+    text-align: center;
+
+    /* 隙間なくす */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* カーソルがあると色を濃くする */
+.modal_setting_tab:hover {
+    background-color: var(--color-background-hover);
+}
+
+/* デフォルトで設定タブの一番上の項目に背景色をつける */
+#modal_setting_tab_0 {
+    background-color: var(--color-background-hover);
+}
+
+/* 設定モーダルの各設定の内容 */
+#modal_setting_contents {
+    position: relative;
+    width: 60%;
+    height: 100%;
+}
+
+/* 設定モーダル内容部分タイトル */
+.setting_title {
+    /* フォントを大きく */
+    font-weight: bold;
+    font-size: 18px;
+
+    /* 文字中央寄せ */
+    text-align: center;
 }

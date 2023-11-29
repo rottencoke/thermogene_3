@@ -57,7 +57,7 @@ export async function render_condition() {
             </div>
     
         </div>
-    `
+    `;
 };
 
 // search_methodの情報を元にわかりやすく説明した文字列を返す

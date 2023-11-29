@@ -1,5 +1,5 @@
 import { get_search_id } from 'get_search_id'; // search_idの取得
-import { load_storage, save_storage } from 'control_storage';
+import { load_result_list, save_result_list } from 'control_result_list';
 
 // APIを使用する際は値の定義とレスポンスのタイミングが異なるので非同期処理を使用
 export async function get_search() {
@@ -8,7 +8,7 @@ export async function get_search() {
     const search_id = get_search_id();
 
     // session storageに情報が保存されてないか確認する
-    const obj_ss_search = load_storage(search_id, 'search',);
+    const obj_ss_search = load_result_list(search_id, 'search',);
 
     /// 保存されている場合
     if (obj_ss_search) {
@@ -52,7 +52,7 @@ export async function get_search() {
             };
 
             // session storageに保存
-            save_storage(search_id, 'search', obj_response);
+            save_result_list(search_id, 'search', obj_response);
 
             // 返り値
             return obj_response;
