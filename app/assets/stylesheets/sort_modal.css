@@ -137,11 +137,6 @@ svg:hover {
     background-color: var(--color-background-hover);
 }
 
-/* デフォルトで設定タブの一番上の項目に背景色をつける */
-#modal_setting_tab_0 {
-    background-color: var(--color-background-hover);
-}
-
 /* 設定モーダルの各設定の内容 */
 #modal_setting_contents {
     position: relative;

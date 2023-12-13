@@ -9,7 +9,7 @@ export function render_filter_control() {
     // フィルター管理部のタイトル
     let html_filter_control_title = ``;
     if (get_state_filter().length) {
-        html_filter_control_title = `
+        html_filter_control_title = /*html*/`
             <div id="filter_default_title" class="sort_show_label text_width hover_background_marked interactive m-4 p-2" style="display:none;">
                 ${html_icon_plus} フィルターを追加
             </div>
@@ -18,7 +18,7 @@ export function render_filter_control() {
             </div>
         `;
     } else {
-        html_filter_control_title = `
+        html_filter_control_title = /*html*/`
             <div id="filter_default_title" class="sort_show_label text_width hover_background_marked interactive m-4 p-2">
                 ${html_icon_plus} フィルターを追加
             </div>
