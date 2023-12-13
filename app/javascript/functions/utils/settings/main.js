@@ -9,7 +9,15 @@ export function control_setting() {
     const element_body = document.body;
     const element_setting_icon = document.getElementById('setting_icon');
     const element_setting_modal = document.getElementById('setting_modal');
-    const element_setting_content_0_auto_save_apply = document.getElementById('setting_content_0_auto_save_apply');
+    const element_setting_0_auto_save_apply = document.getElementById('setting_0_auto_save_apply');
+    const element_setting_1_radio = document.getElementsByName('setting_view');
+    const element_modal_setting_tab = document.querySelectorAll('.modal_setting_tab');
+    const element_modal_setting_content = document.querySelectorAll('.modal_setting_content');
+    const element_modal_setting_tab_0 = document.getElementById('modal_setting_tab_0');
+
+    // ここで設定タブの0番目の背景色を設定する
+    /// なぜかこれをcssで設定すると動的に変更することができなくなる
+    element_modal_setting_tab_0.style.backgroundColor = 'var(--color-background-selected)';
 
     //
     // ================ イベント ==============
@@ -23,7 +31,7 @@ export function control_setting() {
         if (get_state_modals()) return;
 
         // auto_save_applyのcheckedを更新
-        element_setting_content_0_auto_save_apply.checked = get_state_auto_save_apply();
+        element_setting_0_auto_save_apply.checked = get_state_auto_save_apply();
 
         show_modal(event, element_setting_icon);
 
@@ -54,7 +62,17 @@ export function control_setting() {
         // localstorageのsettingを保存
         save_setting();
 
-    })
+    });
+
+    // ====== 設定のタブのクリック ======
+    element_modal_setting_tab.forEach(item => {
+        item.addEventListener('click', function() {
+
+            // 選択された設定タブの内容を表示
+            open_setting_tab(this.id);
+            
+        });
+    });
 
     //
     // ================= 関数 =================
@@ -96,9 +114,37 @@ export function control_setting() {
     function save_setting_auto_save_apply() {
 
         // チェックボックスの値を取得
-        const is_checked_element_setting_content_0_auto_save_apply = element_setting_content_0_auto_save_apply.checked;
+        const is_checked_element_setting_content_0_auto_save_apply = element_setting_0_auto_save_apply.checked;
 
         // stateに保存
         set_state_auto_save_apply(is_checked_element_setting_content_0_auto_save_apply);
+    }
+
+    // 開く設定タブの変更
+    function open_setting_tab(id) {
+
+        // いったんすべての設定タブの背景色を削除する
+        element_modal_setting_tab.forEach(element => {
+            element.style.backgroundColor = null;
+        });
+
+        // 選択された設定タブの背景色を設定する
+        document.getElementById(id).style.backgroundColor = 'var(--color-background-selected)';
+
+        // 選択された設定タブの番号を取得する
+        const num_setting_tab = id.split('_')[3];
+
+        // いったん表示してる設定タブを非表示にする
+        /// クラスが一致するものをすべて非表示
+        element_modal_setting_content.forEach(element => {
+            element.style.display = 'none';
+        });
+
+        // 選択された設定タブの内容の要素の取得
+        const element_target_modal_setting_content = document.getElementById(`modal_setting_content_${num_setting_tab}`);
+
+        // 選択された設定タブの内容を表示
+        element_target_modal_setting_content.style.display = 'block';
+
     }
 }
