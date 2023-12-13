@@ -1,4 +1,4 @@
-// local storageへの保存の形式
+// session storageへの保存の形式
 // result_list : {
 // 	search_id_<Search ID> : {
 // 		search : {
@@ -41,8 +41,8 @@
 /// blastn, tblastn, tempuraのみ第3引数table_idを指定
 export function load_result_list(search_id, table, table_id) {
 
-    // local storageからデータの取得
-    const ssdata_result_list = localStorage.getItem('result_list');
+    // session storageからデータの取得
+    const ssdata_result_list = sessionStorage.getItem('result_list');
 
     // result_listがあれば解凍、なければオブジェクトの作成
     let obj_ss_result_list = ssdata_result_list ? JSON.parse(ssdata_result_list) : false;
@@ -72,12 +72,12 @@ export function load_result_list(search_id, table, table_id) {
 
 }
 
-// local storageに一度APIから取得したdbの情報を保存する
+// session storageに一度APIから取得したdbの情報を保存する
 /// blastn, tblastn, tempuraは配列の中に各idのオブジェクトを保存する
 export function save_result_list(search_id, table, obj) {
 
-    // local storageからデータの取得
-    const ssdata_result_list = localStorage.getItem('result_list');
+    // session storageからデータの取得
+    const ssdata_result_list = sessionStorage.getItem('result_list');
 
     // result_listがあれば解凍、なければオブジェクトの作成
     let obj_ss_result_list = ssdata_result_list ? JSON.parse(ssdata_result_list) : {};
@@ -108,8 +108,8 @@ export function save_result_list(search_id, table, obj) {
         obj_ss_result_list[key_search_id][table] = obj;
     }
     
-    // 変更したデータをlocal storageに保存
-    localStorage.setItem('result_list', JSON.stringify(obj_ss_result_list));
+    // 変更したデータをsession storageに保存
+    sessionStorage.setItem('result_list', JSON.stringify(obj_ss_result_list));
 
 
 }
