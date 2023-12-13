@@ -29,14 +29,17 @@ pin "text_color", to: "functions/utils/show_rare_codons/text_color.js"
 
 ## view/searches/
 pin "searches", to: "functions/views/searches/main.js"
-pin "render_condition", to: "functions/views/searches/render_condition.js"
-pin "render_results", to: "functions/views/searches/render_results.js"
-pin "render_result_table", to: "functions/views/searches/render_result_table.js"
-pin "render_alignment", to: "functions/views/searches/render_alignment.js"
-pin "render_sort_control", to: "functions/views/searches/render_sort_control.js"
-pin "render_filter_control", to: "functions/views/searches/render_filter_control.js"
-pin "render_setting", to: "functions/views/searches/render_setting.js"
-pin "show_if_there", to: "functions/views/searches/show_if_there.js"
+### view/searches/render_condition/
+pin "render_condition", to: "functions/views/searches/render_condition/render_condition.js"
+### view/searches/render_result/
+pin "render_results", to: "functions/views/searches/render_result/render_results.js"
+pin "render_result_table", to: "functions/views/searches/render_result/render_result_table.js"
+pin "render_alignment", to: "functions/views/searches/render_result/render_alignment.js"
+pin "show_if_there", to: "functions/views/searches/render_result/show_if_there.js"
+### view/searches/render_utils/
+pin "render_sort_control", to: "functions/views/searches/render_utils/render_sort_control.js"
+pin "render_filter_control", to: "functions/views/searches/render_utils/render_filter_control.js"
+pin "render_setting", to: "functions/views/searches/render_utils/render_setting.js"
 
 ## view/release_note/
 pin "render_release_notes", to: "functions/views/release_note/main.js"
