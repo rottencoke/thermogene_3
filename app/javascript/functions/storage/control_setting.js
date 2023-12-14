@@ -66,7 +66,7 @@ export function save_setting() {
     const arr_state_filter = state_auto_save_apply ? get_state_filter() : "";
 
     /// viewの取得
-    const state_setting_view = set_state_auto_save_apply ? get_state_setting_view() : "";
+    const state_setting_view = state_auto_save_apply ? get_state_setting_view() : "";
 
     // オブジェクトの作成
     const obj_setting = {
