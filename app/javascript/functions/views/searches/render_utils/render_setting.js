@@ -1,4 +1,5 @@
 import { icon_setting } from 'icons';
+import { get_state_setting_view } from 'state';
 
 export function render_setting() {
 
@@ -44,32 +45,48 @@ export function render_setting() {
     // 各設定の内容
     function render_setting_content() {
 
+        // state_setting_viewの値の取得
+        const state_setting_view = get_state_setting_view();
+
+        // radioのcheckedがどっちか
+        let num_radio_checked;
+        switch (state_setting_view) {
+            case "organismInfo_alignmentInfo_alignment":
+                num_radio_checked = 1;
+                break;
+            case "organismInfo_alignmentInfo":
+                num_radio_checked = 2;
+                break;
+        }
+
         // 内容の配列
         const arr_html_setting_content = [
-        /*html*/`
-            <div class="m-3">
-                <div class="fs_7 p-2">
-                    検索結果に対して設定できるソートやフィルターなどを自動で保存し、次回の検索や再読み込み時に保存した設定を適用することができます。デフォルトではONになっています。
+            /*html*/`
+                <div class="m-3">
+                    <div class="fs_7 p-2">
+                        検索結果に対して設定できるソートやフィルターなどを自動で保存し、次回の検索や再読み込み時に保存した設定を適用することができます。デフォルトではONになっています。
+                    </div>
+                    <form>
+                        <input type="checkbox" id="setting_0_auto_save_apply">
+                        <label for="setting_0_auto_save_apply">結果表示設定を自動で保存&適用する</label>
+                    </form>
                 </div>
-                <form>
-                    <input type="checkbox" id="setting_0_auto_save_apply">
-                    <label for="setting_0_auto_save_apply">結果表示設定を自動で保存&適用する</label>
-                </form>
-            </div>
-        `, /*html*/`
-            <div class="m-3">
-                <div class="fs_7 p-2">
-                    検索結果の表示形式を変更することができます。1の方法では、各種情報と共にペアワイズアライメントも表示されます。2の方法では、各種情報のみが表形式で表示されます。
-                </div>
-                <form>
-                    <input type="radio" id="setting_1_organismInfo_alignmentInfo_alignment" name="setting_view" value="setting_1_organismInfo_alignmentInfo_alignment" checked>
-                    <label for="setting_1_organismInfo_alignmentInfo_alignment">1. 生物情報&アライメント情報&アライメント</label>
+            `,
+            /*html*/`
+                <div class="m-3">
+                    <div class="fs_7 p-2">
+                        検索結果の表示形式を変更することができます。<br>1の方法では、各種情報と共にペアワイズアライメントも表示されます。<br>2の方法では、各種情報のみが表形式で表示されます。
+                    </div>
+                    <form>
+                        <input type="radio" id="setting_1_organismInfo_alignmentInfo_alignment" name="setting_view" value="organismInfo_alignmentInfo_alignment" ${num_radio_checked == 1 ? 'checked' : ''}>
+                        <label for="setting_1_organismInfo_alignmentInfo_alignment">1. 生物情報&アライメント情報&アライメント</label>
 
-                    <input type="radio" id="setting_1_organismInfo_alignmentInfo" name="setting_view" value="setting_1_organismInfo_alignmentInfo">
-                    <label for="setting_1_organismInfo_alignmentInfo">2. 生物情報&アライメント情報</label>
-                </form>
-            </div>
-        `];
+                        <input type="radio" id="setting_1_organismInfo_alignmentInfo" name="setting_view" value="organismInfo_alignmentInfo" ${num_radio_checked == 2 ? 'checked' : ''}>
+                        <label for="setting_1_organismInfo_alignmentInfo">2. 生物情報&アライメント情報</label>
+                    </form>
+                </div>
+            `
+        ];
 
         // 内容をまとめる
         let html_setting_contents = ``;

@@ -1,5 +1,5 @@
-import { set_state_sort, set_state_filter, set_state_auto_save_apply } from 'state';
-import { get_state_sort, get_state_filter, get_state_auto_save_apply } from 'state';
+import { set_state_sort, set_state_filter, set_state_auto_save_apply, set_state_setting_view } from 'state';
+import { get_state_sort, get_state_filter, get_state_auto_save_apply, get_state_setting_view } from 'state';
 
 // localstorageへの保存形式
 // setting : {
@@ -8,7 +8,8 @@ import { get_state_sort, get_state_filter, get_state_auto_save_apply } from 'sta
 // 	filter : [
 // 		<filter 1>,
 // 		<filter 2>, ...
-// 	]
+// 	],
+//  view : <表示形式の種類>
 // }
 
 // localstorageのsettingの読み込み
@@ -43,6 +44,11 @@ export function load_setting() {
     // auto_save_applyの読み込み適用
     set_state_auto_save_apply(state_auto_save_apply);
 
+    // view_settingの読み込み適用
+    if (obj_setting.view) {
+        set_state_setting_view(obj_setting.view);
+    }
+
 }
 
 // localstorageのsettingの書き込み
@@ -59,11 +65,15 @@ export function save_setting() {
     /// filterの取得
     const arr_state_filter = state_auto_save_apply ? get_state_filter() : "";
 
+    /// viewの取得
+    const state_setting_view = set_state_auto_save_apply ? get_state_setting_view() : "";
+
     // オブジェクトの作成
     const obj_setting = {
         auto_save_apply: state_auto_save_apply,
         sort: state_sort,
-        filter: arr_state_filter
+        filter: arr_state_filter,
+        view: state_setting_view
     };
 
     // jsonに変換

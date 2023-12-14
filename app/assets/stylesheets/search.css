@@ -58,3 +58,35 @@
     /* あなたの好みの幅に設定してください */
     max-width: 600px;
 }
+
+/* 結果のテーブル */
+#result_table_organismInfo_alignmentInfo table {
+    margin: auto;
+    text-align: center;
+}
+
+/* 結果のテーブルの形 */
+#result_table_organismInfo_alignmentInfo th {
+    padding: 10px;
+}
+#result_table_organismInfo_alignmentInfo td {
+    padding: 10px;
+    min-width: 70px;
+}
+#result_table_organismInfo_alignmentInfo tr {
+    padding: 10px;
+}
+
+/* 結果のテーブルの最初のrawの上下だけ枠線をつける */
+#result_table_organismInfo_alignmentInfo tr:nth-child(1) {
+    border-top: 2px solid var(--color-border);
+    border-bottom: 2px solid var(--color-border);
+}
+
+/* 結果のテーブルで奇数と偶数のrawで背景変える */
+#result_table_organismInfo_alignmentInfo tr:nth-child(odd) {
+    background-color: var(--color-background-table-raw-1);
+}
+#result_table_organismInfo_alignmentInfo tr:nth-child(even) {
+    background-color: var(--color-background-table-raw-2);
+}

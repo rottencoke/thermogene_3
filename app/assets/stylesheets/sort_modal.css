@@ -153,3 +153,9 @@ svg:hover {
     /* 文字中央寄せ */
     text-align: center;
 }
+
+/* 設定アイコンだけ大きくする */
+#setting_icon svg {
+    width: 24px;
+    height: 24px;
+}

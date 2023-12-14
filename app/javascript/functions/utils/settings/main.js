@@ -1,16 +1,18 @@
 import { set_state_modal_setting, get_state_modal_setting, get_state_modals } from 'state';
 import { set_state_auto_save_apply, get_state_auto_save_apply } from 'state';
+import { set_state_setting_view, get_state_setting_view } from 'state';
 import { save_setting } from 'control_setting';
+import { render_results } from 'render_results';
 
 // いったんページ切り替えの機能はつけない
-export function control_setting() {
+export async function control_setting() {
     
     // html要素の取得
     const element_body = document.body;
     const element_setting_icon = document.getElementById('setting_icon');
     const element_setting_modal = document.getElementById('setting_modal');
     const element_setting_0_auto_save_apply = document.getElementById('setting_0_auto_save_apply');
-    const element_setting_1_radio = document.getElementsByName('setting_view');
+    const element_setting_1_radio = document.querySelectorAll('input[name="setting_view"]');
     const element_modal_setting_tab = document.querySelectorAll('.modal_setting_tab');
     const element_modal_setting_content = document.querySelectorAll('.modal_setting_content');
     const element_modal_setting_tab_0 = document.getElementById('modal_setting_tab_0');
@@ -58,6 +60,9 @@ export function control_setting() {
 
         // 設定モーダル内の設定を適用する
         save_setting_auto_save_apply();
+
+        // 表示設定を保存する
+        await save_setting_view();
 
         // localstorageのsettingを保存
         save_setting();
@@ -145,6 +150,35 @@ export function control_setting() {
 
         // 選択された設定タブの内容を表示
         element_target_modal_setting_content.style.display = 'block';
+
+    }
+
+    // 結果の表示設定の適用
+    async function save_setting_view() {
+
+        // ラジオボタンの値を取得
+        const radios = element_setting_1_radio;
+
+        // すでに登録されているstateの値の取得
+        const state_setting_view_set = get_state_setting_view();
+
+        // 選択された値の取得
+        let state_setting_view_new;
+        for (let radio of radios) {
+            if (radio.checked) {
+                state_setting_view_new = radio.value;
+            }
+        }
+
+        // 変更された場合
+        if (state_setting_view_new != state_setting_view_set) {
+
+            // stateの値の更新
+            set_state_setting_view(state_setting_view_new);
+
+            // 結果を描画しなおす
+            await render_results();
+        }
 
     }
 }
