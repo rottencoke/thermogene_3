@@ -134,7 +134,7 @@ svg:hover {
 
 /* カーソルがあると色を濃くする */
 .modal_setting_tab:hover {
-    background-color: var(--color-background-hover);
+    background-color: var(--color-background-hover) !important;
 }
 
 /* 設定モーダルの各設定の内容 */
