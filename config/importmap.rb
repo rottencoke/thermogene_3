@@ -33,7 +33,7 @@ pin "searches", to: "functions/views/searches/main.js"
 pin "render_condition", to: "functions/views/searches/render_condition/render_condition.js"
 ### view/searches/render_result/
 pin "render_results", to: "functions/views/searches/render_result/render_results.js"
-pin "render_result_table", to: "functions/views/searches/render_result/render_result_table.js"
+pin "render_result", to: "functions/views/searches/render_result/render_result.js"
 pin "render_alignment", to: "functions/views/searches/render_result/render_alignment.js"
 pin "show_if_there", to: "functions/views/searches/render_result/show_if_there.js"
 ### view/searches/render_utils/

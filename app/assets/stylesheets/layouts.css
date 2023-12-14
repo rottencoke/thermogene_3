@@ -70,3 +70,8 @@ a {
 .interactive:hover {
     cursor: pointer;
 }
+
+/* 文字左寄せ */
+.text_align_left {
+    text-align: left;
+}

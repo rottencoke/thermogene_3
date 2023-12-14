@@ -1,9 +1,9 @@
 import { sort_results_by_blast_param } from 'sort_results_by_blast_param';
 import { sort_results_by_tempura_param } from 'sort_results_by_tempura_param';
 import { filter_results } from 'filter_results';
-import { render_result_table } from 'render_result_table';
+import { render_result } from 'render_result';
 import { render_alignment } from 'render_alignment';
-import { get_state_sort } from 'state';
+import { get_state_sort, get_state_setting_view } from 'state';
 
 // 結果全体
 export async function render_results() {
@@ -25,22 +25,68 @@ export async function render_results() {
         // result_table()で得られるHTML構文を入れる
         let html_results = ``;
 
-        // 結果タイトル
+        // 文字
         const result_table_title = "検索結果です";
+        const th_genus_and_species = "生物種名";
+        const th_topt = "生育温度";
+        const th_protein = "タンパク質名";
+        const th_evalue = "E Value";
+        const th_identity = "相同性";
+        const th_bit_score = "bit_score";
 
-        // arr_tempura_id_sortedの長さ分繰り返す
-        for (const [index, tempura_id] of arr_tempura_id_sorted.entries()) {
+        // state_setting_viewの取得
+        const state_setting_view = get_state_setting_view();
 
-            // result_table()を使ってhtmlを作っていく
+        // 表示形式view_styleによって結果表示の形式を変更する
+        // 表示形式1 : 生物情報&アライメント情報&アライメント
+        if (state_setting_view == "organismInfo_alignmentInfo_alignment") {
+
+            // arr_tempura_id_sortedの長さ分繰り返す
+            for (const [index, tempura_id] of arr_tempura_id_sorted.entries()) {
+            
+                // result_table()を使ってhtmlを作っていく
+                html_results += /*html*/`
+
+                    <div class="flex container">
+                        ${await render_result(obj_result_sorted, index, 1)}
+                        ${await render_alignment(obj_result_sorted, index)}
+                    </div>
+                    <hr>
+                `;
+            }
+        }
+        // 表示形式2 : 生物情報&アライメント情報
+        else if (state_setting_view == "organismInfo_alignmentInfo") {
+
+            // なぜかhtml_resultsに各行の情報を先に入れると表外に文字が生成されるから変数作成
+            let html_results_raw = ``;
+
+            // arr_tempura_id_sortedの長さ分繰り返す
+            for (const [index, tempura_id] of arr_tempura_id_sorted.entries()) {
+
+                html_results_raw += await render_result(obj_result_sorted, index, 2);
+
+            }
+
             html_results += /*html*/`
-
-                <div class="flex container">
-                    ${await render_result_table(obj_result_sorted, index)}
-                    ${await render_alignment(obj_result_sorted, index)}
+                <div id="result_table_organismInfo_alignmentInfo" class="container">
+                    <table>
+                        <tr>
+                            <td></td>
+                            <th scope="col">${th_genus_and_species}</th>
+                            <th scope="col">${th_topt}</th>
+                            <th scope="col">${th_protein}</th>
+                            <th scope="col">${th_evalue}</th>
+                            <th scope="col">${th_identity}</th>
+                            <th scope="col">${th_bit_score}</th>
+                        </tr>
+                        ${html_results_raw}
+                    </table>
                 </div>
-                <hr>
             `;
-
+        }
+        else {
+            console.log("その表示形式には対応していません");
         }
 
         html_results = /*html*/`
