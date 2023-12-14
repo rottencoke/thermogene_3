@@ -28,6 +28,7 @@ export async function render_results() {
         // 文字
         const result_table_title = "検索結果です";
         const th_genus_and_species = "生物種名";
+        const th_strain = "株名";
         const th_topt = "生育温度";
         const th_protein = "タンパク質名";
         const th_evalue = "E Value";
@@ -74,6 +75,7 @@ export async function render_results() {
                         <tr>
                             <td></td>
                             <th scope="col">${th_genus_and_species}</th>
+                            <th scope="col">${th_strain}</th>
                             <th scope="col">${th_topt}</th>
                             <th scope="col">${th_protein}</th>
                             <th scope="col">${th_evalue}</th>

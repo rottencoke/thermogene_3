@@ -36,6 +36,7 @@ export async function render_result(obj, index, view_style) {
     // tableヘッダー
     const th_index = "#";
     const th_genus_and_species = "生物種名";
+    const th_strain = "株名";
     const th_classification = "分類";
     const th_topt = "生育温度";
     const th_gene = "遺伝子名";
@@ -51,6 +52,7 @@ export async function render_result(obj, index, view_style) {
 
     /// tempuraからのデータ
     const td_genus_and_species = obj_tempura.genus_and_species;
+    const td_strain = obj_tempura.strain;
     const td_classification_superkingdom = obj_tempura.superkingdom;
     const td_classification_phylum = obj_tempura.phylum;
     const td_classification_org_class = obj_tempura.org_class;
@@ -130,6 +132,10 @@ export async function render_result(obj, index, view_style) {
                         <td>${td_genus_and_species}</td>
                     </tr>
                     <tr>
+                        <th class="result_th" scope="row">${th_strain}</th>
+                        <td>${show_if_there(td_strain)}</td>
+                    </tr>
+                    <tr>
                         <th class="fw-lighter fs_7" scope="row">${th_classification}</th>
                         <td class="fw-lighter fs_7">
                             ${td_classification_superkingdom} >
@@ -191,6 +197,7 @@ export async function render_result(obj, index, view_style) {
             <tr>
                 <th scope="row" class="text_align_left">${td_index}</th>
                 <td>${td_genus_and_species}</td>
+                <td>${show_if_there(td_strain)}</td>
                 <td>
                     ${td_topt_ave}℃
                     <small>
