@@ -57,6 +57,9 @@ export function render_setting() {
             case "organismInfo_alignmentInfo":
                 num_radio_checked = 2;
                 break;
+            case "multiAlignment":
+                num_radio_checked = 3;
+                break;
         }
 
         // 内容の配列
@@ -75,7 +78,10 @@ export function render_setting() {
             /*html*/`
                 <div class="m-3">
                     <div class="fs_7 p-2">
-                        検索結果の表示形式を変更することができます。<br>1の方法では、各種情報と共にペアワイズアライメントも表示されます。<br>2の方法では、各種情報のみが表形式で表示されます。
+                        検索結果の表示形式を変更することができます。<br>
+                        1の方法では、各種情報と共にペアワイズアライメントも表示されます。<br>
+                        2の方法では、各種情報のみが表形式で表示されます。<br>
+                        3の方法では、ヒットした配列全体のマルチアライメントが表示されます。 
                     </div>
                     <form>
                         <input type="radio" id="setting_1_organismInfo_alignmentInfo_alignment" name="setting_view" value="organismInfo_alignmentInfo_alignment" ${num_radio_checked == 1 ? 'checked' : ''}>
@@ -83,6 +89,9 @@ export function render_setting() {
 
                         <input type="radio" id="setting_1_organismInfo_alignmentInfo" name="setting_view" value="organismInfo_alignmentInfo" ${num_radio_checked == 2 ? 'checked' : ''}>
                         <label for="setting_1_organismInfo_alignmentInfo">2. 生物情報&アライメント情報</label>
+
+                        <input type="radio" id="setting_1_multiAlignment" name="setting_view" value="multiAlignment" ${num_radio_checked == 3 ? 'checked' : ''}>
+                        <label for="setting_1_multiAlignment">3. マルチアライメント</label>
                     </form>
                 </div>
             `

@@ -64,6 +64,10 @@
     margin: auto;
     text-align: center;
 }
+#result_table_multiAlignment table {
+    margin: auto;
+    text-align: center;
+}
 
 /* 結果のテーブルの形 */
 #result_table_organismInfo_alignmentInfo th {
@@ -75,6 +79,15 @@
 }
 #result_table_organismInfo_alignmentInfo tr {
     padding: 10px;
+}
+#result_table_multiAlignment th{ 
+    padding: 3px 5px;
+}
+#result_table_multiAlignment td {
+    padding: 3px 0px;
+}
+#result_table_multiAlignment tr {
+    padding: 3px;
 }
 
 /* 結果のテーブルの最初のrawの上下だけ枠線をつける */
