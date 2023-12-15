@@ -143,6 +143,7 @@ export async function render_result(obj, index, view_style) {
                                     class="less_styled_link"
                                     href="${url_species}"
                                     title="${text_url_species}"
+                                    target="_blank"
                                 >
                                     ${td_genus_and_species}
                                 </a>
@@ -157,6 +158,7 @@ export async function render_result(obj, index, view_style) {
                                     class="less_styled_link"
                                     href="${url_strain}"
                                     title="${text_url_strain}"
+                                    target="_blank"
                                 >
                                     ${show_if_there(td_strain)}
                                 </a>
@@ -230,6 +232,7 @@ export async function render_result(obj, index, view_style) {
                             class="less_styled_link"
                             href="${url_species}"
                             title="${text_url_species}"
+                            target="_blank"
                         >
                             ${td_genus_and_species}
                         </a>
@@ -241,6 +244,7 @@ export async function render_result(obj, index, view_style) {
                             class="less_styled_link"
                             href="${url_strain}"
                             title="${text_url_strain}"
+                            target="_blank"
                         >
                             ${show_if_there(td_strain)}
                         </a>

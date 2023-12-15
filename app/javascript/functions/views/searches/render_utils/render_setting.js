@@ -7,7 +7,7 @@ export function render_setting() {
     const html_icon_setting = icon_setting;
 
     // 設定各タブ名
-    const arr_text_settings = ["表示設定の自動保存", "結果表示形式の変更"];
+    const arr_text_settings = ["表示設定の自動保存", "結果表示形式"];
 
     // 設定モーダルのタブ作成
     let html_setting_tab = ``;
