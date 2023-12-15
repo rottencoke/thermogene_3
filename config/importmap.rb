@@ -35,6 +35,7 @@ pin "render_condition", to: "functions/views/searches/render_condition/render_co
 pin "render_results", to: "functions/views/searches/render_result/render_results.js"
 pin "render_result", to: "functions/views/searches/render_result/render_result.js"
 pin "render_alignment", to: "functions/views/searches/render_result/render_alignment.js"
+pin "render_multi_alignment", to: "functions/views/searches/render_result/render_multi_alignment.js"
 pin "show_if_there", to: "functions/views/searches/render_result/show_if_there.js"
 ### view/searches/render_utils/
 pin "render_sort_control", to: "functions/views/searches/render_utils/render_sort_control.js"

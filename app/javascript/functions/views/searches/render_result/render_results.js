@@ -3,6 +3,7 @@ import { sort_results_by_tempura_param } from 'sort_results_by_tempura_param';
 import { filter_results } from 'filter_results';
 import { render_result } from 'render_result';
 import { render_alignment } from 'render_alignment';
+import { render_multi_alignment } from 'render_multi_alignment';
 import { get_state_sort, get_state_setting_view } from 'state';
 
 // 結果全体
@@ -82,6 +83,27 @@ export async function render_results() {
                             <th scope="col">${th_identity}</th>
                             <th scope="col">${th_bit_score}</th>
                         </tr>
+                        ${html_results_raw}
+                    </table>
+                </div>
+            `;
+        }
+        // 表示形式3 : マルチアライメント
+        else if (state_setting_view == "multiAlignment") {
+            
+            // なぜかhtml_resultsに各行の情報を先に入れると表外に文字が生成されるから変数作成
+            let html_results_raw = ``;
+
+            // arr_tempura_id_sortedの長さ分繰り返す
+            for (const [index, tempura_id] of arr_tempura_id_sorted.entries()) {
+
+                html_results_raw += await render_multi_alignment(obj_result_sorted, index);
+
+            }
+
+            html_results += /*html*/`
+                <div id="result_table_multiAlignment" class="container">
+                    <table>
                         ${html_results_raw}
                     </table>
                 </div>

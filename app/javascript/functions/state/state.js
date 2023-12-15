@@ -109,7 +109,7 @@ export function get_state_auto_save_apply() {
 }
 
 // ====== 表示設定 ======
-const arr_state_setting_view_acceptable = ["organismInfo_alignmentInfo_alignment", "organismInfo_alignmentInfo"]
+const arr_state_setting_view_acceptable = ["organismInfo_alignmentInfo_alignment", "organismInfo_alignmentInfo", "multiAlignment"]
 let state_setting_view = arr_state_setting_view_acceptable[0];
 
 /// setter
