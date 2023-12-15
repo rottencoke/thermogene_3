@@ -90,3 +90,9 @@
 #result_table_organismInfo_alignmentInfo tr:nth-child(even) {
     background-color: var(--color-background-table-raw-2);
 }
+
+/*aタグ（リンク）の色と下線を削除*/
+.less_styled_link {
+    color: var(--color-text-link);
+    text-decoration: none;
+}

@@ -66,6 +66,14 @@ export async function render_result(obj, index, view_style) {
     /// blastデータ用変数
     let td_gene, td_protein, td_align_len, td_evalue, td_identity, td_gaps, td_bit_score;
 
+    // リンク作成
+    const url_species = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${obj_tempura.taxonomy_id}`;
+    const url_strain = `https://www.ncbi.nlm.nih.gov/datasets/genome/${obj_tempura.assembly_or_accession}/`;
+
+    // リンク説明
+    const text_url_species = "NCBI該当菌種ページ (taxonomy id)";
+    const text_url_strain = "NCBI該当菌株ページ (genome assembly)";
+
     /// blastn_resultから
     if (blast_engine == "blastn") {
 
@@ -129,11 +137,31 @@ export async function render_result(obj, index, view_style) {
                     </tr>
                     <tr>
                         <th class="result_th" scope="row">${th_genus_and_species}</th>
-                        <td>${td_genus_and_species}</td>
+                        <td>
+                            <p>
+                                <a
+                                    class="less_styled_link"
+                                    href="${url_species}"
+                                    title="${text_url_species}"
+                                >
+                                    ${td_genus_and_species}
+                                </a>
+                            </p>
+                        </td>
                     </tr>
                     <tr>
                         <th class="result_th" scope="row">${th_strain}</th>
-                        <td>${show_if_there(td_strain)}</td>
+                        <td>
+                            <p>
+                                <a
+                                    class="less_styled_link"
+                                    href="${url_strain}"
+                                    title="${text_url_strain}"
+                                >
+                                    ${show_if_there(td_strain)}
+                                </a>
+                            </p>    
+                        </td>
                     </tr>
                     <tr>
                         <th class="fw-lighter fs_7" scope="row">${th_classification}</th>
@@ -196,8 +224,28 @@ export async function render_result(obj, index, view_style) {
         const html_result_table = /*html*/`
             <tr>
                 <th scope="row" class="text_align_left">${td_index}</th>
-                <td>${td_genus_and_species}</td>
-                <td>${show_if_there(td_strain)}</td>
+                <td>
+                    <p>
+                        <a
+                            class="less_styled_link"
+                            href="${url_species}"
+                            title="${text_url_species}"
+                        >
+                            ${td_genus_and_species}
+                        </a>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <a
+                            class="less_styled_link"
+                            href="${url_strain}"
+                            title="${text_url_strain}"
+                        >
+                            ${show_if_there(td_strain)}
+                        </a>
+                    </p>    
+                </td>
                 <td>
                     ${td_topt_ave}℃
                     <small>
