@@ -102,7 +102,7 @@ export async function render_results() {
             }
 
             html_results += /*html*/`
-                <div id="result_table_multiAlignment" class="container">
+                <div id="result_table_multiAlignment" class="horizontal_scrollable container">
                     <table>
                         ${html_results_raw}
                     </table>

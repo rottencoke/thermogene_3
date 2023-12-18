@@ -104,8 +104,14 @@
     background-color: var(--color-background-table-raw-2);
 }
 
-/*aタグ（リンク）の色と下線を削除*/
+/* aタグ（リンク）の色と下線を削除 */
 .less_styled_link {
     color: var(--color-text-link);
     text-decoration: none;
+}
+
+/* 横方向にスクロール可能な要素 */
+.horizontal_scrollable {
+    width: 100%;           /* 要素の幅を画面幅に合わせる */
+    overflow-x: auto;      /* 横方向のスクロールを有効にする */
 }
