@@ -85,6 +85,7 @@
 }
 #result_table_multiAlignment td {
     padding: 3px 0px;
+    min-width: 1em;
 }
 #result_table_multiAlignment tr {
     padding: 3px;
@@ -114,4 +115,9 @@
 .horizontal_scrollable {
     width: 100%;           /* 要素の幅を画面幅に合わせる */
     overflow-x: auto;      /* 横方向のスクロールを有効にする */
+}
+
+/* 黒の色を若干減らした文字 */
+.text_less_emphasized {
+    color: var(--color-text-less-emphasized);
 }
