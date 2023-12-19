@@ -128,7 +128,9 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
                 const text_query = arr_search_sequence[position_sequence].toUpperCase();
 
                 html_qseq_td += /*html*/`
-                    <td>${position_sequence % 5 == 4 ? position_sequence + 1 : ''}<br><b>${text_query}</b></td>
+                    <td class="${position_sequence % 5 == 4 ? 'table_border_td_right' : ''}">
+                        ${position_sequence % 5 == 4 ? position_sequence + 1 : ''}<br><b>${text_query}</b>
+                    </td>
                 `;
 
                 position_sequence++;
@@ -137,10 +139,10 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
         }
 
         html_multi_alignment = /*html*/`
-            <tr>
+            <tr class="table_border_top_td_bottom">
                 <th></td>
                 <th>Query<br>1~${arr_search_sequence.length}</th>
-                <th>Hit<br>&nbsp;</th>
+                <th class="table_border_th_right">Hit<br>&nbsp;</th>
                 ${html_qseq_td}
             </tr>        
         `;
@@ -169,34 +171,32 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
 
             // アライメントのquery配列の要素が"-"だったら、hit配列の要素を先に書く
             if (blast_result_qseq[position_alignment] == "-") {
-                render_multi_alignment_element(position_alignment);
+                render_multi_alignment_element(position_alignment, 0);
                 position_alignment++;
-                if(index == 2) console.log(`1 arr_deletion_hit[${position_sequence_td}] : ${arr_deletion_hit[position_sequence_td]}`);
             } else {
 
                 html_hseq_td += /*html*/`
                     <td>&nbsp;</td>
                 `;
-                if(index == 2) console.log(`0 arr_deletion_hit[${position_sequence_td}] : ${arr_deletion_hit[position_sequence_td]}`);
             }
             
             arr_deletion_hit[position_sequence_td]--;
         }
         // arr_deletion_hit[i]が0の場合、tdに配列の要素を入れて、配列上の位置を1増やす
-        else if(arr_deletion_hit[position_sequence_td] == 0){
+        else {
 
             // そもそもアライメント配列の範囲外なら空欄のtdにして次の繰り返しに飛ぶ
             if (position_sequence_td < blast_result_query_from - 1 || position_sequence_td > blast_result_query_to - 1) {
 
                 html_hseq_td += /*html*/`
-                    <td>&nbsp;</td>
+                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}">&nbsp;</td>
                 `;
                 position_sequence_td++;
                 continue;
             }
 
             // アライメント配列の範囲内の場合
-            render_multi_alignment_element(position_alignment);
+            render_multi_alignment_element(position_alignment, position_sequence_td);
             
             position_alignment++;
             position_sequence_td++;
@@ -209,14 +209,14 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
                 <p title="${text_title}">#${index + 1}</p>
             </th>
             <th>${blast_result_query_from}~${blast_result_query_to}</th>
-            <th>${blast_result_hit_from}~${blast_result_hit_to}</th>
+            <th class="table_border_th_right">${blast_result_hit_from}~${blast_result_hit_to}</th>
             ${html_hseq_td}
         </tr>
     `;
 
     return html_multi_alignment;
 
-    function render_multi_alignment_element(position_alignment) {
+    function render_multi_alignment_element(position_alignment, position_sequence_td) {
 
         const text_hit = blast_result_hseq[position_alignment];
         
@@ -228,14 +228,14 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
 
                 // 強調表示
                 html_hseq_td += /*html*/`
-                    <td><b>${text_hit}</b></td>
+                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
 
             }
             // アライメントがない場合
             else {
                 html_hseq_td += /*html*/`
-                    <td>${text_hit ? text_hit : ''}</td>
+                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
                 `; 
             }
         }
@@ -247,7 +247,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
 
                 // 強調表示
                 html_hseq_td += /*html*/`
-                    <td><b>${text_hit}</b></td>
+                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
             }
             // アライメントが"+"の場合
@@ -255,13 +255,13 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
 
                 // 若干強調表示
                 html_hseq_td += /*html*/`
-                    <td class="text_less_emphasized"><b>${text_hit}</b></td>
+                    <td class="text_less_emphasized ${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
             }
             // アライメントがない場合
             else {
                 html_hseq_td += /*html*/`
-                    <td>${text_hit ? text_hit : ''}</td>
+                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
                 `; 
             }
         }

@@ -86,10 +86,10 @@ export function render_setting() {
                     <form>
                         <input type="radio" id="setting_1_organismInfo_alignmentInfo_alignment" name="setting_view" value="organismInfo_alignmentInfo_alignment" ${num_radio_checked == 1 ? 'checked' : ''}>
                         <label for="setting_1_organismInfo_alignmentInfo_alignment">1. 生物情報&アライメント情報&アライメント</label>
-
+                        <br>
                         <input type="radio" id="setting_1_organismInfo_alignmentInfo" name="setting_view" value="organismInfo_alignmentInfo" ${num_radio_checked == 2 ? 'checked' : ''}>
                         <label for="setting_1_organismInfo_alignmentInfo">2. 生物情報&アライメント情報</label>
-
+                        <br>
                         <input type="radio" id="setting_1_multiAlignment" name="setting_view" value="multiAlignment" ${num_radio_checked == 3 ? 'checked' : ''}>
                         <label for="setting_1_multiAlignment">3. マルチアライメント</label>
                     </form>

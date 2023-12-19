@@ -93,8 +93,8 @@
 
 /* 結果のテーブルの最初のrawの上下だけ枠線をつける */
 #result_table_organismInfo_alignmentInfo tr:nth-child(1) {
-    border-top: 2px solid var(--color-border);
-    border-bottom: 2px solid var(--color-border);
+    border-top: 2px solid var(--color-border-1);
+    border-bottom: 2px solid var(--color-border-1);
 }
 
 /* 結果のテーブルで奇数と偶数のrawで背景変える */
@@ -104,6 +104,16 @@
 #result_table_organismInfo_alignmentInfo tr:nth-child(even) {
     background-color: var(--color-background-table-raw-2);
 }
+
+/* 結果のテーブルで奇数と偶数のrawで背景変える */
+#result_table_multiAlignment tr:nth-child(odd) {
+    background-color: var(--color-background-table-raw-1);
+}
+#result_table_multiAlignment tr:nth-child(even) {
+    background-color: var(--color-background-table-raw-2);
+}
+
+
 
 /* aタグ（リンク）の色と下線を削除 */
 .less_styled_link {
@@ -120,4 +130,19 @@
 /* 黒の色を若干減らした文字 */
 .text_less_emphasized {
     color: var(--color-text-less-emphasized);
+}
+
+/* 結果の表の一番最初のrowの下の境目に線をつける */
+.table_border_top_td_bottom {
+    border-bottom: 2px solid var(--color-border-1);
+}
+
+/* 結果の表のthとtdの境目に線をつける */
+.table_border_th_right {
+    border-right: 2px solid var(--color-border-1);
+}
+
+/* 結果の表に5個の間隔で縦線を入れる */
+.table_border_td_right {
+    border-right: 1px solid var(--color-border-2);
 }

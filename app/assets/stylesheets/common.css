@@ -7,7 +7,8 @@
     --color-background-hover: rgb(235, 235, 235);
     --color-icon: rgb(80, 80, 80);
     --color-icon-hover: rgb(5, 5, 5);
-    --color-border: rgb(146, 146, 146);
+    --color-border-1: rgb(146, 146, 146);
+    --color-border-2: rgb(187, 184, 184);
     --color-background-table-raw-1: rgb(220, 220, 220);
     --color-background-table-raw-2: rgb(245, 245, 245);
     --color-text-link: rgb(92, 33, 160);
