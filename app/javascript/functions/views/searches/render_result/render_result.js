@@ -218,7 +218,7 @@ export async function render_result(obj, index, view_style) {
                                     target="_blank"
                                 >
                                     <small>
-                                        ${accession_edited} (${location_from}.. ${location_to})
+                                        ${accession_edited} : ${location_from} .. ${location_to}
                                     </small>
                                 </a>
                             </p>
@@ -302,7 +302,18 @@ export async function render_result(obj, index, view_style) {
                         &nbsp;(${td_tmin}℃ ~ ${td_tmax}℃)
                     </small>
                 </td>
-                <td>${show_if_there(td_protein)}</td>
+                <td>
+                    <p>
+                        <a
+                            class="less_styled_link"
+                            href="${url_protein}"
+                            title="${text_url_protein}"
+                            target="_blank"
+                        >
+                            ${show_if_there(td_protein)}
+                        </a>
+                    </p>    
+                </td>
                 <td>${td_evalue}</td>
                 <td>${td_identity}%</td>
                 <td>${td_bit_score}</td>

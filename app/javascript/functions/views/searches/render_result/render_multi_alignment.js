@@ -17,7 +17,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     let blast_result_align_len, blast_result_midline;
     let blast_result_query_from, blast_result_query_to, blast_result_query_strand, blast_result_qseq;
     let blast_result_hit_from, blast_result_hit_to, blast_result_hit_strand, blast_result_hseq;
-    let blast_result_protein;
+    let blast_result_protein, blast_result_locus_tag;
 
     if (obj.arr_blastn_result_id.length) {
 
@@ -38,6 +38,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
         blast_result_hseq = obj_blastn_result.hseq;
 
         blast_result_protein = obj_blastn_result.protein;
+        blast_result_locus_tag = obj_blastn_result.locus_tag;
 
     } else if (obj.arr_tblastn_result_id.length) {
 
@@ -58,6 +59,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
         blast_result_hseq = obj_tblastn_result.hseq;
 
         blast_result_protein = obj_tblastn_result.protein;
+        blast_result_locus_tag = obj_tblastn_result.locus_tag;
 
     }
 
@@ -141,8 +143,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
         html_multi_alignment = /*html*/`
             <tr class="table_border_top_td_bottom">
                 <th></td>
-                <th>Query<br>1~${arr_search_sequence.length}</th>
-                <th class="table_border_th_right">Hit<br>&nbsp;</th>
+                <th class="table_border_th_right">Query<br>1~${arr_search_sequence.length}</th>
                 ${html_qseq_td}
             </tr>        
         `;
@@ -162,6 +163,10 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     for (let i = 0; i < arr_deletion_hit.length; i++) {
         arr_deletion_hit[i] = arr_deletion[i+1];
     }
+
+    // タンパク質のリンク作成
+    const url_protein = `https://www.ncbi.nlm.nih.gov/protein/?term=${blast_result_locus_tag}[locus_tag]`;
+    const text_url_protein = "NCBI該当タンパク質ページ (protein)";
 
     // 配列表示部分の要素の数だけ繰り返す
     for (let i = 0; i < num_alignment_length; i++) {
@@ -206,10 +211,18 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     html_multi_alignment += /*html*/`
         <tr>
             <th>
-                <p title="${text_title}">#${index + 1}</p>
+                <p title="${text_title}">
+                    <a
+                        class="less_styled_link"
+                        href="${url_protein}"
+                        title="${text_url_protein}"
+                        target="_blank"
+                    >
+                        #${index + 1}
+                    </a>
+                </p>
             </th>
-            <th>${blast_result_query_from}~${blast_result_query_to}</th>
-            <th class="table_border_th_right">${blast_result_hit_from}~${blast_result_hit_to}</th>
+            <th class="table_border_th_right">${blast_result_query_from}~${blast_result_query_to}</th>
             ${html_hseq_td}
         </tr>
     `;
