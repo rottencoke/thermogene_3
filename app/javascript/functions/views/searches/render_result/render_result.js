@@ -40,6 +40,7 @@ export async function render_result(obj, index, view_style) {
     const th_classification = "分類";
     const th_topt = "生育温度";
     const th_gene = "遺伝子名";
+    const th_gene_location = "gene location";
     const th_protein = "タンパク質名";
     const th_alignment_length = "長さ";
     const th_evalue = "E Value";
@@ -64,15 +65,7 @@ export async function render_result(obj, index, view_style) {
     const td_tmax = obj_tempura.tmax;
 
     /// blastデータ用変数
-    let td_gene, td_protein, td_align_len, td_evalue, td_identity, td_gaps, td_bit_score;
-
-    // リンク作成
-    const url_species = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${obj_tempura.taxonomy_id}`;
-    const url_strain = `https://www.ncbi.nlm.nih.gov/datasets/genome/${obj_tempura.assembly_or_accession}/`;
-
-    // リンク説明
-    const text_url_species = "NCBI該当菌種ページ (taxonomy id)";
-    const text_url_strain = "NCBI該当菌株ページ (genome assembly)";
+    let td_gene, td_protein, td_align_len, td_evalue, td_identity, td_gaps, td_bit_score, locus_tag, accession, location;
 
     /// blastn_resultから
     if (blast_engine == "blastn") {
@@ -86,6 +79,10 @@ export async function render_result(obj, index, view_style) {
         td_identity = obj_blastn_result.identity;
         td_gaps = obj_blastn_result.gaps;
         td_bit_score = obj_blastn_result.bit_score;
+        
+        locus_tag = obj_blastn_result.locus_tag;
+        accession = obj_blastn_result.accession;
+        location = obj_blastn_result.location;
 
     }
     /// tblastn_resultから
@@ -100,8 +97,29 @@ export async function render_result(obj, index, view_style) {
         td_identity = obj_tblastn_result.identity;
         td_gaps = obj_tblastn_result.gaps;
         td_bit_score = obj_tblastn_result.bit_score;
+        
+        locus_tag = obj_tblastn_result.locus_tag;
+        accession = obj_tblastn_result.accession;
+        location = obj_tblastn_result.location;
 
     }
+
+    // リンク作成用のaccession取り出し
+    const accession_edited = accession.split('_')[0];
+    const location_from = parseInt(location.match(/\d+/g)[0], 10);  
+    const location_to = parseInt(location.match(/\d+/g)[1], 10);  
+
+    // リンク作成
+    const url_species = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${obj_tempura.taxonomy_id}`;
+    const url_strain = `https://www.ncbi.nlm.nih.gov/datasets/genome/${obj_tempura.assembly_or_accession}/`;
+    const url_gene = `https://www.ncbi.nlm.nih.gov/nuccore/${accession_edited}?from=${location_from}&to=${location_to}`;
+    const url_protein = `https://www.ncbi.nlm.nih.gov/protein/?term=${locus_tag}[locus_tag]`;
+
+    // リンク説明
+    const text_url_species = "NCBI該当菌種ページ (taxonomy id)";
+    const text_url_strain = "NCBI該当菌株ページ (genome assembly)";
+    const text_url_gene = "NCBI該当遺伝子ページ (nuccore)"
+    const text_url_protein = "NCBI該当タンパク質ページ (protein)";
 
     // 単位
     /// 配列長
@@ -190,8 +208,36 @@ export async function render_result(obj, index, view_style) {
                         <td>${show_if_there(td_gene)}</td>
                     </tr>
                     <tr>
+                        <th class="result_th" scope="row">${th_gene_location}</th>
+                        <td>
+                            <p>
+                                <a
+                                    class="less_styled_link"
+                                    href="${url_gene}"
+                                    title="${text_url_gene}"
+                                    target="_blank"
+                                >
+                                    <small>
+                                        ${accession_edited} (${location_from}.. ${location_to})
+                                    </small>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
                         <th class="result_th" scope="row">${th_protein}</th>
-                        <td>${show_if_there(td_protein)}</td>
+                        <td>
+                            <p>
+                                <a
+                                    class="less_styled_link"
+                                    href="${url_protein}"
+                                    title="${text_url_protein}"
+                                    target="_blank"
+                                >
+                                    ${show_if_there(td_protein)}
+                                </a>
+                            </p>    
+                        </td>
                     </tr>
                     <tr>
                         <th class="result_th" scope="row">${th_alignment_length}</th>
