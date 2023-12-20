@@ -81,8 +81,9 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     // 各データの詳細をtitle属性で表示する
     const text_title = `
         ${th_genus_and_species} (${th_strain}): ${td_genus_and_species} (${td_strain})
-        ${th_topt}: ${td_topt_ave}℃ (${td_tmin}℃~${td_tmax}℃)
-        ${th_protein}: ${blast_result_protein}
+${th_topt}: ${td_topt_ave}℃ (${td_tmin}℃~${td_tmax}℃)
+${th_protein}: ${blast_result_protein}
+クリックするとNCBIの該当タンパク質のページを開きます。
     `;
 
     // マルチアライメント作成（table）
@@ -215,7 +216,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
                     <a
                         class="less_styled_link"
                         href="${url_protein}"
-                        title="${text_url_protein}"
+                        title="${text_title}"
                         target="_blank"
                     >
                         #${index + 1}
