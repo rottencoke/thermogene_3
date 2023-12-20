@@ -10,7 +10,8 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     // 情報取得
     /// search
     const obj_search = await get_search();
-    const arr_search_sequence = obj_search.sequence.split("");
+    const arr_search_sequence = obj_search.sequence.replace(/\n/g, '').split("");
+    console.dir(arr_search_sequence);
 
     /// blast
     let blastn_result_id, tblastn_result_id, blast_engine;
