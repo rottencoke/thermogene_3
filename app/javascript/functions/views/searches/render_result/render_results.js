@@ -108,7 +108,6 @@ export async function render_results() {
             html_results += /*html*/`
                 <div class="container">
                     <p>Query : 検索に使用した配列のどの部分に対して、Hitした配列がアライメントを形成しているかを示しています</p>
-                    <p>Hit : Hitしたデータベース配列のうち、どの部分がアライメントを形成しているかを示しています</p>
                     <p>※黒太字 : 一致した塩基orアミノ残基、灰太字 : 化学的性質の類似したアミノ残基、黒細字 : 一致していない塩基orアミノ残基</p>
                 </div>
                 <div id="result_table_multiAlignment" class="horizontal_scrollable container">
