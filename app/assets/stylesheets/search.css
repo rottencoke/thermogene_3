@@ -120,6 +120,10 @@
     color: var(--color-text-link);
     text-decoration: none;
 }
+.less_styled_link:hover {
+    color: var(--color-text-link-hover);
+    text-decoration: underline;
+}
 
 /* 横方向にスクロール可能な要素 */
 .horizontal_scrollable {
