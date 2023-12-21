@@ -8,12 +8,13 @@ import { sleep } from 'sleep';
 // メインの関数
 export async function show_binding_sites() {
 
+    // state_setting_binding_siteがfalseだったら下の枠線を消す
+    if (!get_state_setting_binding_site()) return;
+
     // そもそもblastnだったら処理を行わない
     const search_engine = get_search().blast_search_engine;
     if (search_engine == "blastn") return;
 
-    // stateの取得
-    const state_setting_binding_site = get_state_setting_binding_site();
     const state_obj_locus_tag = get_state_obj_locus_tag();
 
     // search_idの取得
@@ -126,9 +127,7 @@ export async function show_binding_sites() {
                 // 対象の要素にtitleを付与
                 element_td_target.setAttribute("title", arr_binding_sites_name[j]);
             }
-
         }
-
     }
 
     // 新たに読み込んだデータがあればresult_list.binding_sitesに保存
@@ -138,7 +137,6 @@ export async function show_binding_sites() {
         else arr_save = arr_binding_sites.concat(arr_save_binding_sites);
         save_result_list(search_id, 'binding_sites', arr_save);
     }
-
 
     // session storageのresult_listに'binding_sites'項目内に目的のblast_idがあれば返す
     function find_binding_site_in_storage(blast_id) {

@@ -1,5 +1,5 @@
-import { set_state_sort, set_state_filter, set_state_auto_save_apply, set_state_setting_view } from 'state';
-import { get_state_sort, get_state_filter, get_state_auto_save_apply, get_state_setting_view } from 'state';
+import { set_state_sort, set_state_filter, set_state_auto_save_apply, set_state_setting_view, set_state_setting_binding_site } from 'state';
+import { get_state_sort, get_state_filter, get_state_auto_save_apply, get_state_setting_view, get_state_setting_binding_site } from 'state';
 
 // localstorageへの保存形式
 // setting : {
@@ -9,7 +9,8 @@ import { get_state_sort, get_state_filter, get_state_auto_save_apply, get_state_
 // 		<filter 1>,
 // 		<filter 2>, ...
 // 	],
-//  view : <表示形式の種類>
+//  view : <表示形式の種類>,
+//  binding_site : <Boolean>
 // }
 
 // localstorageのsettingの読み込み
@@ -38,6 +39,9 @@ export function load_setting() {
         for (let i = 0; i < arr_setting_filter.length; i++) {
             set_state_filter(arr_setting_filter[i]);
         }
+
+        // 結合部位の表示の読み込み適用
+        set_state_setting_binding_site(obj_setting.binding_site);
 
     }
 
@@ -68,12 +72,16 @@ export function save_setting() {
     /// viewの取得
     const state_setting_view = state_auto_save_apply ? get_state_setting_view() : "";
 
+    /// binding_siteの取得
+    const state_setting_binding_site = state_auto_save_apply ? get_state_setting_binding_site() : "";
+
     // オブジェクトの作成
     const obj_setting = {
         auto_save_apply: state_auto_save_apply,
         sort: state_sort,
         filter: arr_state_filter,
-        view: state_setting_view
+        view: state_setting_view,
+        binding_site: state_setting_binding_site
     };
 
     // jsonに変換

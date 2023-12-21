@@ -198,7 +198,7 @@ ${th_protein}: ${blast_result_protein}
             } else {
 
                 html_hseq_td += /*html*/`
-                    <td>&nbsp;</td>
+                    <td class="multi_alignment_td">&nbsp;</td>
                 `;
             }
             position_td++;
@@ -211,7 +211,7 @@ ${th_protein}: ${blast_result_protein}
             if (position_query < blast_result_query_from - 1 || position_query > blast_result_query_to - 1) {
 
                 html_hseq_td += /*html*/`
-                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">&nbsp;</td>
+                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''} multi_alignment_td">&nbsp;</td>
                 `;
                 position_query++;
                 continue;
@@ -259,14 +259,14 @@ ${th_protein}: ${blast_result_protein}
 
                 // 強調表示
                 html_hseq_td += /*html*/`
-                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
+                    <td class="multi_alignment_td ${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
 
             }
             // アライメントがない場合
             else {
                 html_hseq_td += /*html*/`
-                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
+                    <td class="multi_alignment_td ${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
                 `; 
             }
         }
@@ -278,7 +278,7 @@ ${th_protein}: ${blast_result_protein}
 
                 // 強調表示
                 html_hseq_td += /*html*/`
-                    <td id="td_${blast_id}_${blast_result_common_hit}" class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
+                    <td id="td_${blast_id}_${blast_result_common_hit}" class="multi_alignment_td ${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
 
                 blast_result_common_hit++;
@@ -288,7 +288,7 @@ ${th_protein}: ${blast_result_protein}
 
                 // 若干強調表示
                 html_hseq_td += /*html*/`
-                    <td id="td_${blast_id}_${blast_result_common_hit}" class="text_less_emphasized ${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
+                    <td id="td_${blast_id}_${blast_result_common_hit}" class="multi_alignment_td text_less_emphasized ${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
 
                 blast_result_common_hit++;
@@ -297,7 +297,7 @@ ${th_protein}: ${blast_result_protein}
             // アライメントがないけど"-"じゃない場合
             else if(text_hit != "-"){
                 html_hseq_td += /*html*/`
-                    <td id="td_${blast_id}_${blast_result_common_hit}" class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
+                    <td id="td_${blast_id}_${blast_result_common_hit}" class="multi_alignment_td ${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
                 `;
 
                 blast_result_common_hit++;
@@ -306,7 +306,7 @@ ${th_protein}: ${blast_result_protein}
             // アライメントがなく、"-"の場合
             else {
                 html_hseq_td += /*html*/`
-                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit}</td>
+                    <td class="multi_alignment_td ${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit}</td>
                 `;
             }
         }
