@@ -93,8 +93,6 @@ export async function render_results() {
 
             const arr_deletion = await check_deletion_query_sequence(obj_result_sorted);
 
-            console.dir(arr_deletion);
-
             // なぜかhtml_resultsに各行の情報を先に入れると表外に文字が生成されるから変数作成
             let html_results_raw = ``;
 
@@ -109,6 +107,7 @@ export async function render_results() {
                 <div class="container">
                     <p>Query : 検索に使用した配列のどの部分に対して、Hitした配列がアライメントを形成しているかを示しています</p>
                     <p>※黒太字 : 一致した塩基orアミノ残基、灰太字 : 化学的性質の類似したアミノ残基、黒細字 : 一致していない塩基orアミノ残基</p>
+                    <p>「shift + スクロール」で横スクロールが可能です</p>
                 </div>
                 <div id="result_table_multiAlignment" class="horizontal_scrollable container">
                     <table>

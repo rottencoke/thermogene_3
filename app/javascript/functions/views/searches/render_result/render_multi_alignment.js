@@ -2,6 +2,7 @@ import { get_blastn_result } from 'get_blastn_result';
 import { get_tblastn_result } from 'get_tblastn_result';
 import { get_tempura } from 'get_tempura';
 import { get_search } from 'get_search';
+import { push_state_obj_locus_tag } from 'state';
 
 // アライメント描画
 // 関数内でblast_engine判別
@@ -11,14 +12,13 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     /// search
     const obj_search = await get_search();
     const arr_search_sequence = obj_search.sequence.replace(/\n/g, '').split("");
-    console.dir(arr_search_sequence);
 
     /// blast
     let blastn_result_id, tblastn_result_id, blast_engine;
     let blast_result_align_len, blast_result_midline;
     let blast_result_query_from, blast_result_query_to, blast_result_query_strand, blast_result_qseq;
     let blast_result_hit_from, blast_result_hit_to, blast_result_hit_strand, blast_result_hseq;
-    let blast_result_protein, blast_result_locus_tag;
+    let blast_result_protein, blast_result_locus_tag, blast_id;
 
     if (obj.arr_blastn_result_id.length) {
 
@@ -38,8 +38,12 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
         blast_result_hit_strand = obj_blastn_result.hit_strand;
         blast_result_hseq = obj_blastn_result.hseq;
 
+        blast_id = blastn_result_id;
         blast_result_protein = obj_blastn_result.protein;
         blast_result_locus_tag = obj_blastn_result.locus_tag;
+
+        // locus_tagとblast_idのオブジェクトをstateに保存する
+        push_state_obj_locus_tag({ 'blast_id': blastn_result_id, 'locus_tag': blast_result_locus_tag });
 
     } else if (obj.arr_tblastn_result_id.length) {
 
@@ -59,8 +63,12 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
         blast_result_hit_strand = obj_tblastn_result.hit_strand;
         blast_result_hseq = obj_tblastn_result.hseq;
 
+        blast_id = tblastn_result_id;
         blast_result_protein = obj_tblastn_result.protein;
         blast_result_locus_tag = obj_tblastn_result.locus_tag;
+
+        // locus_tagとblast_idのオブジェクトをstateに保存する
+        push_state_obj_locus_tag({ 'blast_id': tblastn_result_id, 'locus_tag': blast_result_locus_tag });
 
     }
 
@@ -155,10 +163,17 @@ ${th_protein}: ${blast_result_protein}
     let html_hseq_td = ``;
 
     // tableの配列のtdの位置
-    let position_sequence_td = 0;
+    let position_td = 0;
+
+    // query配列上の位置
+    let position_query = 0;
 
     // 各アライメント上の位置
     let position_alignment = 0;
+
+    // アライメントの始まりの塩基（blastn）or アミノ残基（tblastn）が元の配列の何番目から始まってるか
+    let blast_result_common_hit = 0;
+    if (blast_engine == "tblastn") blast_result_common_hit = (blast_result_hit_from + 2) / 3;
 
     // 欠失の最大連続数の配列
     let arr_deletion_hit = new Array(arr_search_sequence.length);
@@ -174,11 +189,11 @@ ${th_protein}: ${blast_result_protein}
     for (let i = 0; i < num_alignment_length; i++) {
 
         // arr_deletion_hit[i]が1以上ある場合、空欄のtdにしてarr_deletion_hit[i]を1減らす
-        if (arr_deletion_hit[position_sequence_td] > 0) {
+        if (arr_deletion_hit[position_query] > 0) {
 
             // アライメントのquery配列の要素が"-"だったら、hit配列の要素を先に書く
             if (blast_result_qseq[position_alignment] == "-") {
-                render_multi_alignment_element(position_alignment, 0);
+                render_multi_alignment_element(position_alignment, 0, position_td);
                 position_alignment++;
             } else {
 
@@ -186,27 +201,28 @@ ${th_protein}: ${blast_result_protein}
                     <td>&nbsp;</td>
                 `;
             }
-            
-            arr_deletion_hit[position_sequence_td]--;
+            position_td++;
+            arr_deletion_hit[position_query]--;
         }
         // arr_deletion_hit[i]が0の場合、tdに配列の要素を入れて、配列上の位置を1増やす
         else {
 
             // そもそもアライメント配列の範囲外なら空欄のtdにして次の繰り返しに飛ぶ
-            if (position_sequence_td < blast_result_query_from - 1 || position_sequence_td > blast_result_query_to - 1) {
+            if (position_query < blast_result_query_from - 1 || position_query > blast_result_query_to - 1) {
 
                 html_hseq_td += /*html*/`
-                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}">&nbsp;</td>
+                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">&nbsp;</td>
                 `;
-                position_sequence_td++;
+                position_query++;
                 continue;
             }
 
             // アライメント配列の範囲内の場合
-            render_multi_alignment_element(position_alignment, position_sequence_td);
+            render_multi_alignment_element(position_alignment, position_query, position_td);
             
             position_alignment++;
-            position_sequence_td++;
+            position_query++;
+            position_td++;
         }
     }
 
@@ -231,7 +247,7 @@ ${th_protein}: ${blast_result_protein}
 
     return html_multi_alignment;
 
-    function render_multi_alignment_element(position_alignment, position_sequence_td) {
+    function render_multi_alignment_element(position_alignment, position_query, position_td) {
 
         const text_hit = blast_result_hseq[position_alignment];
         
@@ -243,14 +259,14 @@ ${th_protein}: ${blast_result_protein}
 
                 // 強調表示
                 html_hseq_td += /*html*/`
-                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
+                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
 
             }
             // アライメントがない場合
             else {
                 html_hseq_td += /*html*/`
-                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
+                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
                 `; 
             }
         }
@@ -262,22 +278,36 @@ ${th_protein}: ${blast_result_protein}
 
                 // 強調表示
                 html_hseq_td += /*html*/`
-                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
+                    <td id="td_${blast_id}_${blast_result_common_hit}" class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
+
+                blast_result_common_hit++;
             }
             // アライメントが"+"の場合
             else if (blast_result_midline[position_alignment] == "+") {
 
                 // 若干強調表示
                 html_hseq_td += /*html*/`
-                    <td class="text_less_emphasized ${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
+                    <td id="td_${blast_id}_${blast_result_common_hit}" class="text_less_emphasized ${position_query % 5 == 4 ? 'table_border_td_right' : ''}"><b>${text_hit}</b></td>
                 `;
+
+                blast_result_common_hit++;
+
             }
-            // アライメントがない場合
+            // アライメントがないけど"-"じゃない場合
+            else if(text_hit != "-"){
+                html_hseq_td += /*html*/`
+                    <td id="td_${blast_id}_${blast_result_common_hit}" class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
+                `;
+
+                blast_result_common_hit++;
+
+            }
+            // アライメントがなく、"-"の場合
             else {
                 html_hseq_td += /*html*/`
-                    <td class="${position_sequence_td % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit ? text_hit : ''}</td>
-                `; 
+                    <td class="${position_query % 5 == 4 ? 'table_border_td_right' : ''}">${text_hit}</td>
+                `;
             }
         }
     }

@@ -1,6 +1,7 @@
 import { set_state_modal_setting, get_state_modal_setting, get_state_modals } from 'state';
 import { set_state_auto_save_apply, get_state_auto_save_apply } from 'state';
 import { set_state_setting_view, get_state_setting_view } from 'state';
+import { set_state_setting_binding_site, get_state_setting_binding_site } from 'state';
 import { save_setting } from 'control_setting';
 import { render_results } from 'render_results';
 
@@ -16,6 +17,7 @@ export async function control_setting() {
     const element_modal_setting_tab = document.querySelectorAll('.modal_setting_tab');
     const element_modal_setting_content = document.querySelectorAll('.modal_setting_content');
     const element_modal_setting_tab_0 = document.getElementById('modal_setting_tab_0');
+    const element_setting_2_show_binding_site = document.getElementById('setting_2_show_binding_site');
 
     // ここで設定タブの0番目の背景色を設定する
     /// なぜかこれをcssで設定すると動的に変更することができなくなる
@@ -180,5 +182,15 @@ export async function control_setting() {
             await render_results();
         }
 
+    }
+
+    // 結合部位の表示の設定
+    function save_setting_show_binding_site() {
+
+        // チェックボックスの値を取得
+        const checkbox = element_setting_2_show_binding_site.checked;
+
+        // stateに保存
+        set_state_setting_binding_site(checkbox);
     }
 }

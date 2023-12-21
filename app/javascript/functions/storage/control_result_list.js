@@ -33,13 +33,22 @@
 // 			genus_and_species : ,
 // 			...
 // 		}, ...
-// 		}]
+// 		}],
+//      binding_sites : [{
+//          blast_id : ,
+//          binding_site : [{
+//              name : ,
+//              position : []
+//          }]
+//      }]
 // 	}
 // }	
 
 // storageにあれば読み込み、なければfalseを返す
 /// blastn, tblastn, tempuraのみ第3引数table_idを指定
 export function load_result_list(search_id, table, table_id) {
+
+    // console.log(`load_result : ${search_id}_${table}_${table_id}`);
 
     // session storageからデータの取得
     const ssdata_result_list = sessionStorage.getItem('result_list');
@@ -91,7 +100,7 @@ export function save_result_list(search_id, table, obj) {
         obj_ss_result_list[key_search_id] = {};
     }
 
-    // blastn, tblastn, tempuraの場合、配列の中に各idのオブジェクトを保存する
+    // blastn, tblastn, tempura, binding_sitesの場合、配列の中に各idのオブジェクトを保存する
     if (table == 'blastn_result' || table == 'tblastn_result' || table == 'tempura') {
 
         // 指定したtableキーがまだ存在しない場合、配列を定義して初期化

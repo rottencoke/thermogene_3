@@ -176,6 +176,3 @@ function change_color_of_rare_codon(i, j) {
     element.style.fontWeight = "bold";
 
 };
-
-// グローバルスコープに公開して、erbファイルで使用できるようにする
-window.show_rare_codons = show_rare_codons;

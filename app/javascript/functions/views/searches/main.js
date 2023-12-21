@@ -4,6 +4,7 @@ import { render_filter_control } from 'render_filter_control';
 import { render_setting } from 'render_setting';
 
 import { show_rare_codons } from 'show_rare_codons';
+import { show_binding_sites } from 'show_binding_sites';
 import { control_modal_sort } from 'control_modal_sort';
 import { control_modal_filter } from 'control_modal_filter';
 import { render_results } from 'render_results';
@@ -35,6 +36,9 @@ export async function render_searches() {
 
     // レアコドンの表示
     show_rare_codons();
+
+    // 結合部位の表示
+    await show_binding_sites();
 
     // ソートの設定モーダルを動かせるように
     await control_modal_sort();
