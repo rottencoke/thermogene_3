@@ -24,11 +24,9 @@ export function get_state_modal_sort() {
 /// state_sortのsetter、値の変更用
 /// listにない値には変更できない
 export function set_state_sort(new_state) {
-
     if (arr_state_sort_acceptable.includes(new_state)) {
         state_sort = new_state;
     }
-
 }
 
 /// state_sortのgetter、値の取得用

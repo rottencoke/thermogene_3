@@ -4,6 +4,7 @@ import { set_state_setting_view, get_state_setting_view } from 'state';
 import { set_state_setting_binding_site, get_state_setting_binding_site } from 'state';
 import { save_setting } from 'control_setting';
 import { render_results } from 'render_results';
+import { show_binding_sites } from 'show_binding_sites';
 
 // いったんページ切り替えの機能はつけない
 export async function control_setting() {
@@ -62,9 +63,7 @@ export async function control_setting() {
 
         // 設定モーダル内の設定を適用する
         save_setting_auto_save_apply();
-
-        // 表示設定を保存する
-        await save_setting_view();
+        await save_setting_show_binding_site();
 
         // localstorageのsettingを保存
         save_setting();
@@ -185,12 +184,33 @@ export async function control_setting() {
     }
 
     // 結合部位の表示の設定
-    function save_setting_show_binding_site() {
+    async function save_setting_show_binding_site() {
 
         // チェックボックスの値を取得
         const checkbox = element_setting_2_show_binding_site.checked;
 
         // stateに保存
         set_state_setting_binding_site(checkbox);
+
+        // state_setting_binding_siteがtrueなら
+        if (get_state_setting_binding_site()) {
+
+            // 表示設定を保存する
+            await show_binding_sites();
+        }
+
+        // state_setting_binding_siteがfalseなら
+        else {
+
+            // 要素取得
+            const element_multi_alignment_td = document.querySelectorAll('.multi_alignment_td');
+
+            // 下線削除
+            element_multi_alignment_td.forEach(function(element) {
+                element.style.borderBottom = "0px"; 
+            });
+        }
+
+        
     }
 }

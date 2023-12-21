@@ -1,5 +1,5 @@
 import { icon_setting } from 'icons';
-import { get_state_setting_view } from 'state';
+import { get_state_setting_view, get_state_setting_binding_site } from 'state';
 
 export function render_setting() {
 
@@ -100,13 +100,11 @@ export function render_setting() {
             /*html*/`
                 <div class="m-3">
                     <div class="fs_7 p-2">
-                        NCBIのproteinデータベースの情報を取得して、<br>
-                        表示形式3のマルチアライメントの表に<br>
-                        タンパク質の基質等の結合部位を表示します。<br>
+                        NCBIのproteinデータベースの情報を取得して、表示形式3のマルチアライメントの表にタンパク質の基質等の結合部位を表示します。<br>
                         ※各データの初回読み込み時には時間がかかります。
                     </div>
                     <form>
-                        <input type="checkbox" id="setting_2_show_binding_site">
+                        <input type="checkbox" id="setting_2_show_binding_site" ${get_state_setting_binding_site() ? 'checked' : ''}>
                         <label for="setting_2_show_binding_site">結合部位を表示する</label>
                     </form>
                 </div>
