@@ -7,5 +7,7 @@ Rails.application.routes.draw do
     get 'data/get_tempura/:tempura_id', to: 'data#get_tempura'
     get 'data/get_blastn_result/:blastn_result_id', to: 'data#get_blastn_result'
     get 'data/get_tblastn_result/:tblastn_result_id', to: 'data#get_tblastn_result'
+
+    get 'api/get_ncbi_protein/:locus_tag', to: 'api#get_ncbi_protein'
 end
   

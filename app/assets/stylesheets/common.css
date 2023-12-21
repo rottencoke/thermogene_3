@@ -14,4 +14,16 @@
     --color-text-link: rgb(92, 33, 160);
     --color-text-link-hover: rgb(159, 77, 253);
     --color-text-less-emphasized: rgb(119, 119, 119);
+
+    --color-border-highlighted-0: #ca6a5b;
+    --color-border-highlighted-1: #db97ff;
+    --color-border-highlighted-2: #993bcf;
+    --color-border-highlighted-3: #7fbebe;
+    --color-border-highlighted-4: #0881a3;
+    --color-border-highlighted-5: #ff7a8a;
+    --color-border-highlighted-6: #dfd158;
+    --color-border-highlighted-7: #63c7a2;
+    --color-border-highlighted-8: #30999e;
+    --color-border-highlighted-9: #54aa93;
+    
 }

@@ -27,6 +27,9 @@ pin "show_rare_codons", to: "functions/utils/show_rare_codons/main.js"
 pin "rare_codons", to: "functions/utils/show_rare_codons/rare_codons.js"
 pin "text_color", to: "functions/utils/show_rare_codons/text_color.js"
 
+## utils/show_binding_site/
+pin "show_binding_sites", to: "functions/utils/show_binding_sites/main.js"
+
 ## view/searches/
 pin "searches", to: "functions/views/searches/main.js"
 ### view/searches/render_condition/
@@ -60,6 +63,9 @@ pin "settings", to: "functions/utils/settings/main.js"
 
 ## utils/link_to_home/
 pin "open_home_page", to: "functions/utils/link_to_home/main.js"
+
+## utils/utils/
+pin "sleep", to: "functions/utils/utils/sleep.js"
 
 ## view/icons/
 pin "icons", to: "functions/views/icons/icons.js"

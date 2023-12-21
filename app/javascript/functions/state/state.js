@@ -123,3 +123,32 @@ export function set_state_setting_view(new_state) {
 export function get_state_setting_view() {
     return state_setting_view;
 }
+
+// ====== 結合部位表示設定 ======
+let state_setting_binding_site = false;
+
+/// setter
+export function set_state_setting_binding_site(new_state) {
+    state_setting_binding_site = new_state;
+}
+
+/// getter
+export function get_state_setting_binding_site() {
+    return state_setting_binding_site;
+}
+
+// ====== blast_idとlocus_tagのオブジェクトの配列 ======
+/// NCBIのAPIでタンパク質の結合サイトを取得する用
+/// 本当はここに書かない方がいいけど、読み込みを結果表示と別にしたいからここに書く
+// [{blast_id : , locus_tag : }, {}...]
+let state_arr_locus_tag = [];
+
+/// push
+export function push_state_obj_locus_tag(new_obj) {
+    state_arr_locus_tag.push(new_obj);
+}
+
+/// getter
+export function get_state_obj_locus_tag() {
+    return state_arr_locus_tag;
+}

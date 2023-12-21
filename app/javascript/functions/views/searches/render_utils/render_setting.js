@@ -7,7 +7,7 @@ export function render_setting() {
     const html_icon_setting = icon_setting;
 
     // 設定各タブ名
-    const arr_text_settings = ["表示設定の自動保存", "結果表示形式"];
+    const arr_text_settings = ["表示設定の自動保存", "結果表示形式", "結合部位表示"];
 
     // 設定モーダルのタブ作成
     let html_setting_tab = ``;
@@ -67,7 +67,9 @@ export function render_setting() {
             /*html*/`
                 <div class="m-3">
                     <div class="fs_7 p-2">
-                        検索結果に対して設定できるソートやフィルターなどを自動で保存し、次回の検索や再読み込み時に保存した設定を適用することができます。デフォルトではONになっています。
+                        検索結果に対して設定できるソートやフィルターなどを自動で保存し、<br>
+                        次回の検索や再読み込み時に保存した設定を適用することができます。<br>
+                        デフォルトではONになっています。
                     </div>
                     <form>
                         <input type="checkbox" id="setting_0_auto_save_apply">
@@ -92,6 +94,20 @@ export function render_setting() {
                         <br>
                         <input type="radio" id="setting_1_multiAlignment" name="setting_view" value="multiAlignment" ${num_radio_checked == 3 ? 'checked' : ''}>
                         <label for="setting_1_multiAlignment">3. マルチアライメント</label>
+                    </form>
+                </div>
+            `,
+            /*html*/`
+                <div class="m-3">
+                    <div class="fs_7 p-2">
+                        NCBIのproteinデータベースの情報を取得して、<br>
+                        表示形式3のマルチアライメントの表に<br>
+                        タンパク質の基質等の結合部位を表示します。<br>
+                        ※各データの初回読み込み時には時間がかかります。
+                    </div>
+                    <form>
+                        <input type="checkbox" id="setting_2_show_binding_site">
+                        <label for="setting_2_show_binding_site">結合部位を表示する</label>
                     </form>
                 </div>
             `

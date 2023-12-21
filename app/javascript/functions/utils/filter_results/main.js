@@ -2,6 +2,7 @@ import { set_state_filter, splice_state_filter, get_state_filter, set_state_moda
 import { icon_edit, icon_delete } from 'icons';
 import { render_results } from 'render_results';
 import { save_setting } from 'control_setting';
+import { show_binding_sites } from 'show_binding_sites';
 
 // フィルター管理画面の表示の管理
 export async function control_modal_filter() {
@@ -89,6 +90,9 @@ export async function control_modal_filter() {
 
             // state_filterに従ってフィルターを実行
             await render_results();
+
+            // 結合部位の表示
+            await show_binding_sites();
 
             // localstorageのsettingを保存
             save_setting();
