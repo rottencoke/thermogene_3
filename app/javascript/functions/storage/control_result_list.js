@@ -48,8 +48,6 @@
 /// blastn, tblastn, tempuraのみ第3引数table_idを指定
 export function load_result_list(search_id, table, table_id) {
 
-    // console.log(`load_result : ${search_id}_${table}_${table_id}`);
-
     // session storageからデータの取得
     const ssdata_result_list = sessionStorage.getItem('result_list');
 

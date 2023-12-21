@@ -40,8 +40,6 @@ export async function show_binding_sites() {
     // hit数だけ繰り返す
     for (let i = 0; i < state_obj_locus_tag.length; i++) {
 
-        console.log("sequence " + i);
-
         // state_obj_locus_tagから情報取り出し
         const blast_id = state_obj_locus_tag[i].blast_id;
         const locus_tag = state_obj_locus_tag[i].locus_tag;
@@ -61,8 +59,6 @@ export async function show_binding_sites() {
 
             // APIを呼び出してresultを取得する
             const response = await axios.get(`/api/get_ncbi_protein/${locus_tag}`);
-
-            console.log(response.data);
 
             // もしresponse.dataが空なら飛ばす
             if (response.data.length == 0) continue;
@@ -133,7 +129,6 @@ export async function show_binding_sites() {
 
         }
 
-        console.log("");
     }
 
     // 新たに読み込んだデータがあればresult_list.binding_sitesに保存
