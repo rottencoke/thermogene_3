@@ -7,6 +7,8 @@ export async function get_search() {
     // search_idを取得
     const search_id = get_search_id();
 
+    if (!search_id) return;
+
     // session storageに情報が保存されてないか確認する
     const obj_ss_search = load_result_list(search_id, 'search',);
 
