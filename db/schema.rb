@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_125007) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_26_092414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,14 +75,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_125007) do
     t.text "sequence"
     t.string "search_method"
     t.string "search_blast_engine"
-    t.float "identity_minimum"
-    t.float "identity_maximum"
-    t.float "eValue_minimum"
-    t.float "eValue_maximum"
-    t.float "qCoverage_minimum"
-    t.float "qCoverage_maximum"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "fasta_header"
   end
 
   create_table "tblastn_results", force: :cascade do |t|
