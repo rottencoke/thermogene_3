@@ -76,7 +76,8 @@ class SearchesController < ApplicationController
             :temp_maximum, 
             :sequence, 
             :search_method, 
-            :search_blast_engine
+            :search_blast_engine,
+            :fasta_header
         )
     end
 

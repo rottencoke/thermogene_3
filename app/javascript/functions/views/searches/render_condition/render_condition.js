@@ -12,6 +12,7 @@ export async function render_condition() {
     // <table>のヘッダー
     const th_jobtitle = "JOB TITLE";
     const th_temperature = "生育温度";
+    const th_fasta_header = "fastaヘッダーライン";
     const th_sequence = "Query配列";
     const th_search_blast_engine = "BLAST検索プログラム";
     const th_created_at = "検索開始時刻";
@@ -23,6 +24,7 @@ export async function render_condition() {
     const td_sequence = search.sequence.replace(/(\r\n?|\n)/g, "");
     const td_search_blast_engine = search.search_blast_engine;
     const td_created_at = formatDate(search.created_at);
+    const td_fasta_header = search.fasta_header;
 
     return /*html*/`
         <div id="search_condition_area" class="container">
@@ -33,6 +35,10 @@ export async function render_condition() {
                         <tr>
                             <th class="condition_th">${th_jobtitle}</th>
                             <td>${td_jobtitle}</td>
+                        </tr>
+                        <tr ${td_fasta_header ? '' : 'style="display:none;"'}>
+                            <th class="condition_th">${th_fasta_header}</th>
+                            <td>${td_fasta_header}</td>
                         </tr>
                         <tr>
                             <th class="condition_th">${th_temperature}</th>
