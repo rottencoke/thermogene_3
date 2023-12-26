@@ -139,12 +139,6 @@ class SearchesController < ApplicationController
             :sequence, 
             :search_method, 
             :search_blast_engine, 
-            :identity_minimum, 
-            :identity_maximum, 
-            :eValue_minimum, 
-            :eValue_maximum, 
-            :qCoverage_minimum, 
-            :qCoverage_maximum
         )
     end
 
