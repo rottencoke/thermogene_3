@@ -3,10 +3,13 @@ import { post_search_params } from 'post_search_params';
 
 export function render_homes() {
 
+    // ファイル入力受付形式
+    const file_type_accepted = ".txt, .fasta, .fa, .fas, .fna, .ffn, .faa, .frn"
+
     // 作成するフォーム
     const html_form = /*html*/`
         <div id="search_form_area">
-            <form id="search-form">
+            <form id="search_form">
                 <div id="search_condition_area" class="flex center">
                     <div id="search_main_area" class="container center">
                         <div id="search_jobtitle">
@@ -26,8 +29,12 @@ export function render_homes() {
                         </div>
                         <hr>
                         <div id="search_seqInputArea">
+                            <label for="sequence_file">ファイルを選択(.txt, .fasta等) : </label>
+                            <input type="file" name="sequence_file" id="sequence_file" accept="${file_type_accepted}">
+                            <br>
                             <label for="seq" class="form_label py-3 pe-2">Query配列</label>
                             <textarea name="sequence" id="seq" class="form-control form_text_area"></textarea>
+                            <div id="error_message" style="color:red;" class="fs_7"></div>
                         </div>
                         <hr>
                         <div id="search_blast_engine">
