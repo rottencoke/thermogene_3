@@ -8,6 +8,9 @@ export function get_search_id() {
 
     const search_id = splitted_currentURL[splitted_currentURL.length - 1];
 
+    // 数字じゃなかったらreturn
+    if (!/^\d+(\.\d+)?$/.test(search_id)) return false;
+
     return search_id;
 
 }
