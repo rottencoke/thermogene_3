@@ -23,11 +23,8 @@ export async function get_search() {
             sequence: obj_ss_search.sequence,
             search_method: obj_ss_search.search_method,
             search_blast_engine: obj_ss_search.search_blast_engine,
-            identity_minimum: obj_ss_search.identity_minimum,
-            identity_maximum: obj_ss_search.identity_maximum,
-            evalue_minimum: obj_ss_search.evalue_minimum,
-            evalue_maximum: obj_ss_search.evalue_maximum,
-            created_at: obj_ss_search.created_at
+            created_at: obj_ss_search.created_at,
+            fasta_header: obj_ss_search.fasta_header
         }
     }
     /// 保存されていない場合
@@ -46,11 +43,8 @@ export async function get_search() {
                 sequence: response.data.sequence,
                 search_method: response.data.search_method,
                 search_blast_engine: response.data.search_blast_engine,
-                identity_minimum: response.data.identity_minimum,
-                identity_maximum: response.data.identity_maximum,
-                evalue_minimum: response.data.eValue_minimum,
-                evalue_maximum: response.data.eValue_maximum,
-                created_at: response.data.created_at
+                created_at: response.data.created_at,
+                fasta_header: response.data.fasta_header
             };
 
             // session storageに保存
