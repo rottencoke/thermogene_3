@@ -68,6 +68,9 @@ export async function control_setting() {
         // localstorageのsettingを保存
         save_setting();
 
+        // 結果の表示設定の適用
+        save_setting_view();
+
     });
 
     // ====== 設定のタブのクリック ======

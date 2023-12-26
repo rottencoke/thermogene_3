@@ -13,14 +13,6 @@ class SearchesController < ApplicationController
         # 入力されたパラメータをデータベースに登録
         @search = Search.create(search_params)
 
-        # DBに正常に登録されたか判断
-        if @search.save
-            puts "[Search Parameter Saved Successfully]"
-            # redirect_to @search
-        else
-            puts "[Search Parameter Saved Failed]"
-        end
-
         puts puts
         puts "-----------------------------------------"
         puts "Search : " + `date +%Y/%m/%d_%H:%M:%S.%3N` + "------------------------------------------"
@@ -36,14 +28,10 @@ class SearchesController < ApplicationController
         ## TEMPURAから温度の条件に当てはまるassemblyの配列を取り出す
         tempura_result_assembly = @tempura_ins.search_tempura_assembly_with_optimum_growth_temp
 
-        puts "tempura result len #{tempura_result_assembly.length.to_s}"
-
         # BLAST部分~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ## Blastnの場合
 
         if @search.search_blast_engine == "blastn" then
-
-            puts "[test] BLASTN"
 
             # BLASTn検索結果のインスタンス作成
             @search_blastn_ins = SearchBlastn.new(@search.sequence, request_id)
@@ -58,8 +46,6 @@ class SearchesController < ApplicationController
         ## Blastnの場合
         elsif @search.search_blast_engine == "tblastn" then
 
-            puts "[test] TBLASTN"
-            
             # BLASTn検索結果のインスタンス作成
             @search_tblastn_ins = SearchTblastn.new(@search.sequence, request_id)
         
@@ -67,78 +53,30 @@ class SearchesController < ApplicationController
             ## tBLASTnの結果のassemblyの配列を取り出す
             tblastn_result_assembly = execute_tblastn(request_id)
 
-            puts "[test searches_controller] tblastn result len #{tblastn_result_assembly.length.to_s}"
-        
             # 一致するAssemblyを取得、resultsテーブルに保存する
             acquire_shared_assembly(@search.id, tempura_result_assembly, tblastn_result_assembly)
 
         end
 
-        # 結果表示
-        redirect_to @search
-
+        if @search.save
+            render json: { search_id: @search.id }, status: :created
+        else
+            render json: @search.errors, status: :unprocessable_entity
+        end
     end
 
     def show
-
-        # Search
-        ## Searchをインスタンスにする
-        @search = Search.find(params[:id])
-
-        # Result
-        ## Resultのidを取得する
-        result_id = @search.result_ids
-
-        ## Resultのインスタンス
-        @result = Result.find(result_id)
-
-        # Tempura
-        ## Tempuraのidをresult_idから取得する
-        tempura_ids = @result[0][:tempura_id]
-
-        ## Tempuraの情報を配列にする
-        @tempuras = []
-        tempura_ids.length.times do |i|
-            @tempuras << Tempura.find(tempura_ids[i])
-        end
-
-        # BlastnResult
-        ## BlastResultの情報を配列にする
-        @blast_results = []
-
-        case
-        ## blastnの場合
-        when @search&.search_blast_engine == "blastn"
-
-            ## BlastnResultのidをresult_idから取得する
-            blast_result_ids = @result[0][:blastn_result_id]
-
-            blast_result_ids.length.times do |i|
-                @blast_results << BlastnResult.find(blast_result_ids[i])
-            end
-        
-        ## tblastnの場合
-        when @search&.search_blast_engine == "tblastn"
-            
-            ## BlastnResultのidをresult_idから取得する
-            blast_result_ids = @result[0][:tblastn_result_id]
-
-            blast_result_ids.length.times do |i|
-                @blast_results << TblastnResult.find(blast_result_ids[i])
-            end
-        end
-
     end
 
     private
     def search_params
-        params.require(:search).permit(
+        params.permit(
             :jobtitle, 
             :temp_minimum, 
             :temp_maximum, 
             :sequence, 
             :search_method, 
-            :search_blast_engine, 
+            :search_blast_engine
         )
     end
 

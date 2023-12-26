@@ -22,13 +22,12 @@ pin "state", to: "functions/state/state.js"
 pin "control_result_list", to: "functions/storage/control_result_list.js"
 pin "control_setting", to: "functions/storage/control_setting.js"
 
-## utils/show_rare_codons/
-pin "show_rare_codons", to: "functions/utils/show_rare_codons/main.js"
-pin "rare_codons", to: "functions/utils/show_rare_codons/rare_codons.js"
-pin "text_color", to: "functions/utils/show_rare_codons/text_color.js"
+## view/homes/
+pin "homes", to: "functions/views/homes/main.js"
 
-## utils/show_binding_site/
-pin "show_binding_sites", to: "functions/utils/show_binding_sites/main.js"
+## view/release_note/
+pin "render_release_notes", to: "functions/views/release_note/main.js"
+pin "release_info", to: "functions/views/release_note/release_info.js"
 
 ## view/searches/
 pin "searches", to: "functions/views/searches/main.js"
@@ -45,9 +44,8 @@ pin "render_sort_control", to: "functions/views/searches/render_utils/render_sor
 pin "render_filter_control", to: "functions/views/searches/render_utils/render_filter_control.js"
 pin "render_setting", to: "functions/views/searches/render_utils/render_setting.js"
 
-## view/release_note/
-pin "render_release_notes", to: "functions/views/release_note/main.js"
-pin "release_info", to: "functions/views/release_note/release_info.js"
+## utils/post_search_params/
+pin "post_search_params", to: "functions/utils/post_search_params/main.js"
 
 ## utils/sort_results/
 pin "control_modal_sort", to: "functions/utils/sort_results/main.js"
@@ -60,6 +58,14 @@ pin "filter_results", to: "functions/utils/filter_results/filter_results.js"
 
 ## utils/settings/
 pin "settings", to: "functions/utils/settings/main.js"
+
+## utils/show_rare_codons/
+pin "show_rare_codons", to: "functions/utils/show_rare_codons/main.js"
+pin "rare_codons", to: "functions/utils/show_rare_codons/rare_codons.js"
+pin "text_color", to: "functions/utils/show_rare_codons/text_color.js"
+
+## utils/show_binding_site/
+pin "show_binding_sites", to: "functions/utils/show_binding_sites/main.js"
 
 ## utils/link_to_home/
 pin "open_home_page", to: "functions/utils/link_to_home/main.js"

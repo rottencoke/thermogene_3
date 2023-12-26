@@ -1,19 +1,5 @@
-<main>
-    <div id="search_area" class="container">
-        <div class="container">
-            <div id="main_title">
-                <p>
-                    特定の温度に生息する微生物に対して、入力した配列と相同性を有する遺伝子を検索します
-                </p>
-            </div>
-            <%= render partial: 'form', locals: { search: @search } %>
-            <hr>          
-            
-        </div>
-    </div>
-    <div id="release_notes" class="container"></div>
-</main>
+<main></main>
 <script type="module">
-    import {render_release_notes} from "render_release_notes";
-    render_release_notes();
+    import { render_homes } from 'homes';
+    render_homes();
 </script>
