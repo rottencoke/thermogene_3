@@ -91,5 +91,13 @@ export const arr_release_info = [
         details: [
             "検索でヒットした配列に対し、NCBIのゲノム (nuccore) の該当位置のページと、タンパク質 (protein) のページのリンクを追加しました。"
         ]
+    }, {
+        date: "2023-12-26",
+        changes: [
+            "ファイル入力の追加"
+        ],
+        details: [
+            "検索時に入力する配列をテキストファイル（.txt, .fasta等）から入力できるようにになりました。"
+        ]
     }
 ]
