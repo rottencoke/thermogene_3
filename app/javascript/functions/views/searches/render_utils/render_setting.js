@@ -7,7 +7,7 @@ export function render_setting() {
     const html_icon_setting = icon_setting;
 
     // 設定各タブ名
-    const arr_text_settings = ["表示設定の自動保存", "結果表示形式", "結合部位表示"];
+    const arr_text_settings = ["表示設定の自動保存", "結果表示形式", "結合部位表示", "結果保存 (.csv)"];
 
     // 設定モーダルのタブ作成
     let html_setting_tab = ``;
@@ -106,6 +106,19 @@ export function render_setting() {
                     <form>
                         <input type="checkbox" id="setting_2_show_binding_site" ${get_state_setting_binding_site() ? 'checked' : ''}>
                         <label for="setting_2_show_binding_site">結合部位を表示する</label>
+                    </form>
+                </div>
+            `,
+            /*html*/`
+                <div class="m-3">
+                    <div class="fs_7 p-2">
+                        BLAST検索の結果をcsvファイルに保存します。何も選択しない場合、生物種と菌株、タンパク質、生育温度のみ保存します。
+                    </div>
+                    <form>
+                        <input type="checkbox" id="setting_3_protein_id">
+                        <label for="setting_3_protein_id">protein idを含む形式</label>
+
+                        <button id="setting_3_download">CSVファイルを保存</button>
                     </form>
                 </div>
             `

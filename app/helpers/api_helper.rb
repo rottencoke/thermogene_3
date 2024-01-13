@@ -11,8 +11,16 @@ module ApiHelper
         url = URI("#{base_url}?db=#{db}&term=#{locus_tag}[locus_tag]&retmode=json")
       
         response = Net::HTTP.get(url)
-        result = JSON.parse(response)
-        result["esearchresult"]["idlist"][0]
+
+        begin
+            result = JSON.parse(response)
+            result["esearchresult"]["idlist"][0]
+        rescue JSON::ParserError => e
+            puts "JSONパースエラーが発生しました: #{e.message}"
+            false
+        end
+
+        
     end
 
     # NCBIのE-utilitiesのefetchを使用してFEATURESのSITE項目を取得
