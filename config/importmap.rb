@@ -67,6 +67,9 @@ pin "text_color", to: "functions/utils/show_rare_codons/text_color.js"
 ## utils/show_binding_site/
 pin "show_binding_sites", to: "functions/utils/show_binding_sites/main.js"
 
+## utils/save_csv/
+pin "save_csv", to: "functions/utils/save_csv/main.js"
+
 ## utils/link_to_home/
 pin "open_home_page", to: "functions/utils/link_to_home/main.js"
 

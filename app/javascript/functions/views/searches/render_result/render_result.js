@@ -65,7 +65,7 @@ export async function render_result(obj, index, view_style) {
     const td_tmax = obj_tempura.tmax;
 
     /// blastデータ用変数
-    let td_gene, td_protein, td_align_len, td_evalue, td_identity, td_gaps, td_bit_score, locus_tag, accession, location;
+    let td_gene, td_protein, td_align_len, td_evalue, td_identity, td_gaps, td_bit_score, protein_id, accession, location;
 
     /// blastn_resultから
     if (blast_engine == "blastn") {
@@ -80,7 +80,7 @@ export async function render_result(obj, index, view_style) {
         td_gaps = obj_blastn_result.gaps;
         td_bit_score = obj_blastn_result.bit_score;
         
-        locus_tag = obj_blastn_result.locus_tag;
+        protein_id = obj_blastn_result.protein_id;
         accession = obj_blastn_result.accession;
         location = obj_blastn_result.location;
 
@@ -98,7 +98,7 @@ export async function render_result(obj, index, view_style) {
         td_gaps = obj_tblastn_result.gaps;
         td_bit_score = obj_tblastn_result.bit_score;
         
-        locus_tag = obj_tblastn_result.locus_tag;
+        protein_id = obj_tblastn_result.protein_id;
         accession = obj_tblastn_result.accession;
         location = obj_tblastn_result.location;
 
@@ -113,7 +113,7 @@ export async function render_result(obj, index, view_style) {
     const url_species = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${obj_tempura.taxonomy_id}`;
     const url_strain = `https://www.ncbi.nlm.nih.gov/datasets/genome/${obj_tempura.assembly_or_accession}/`;
     const url_gene = `https://www.ncbi.nlm.nih.gov/nuccore/${accession_edited}?from=${location_from}&to=${location_to}`;
-    const url_protein = `https://www.ncbi.nlm.nih.gov/protein/?term=${locus_tag}[locus_tag]`;
+    const url_protein = `https://www.ncbi.nlm.nih.gov/protein/${protein_id}`;
 
     // リンク説明
     const text_url_species = "NCBI該当菌種ページ (taxonomy id)";
