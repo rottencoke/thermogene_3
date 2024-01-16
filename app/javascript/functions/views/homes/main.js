@@ -26,6 +26,14 @@ export function render_homes() {
                                 <input type="number" name="temp_maximum" id="temp_maximum" class="form-control small_number_field" min="40" max="106">
                                 <label for="temp_maximum">°C</label>
                             </div>
+                            <div class="fs_7">
+                                <p>
+                                    41℃ ~ 102℃の生育温度の生物種のみ登録されています。
+                                </p>
+                                <p>
+                                    ※TEMPURAに登録されていた40℃以下の生物種のデータには、ゲノムデータ収集に必要なAssemblyの情報が欠けていたので、<br>本ツールでは検索することはできません。
+                                </p>
+                            </div>
                         </div>
                         <hr>
                         <div id="search_seqInputArea">
@@ -48,7 +56,7 @@ export function render_homes() {
                     </div>
                 </div>
                 <div class="align_center py-5">
-                    <input type="submit" value="検索開始" class="btn btn-primary">
+                    <input type="submit" value="検索開始" class="btn btn-primary" id="btn_search">
                 </div>
             </form>
         </div>
