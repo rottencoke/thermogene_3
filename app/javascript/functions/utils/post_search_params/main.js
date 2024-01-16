@@ -2,10 +2,19 @@ export function post_search_params() {
 
     // フォーム読み取り
     document.addEventListener("DOMContentLoaded", function () {
+        
+        // 要素取得
         const element_search_form = document.getElementById("search_form");
+        const element_btn_search = document.getElementById('btn_search');
   
         element_search_form.addEventListener("submit", function (e) {
             e.preventDefault();
+
+            // ボタンの色を変更する
+            element_btn_search.style.backgroundColor = 'var(--color-button-pushed)';
+            element_btn_search.style.borderColor = 'var(--color-button-pushed)';
+            element_btn_search.style.color = 'black';
+
             const form_data = new FormData(this);
 
             let data_raw_sequence = "";
