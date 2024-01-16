@@ -45,8 +45,8 @@ export async function render_result(obj, index, view_style) {
     const th_alignment_length = "長さ";
     const th_evalue = "E Value";
     const th_identity = "相同性";
-    const th_gap = "ギャップ";
-    const th_bit_score = "bit_score";
+    const th_bit_score = "Bit Score";
+    const th_query_coverage = "Query Cover";
 
     // tableデータ
     const td_index = index + 1;
@@ -65,7 +65,7 @@ export async function render_result(obj, index, view_style) {
     const td_tmax = obj_tempura.tmax;
 
     /// blastデータ用変数
-    let td_gene, td_protein, td_align_len, td_evalue, td_identity, td_gaps, td_bit_score, protein_id, accession, location;
+    let td_gene, td_protein, td_align_len, td_evalue, td_identity, td_gaps, td_bit_score, protein_id, accession, location, td_query_len;
 
     /// blastn_resultから
     if (blast_engine == "blastn") {
@@ -84,6 +84,8 @@ export async function render_result(obj, index, view_style) {
         accession = obj_blastn_result.accession;
         location = obj_blastn_result.location;
 
+        td_query_len = obj_blastn_result.query_len;
+
     }
     /// tblastn_resultから
     else if (blast_engine == "tblastn") {
@@ -101,6 +103,8 @@ export async function render_result(obj, index, view_style) {
         protein_id = obj_tblastn_result.protein_id;
         accession = obj_tblastn_result.accession;
         location = obj_tblastn_result.location;
+
+        td_query_len = obj_tblastn_result.query_len;
 
     }
 
@@ -132,6 +136,9 @@ export async function render_result(obj, index, view_style) {
         td_align_len_counter = "残基";
 
     }
+
+    // query coverage計算
+    const td_query_coverage = (td_align_len / td_query_len * 100).toFixed(1);
 
     // 表示形式view_styleによって結果表示の形式を変更する
     switch (view_style) {
@@ -252,8 +259,8 @@ export async function render_result(obj, index, view_style) {
                         <td>${td_identity}%</td>
                     </tr>
                     <tr>
-                        <th class="result_th" scope="row">${th_gap}</th>
-                        <td>${td_gaps}</td>
+                        <th class="result_th" scope="row">${th_query_coverage}</th>
+                        <td>${td_query_coverage}%</td>
                     </tr>
                     <tr>
                         <th class="result_th" scope="row">${th_bit_score}</th>
@@ -316,6 +323,7 @@ export async function render_result(obj, index, view_style) {
                 </td>
                 <td>${td_evalue}</td>
                 <td>${td_identity}%</td>
+                <td>${td_query_coverage}%</td>
                 <td>${td_bit_score}</td>
             </tr>
         `;

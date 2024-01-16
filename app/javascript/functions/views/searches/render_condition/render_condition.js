@@ -36,13 +36,13 @@ export async function render_condition() {
                             <th class="condition_th">${th_jobtitle}</th>
                             <td>${td_jobtitle}</td>
                         </tr>
-                        <tr ${td_fasta_header ? '' : 'style="display:none;"'}>
-                            <th class="condition_th">${th_fasta_header}</th>
-                            <td>${td_fasta_header}</td>
-                        </tr>
                         <tr>
                             <th class="condition_th">${th_temperature}</th>
                             <td>${td_temperature_minimum}°C&nbsp;～&nbsp;${td_temperature_maximum}°C</td>
+                        </tr>
+                        <tr ${td_fasta_header ? '' : 'style="display:none;"'}>
+                            <th class="condition_th">${th_fasta_header}</th>
+                            <td>${td_fasta_header}</td>
                         </tr>
                         <tr>
                             <th class="condition_th">${th_sequence}</th>

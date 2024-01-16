@@ -34,7 +34,8 @@ export async function render_results() {
         const th_protein = "タンパク質名";
         const th_evalue = "E Value";
         const th_identity = "相同性";
-        const th_bit_score = "bit_score";
+        const th_bit_score = "Bit Score";
+        const th_query_coverage = "Query Cover";
 
         // state_setting_viewの取得
         const state_setting_view = get_state_setting_view();
@@ -81,6 +82,7 @@ export async function render_results() {
                             <th scope="col">${th_protein}</th>
                             <th scope="col">${th_evalue}</th>
                             <th scope="col">${th_identity}</th>
+                            <th scope="col">${th_query_coverage}</th>
                             <th scope="col">${th_bit_score}</th>
                         </tr>
                         ${html_results_raw}
