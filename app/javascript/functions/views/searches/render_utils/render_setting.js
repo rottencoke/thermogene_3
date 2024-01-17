@@ -112,11 +112,18 @@ export function render_setting() {
             /*html*/`
                 <div class="m-3">
                     <div class="fs_7 p-2">
-                        BLAST検索の結果をcsvファイルに保存します。何も選択しない場合、生物種と菌株、タンパク質、生育温度のみ保存します。
+                        BLAST検索の結果をCSVファイルに保存します。何も選択しない場合、生物種と菌株、タンパク質、生育温度のみ保存します。<br>
+                        ※CSVファイル保存時に結果表示が消えますが、問題ありません。
                     </div>
                     <form>
-                        <input type="checkbox" id="setting_3_protein_id">
-                        <label for="setting_3_protein_id">protein idを含む形式</label>
+                        <input type="checkbox" id="setting_3_alignment">
+                        <label for="setting_3_alignment">各結果のアライメントを含む形式</label><br>
+
+                        <input type="checkbox" id="setting_3_blast">
+                        <label for="setting_3_blast">その他blastの結果の全情報を含む形式</label><br>
+
+                        <input type="checkbox" id="setting_3_tempura">
+                        <label for="setting_3_tempura">その他TEMPURAの全情報を含む形式</label><br>
 
                         <button id="setting_3_download">CSVファイルを保存</button>
                     </form>
