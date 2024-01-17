@@ -150,3 +150,21 @@ export function push_state_obj_locus_tag(new_obj) {
 export function get_state_obj_locus_tag() {
     return state_arr_locus_tag;
 }
+
+// ====== obj_result_sorted_filtered ======
+/// CSVファイルにソート&フィルターをした後の結果が欲しい
+/// render_results内に記述したら、save_csv(obj_result_sorted_filtered)が複数呼び出されて、一度に複数csvが保存された
+//  arr_blastn_result_id: arr_blastn_result_id_filtered,
+//  arr_tblastn_result_id: arr_tblastn_result_id_filtered,
+//  arr_tempura_id: arr_tempura_id_filtered
+let state_obj_result = {};
+
+// setter
+export function set_state_obj_result(obj) {
+    state_obj_result = obj;
+}
+
+// getter
+export function get_state_obj_result() {
+    return state_obj_result;
+}

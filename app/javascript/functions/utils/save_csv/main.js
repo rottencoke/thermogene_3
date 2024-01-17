@@ -1,10 +1,10 @@
 import { get_search } from 'get_search';
-import { get_result } from 'get_result';
 import { get_blastn_result } from 'get_blastn_result';
 import { get_tblastn_result } from 'get_tblastn_result';
 import { get_tempura } from 'get_tempura';
+import { get_state_obj_result } from 'state';
 
-export async function save_csv(obj_result) {
+export async function save_csv() {
 
     // 要素の取得
     const element_setting_3_download = document.getElementById('setting_3_download');
@@ -106,7 +106,7 @@ export async function save_csv(obj_result) {
             const search_blast_engine = obj_search.search_blast_engine;
             jobtitle = obj_search.jobtitle;
 
-            const arr_tempura_id = obj_result.arr_tempura_id;
+            const arr_tempura_id = get_state_obj_result().arr_tempura_id;
 
             // 結果の数だけcsv用の行列に行を追加
             for (let i = 0; i < arr_tempura_id.length; i++) {
@@ -114,15 +114,15 @@ export async function save_csv(obj_result) {
                 // blastの情報取得
                 let obj_blast_result = {};
                 if (search_blast_engine == 'blastn') {
-                    obj_blast_result = await get_blastn_result(obj_result.arr_blastn_result_id[i]);
+                    obj_blast_result = await get_blastn_result(get_state_obj_result().arr_blastn_result_id[i]);
                 } else {
-                    obj_blast_result = await get_tblastn_result(obj_result.arr_tblastn_result_id[i]);
+                    obj_blast_result = await get_tblastn_result(get_state_obj_result().arr_tblastn_result_id[i]);
                 }
 
                 const accession = obj_blast_result.accession;
                 const gene = obj_blast_result.gene;
                 const locus_tag = obj_blast_result.locus_tag;
-                const protein = "\"" + obj_blast_result.protein + "\"";
+                const protein = obj_blast_result.protein;
                 const protein_id = obj_blast_result.protein_id;
                 const location = obj_blast_result.location;
                 const gbkey = obj_blast_result.gbkey;
@@ -146,7 +146,7 @@ export async function save_csv(obj_result) {
                 const updated_at = obj_blast_result.updated_at;
                 const program = obj_blast_result.program;
                 const version = obj_blast_result.version;
-                const reference = "\"" + obj_blast_result.reference + "\"";
+                const reference = obj_blast_result.reference.replace(/,/g, '');
                 const db = obj_blast_result.db;
                 const expect = obj_blast_result.expect;
                 const sc_match = obj_blast_result.sc_match;
