@@ -5,7 +5,7 @@ import { render_result } from 'render_result';
 import { render_alignment } from 'render_alignment';
 import { render_multi_alignment, check_deletion_query_sequence } from 'render_multi_alignment';
 import { get_state_sort, get_state_setting_view } from 'state';
-import { save_csv } from 'save_csv';
+import { set_state_obj_result } from 'state';
 
 // 結果全体
 export async function render_results() {
@@ -133,8 +133,8 @@ export async function render_results() {
         // htmlを追加
         element_search_result_area.innerHTML = html_results;
 
-        // csvファイル作成に用いる結果を渡す
-        save_csv(obj_result_sorted);
+        // csvファイル作成に用いる結果をstateに保存
+        set_state_obj_result(obj_result_sorted);
         
     } catch (error) {
         // エラー処理
