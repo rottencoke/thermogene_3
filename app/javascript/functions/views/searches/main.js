@@ -10,7 +10,6 @@ import { control_modal_filter } from 'control_modal_filter';
 import { render_results } from 'render_results';
 import { control_setting } from 'settings';
 import { load_setting } from 'control_setting';
-import { save_csv } from 'save_csv';
 
 export async function render_searches() {
 
@@ -50,6 +49,4 @@ export async function render_searches() {
     // 設定のモーダルを動かせるように
     control_setting();
 
-    // csv保存
-    await save_csv();
 }
