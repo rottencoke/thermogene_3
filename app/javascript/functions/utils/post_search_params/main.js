@@ -5,15 +5,53 @@ export function post_search_params() {
         
         // 要素取得
         const element_search_form = document.getElementById("search_form");
-        const element_btn_search = document.getElementById('btn_search');
-  
+        
         element_search_form.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            // ボタンの色を変更する
+            // エラー表示
+            // 要素取得
+            const element_sequence_textarea = document.getElementById("sequence_textarea").value;
+            const element_sequence_file = document.getElementById("sequence_file").value;
+            const element_temp_minimum = document.getElementById("temp_minimum").value;
+            const element_temp_maximum = document.getElementById("temp_maximum").value;
+            const element_error_sequence = document.getElementById("error_sequence");
+            const element_error_temp = document.getElementById("error_temp");
+            const element_btn_search = document.getElementById('btn_search');
+
+            // エラーの有無
+            let is_error = false;
+
+            // 温度の入力フィールドが空かどうかチェック
+            if (!(element_temp_minimum && element_temp_maximum)) {
+                // どちらかが空の場合、エラーメッセージを表示し、フォームの送信を防止
+                element_error_temp.textContent = "生育温度を入力してください";
+                e.preventDefault();
+                is_error = true;
+            } else {
+                // そうでない場合はエラーメッセージをクリア
+                element_error_temp.textContent = "";
+            }
+        
+            // 配列の両方の入力フィールドが空かどうかをチェック
+            if (!element_sequence_textarea && !element_sequence_file) {
+                // 両方が空の場合、エラーメッセージを表示し、フォームの送信を防止
+                element_error_sequence.textContent = "ファイル入力かテキスト入力のどちらかを行ってください";
+                e.preventDefault();
+                is_error = true;
+            } else {
+                // そうでない場合はエラーメッセージをクリア
+                element_error_sequence.textContent = "";
+            }
+
+            // エラーがある場合、以下の処理は実行しない
+            if (is_error) return;
+
+            // ボタンの色と文字を変更する
             element_btn_search.style.backgroundColor = 'var(--color-button-pushed)';
             element_btn_search.style.borderColor = 'var(--color-button-pushed)';
             element_btn_search.style.color = 'black';
+            element_btn_search.value = '検索中';
 
             const form_data = new FormData(this);
 
@@ -76,50 +114,33 @@ export function post_search_params() {
                     })
                     .catch(error => console.error('Error:', error));
             }
+
+            function split_fasta_header_from_sequence(str) {
+
+                // \nで分ける
+                const arr_raw_str = str.split('\n');
+            
+                // fasta_header
+                let fasta_header = "";
+            
+                // sequence
+                let sequence = str;
+            
+                // 分けた一つ目（[0]）が">"で始まる場合、fasta形式だと判断する
+                if (arr_raw_str.length > 1 && arr_raw_str[0].startsWith(">")) {
+                    fasta_header = arr_raw_str[0].replace(">", "");
+                    sequence = "";
+                    for (let i = 1; i < arr_raw_str.length; i++) {
+                        sequence += arr_raw_str[i];
+                    }
+                }
+            
+                return {
+                    fasta_header,
+                    sequence
+                }
+            }
         });
     });
-
-    // エラー表示
-    document.getElementById("search_form").addEventListener("submit", function(event) {
-        const input1 = document.getElementById("seq").value;
-        const input2 = document.getElementById("sequence_file").value;
-        const element_error_message = document.getElementById("error_message");
-      
-        // 両方の入力フィールドが空かどうかをチェック
-        if (!input1 && !input2) {
-            // 両方が空の場合、エラーメッセージを表示し、フォームの送信を防止
-            element_error_message.textContent = "ファイル入力かテキスト入力のどちらかを行ってください";
-            event.preventDefault();
-        } else {
-            // そうでない場合はエラーメッセージをクリア
-            element_error_message.textContent = "";
-        }
-    });
-      
 }
 
-function split_fasta_header_from_sequence(str) {
-
-    // \nで分ける
-    const arr_raw_str = str.split('\n');
-
-    // fasta_header
-    let fasta_header = "";
-
-    // sequence
-    let sequence = str;
-
-    // 分けた一つ目（[0]）が">"で始まる場合、fasta形式だと判断する
-    if (arr_raw_str.length > 1 && arr_raw_str[0].startsWith(">")) {
-        fasta_header = arr_raw_str[0].replace(">", "");
-        sequence = "";
-        for (let i = 1; i < arr_raw_str.length; i++) {
-            sequence += arr_raw_str[i];
-        }
-    }
-
-    return {
-        fasta_header,
-        sequence
-    }
-}
