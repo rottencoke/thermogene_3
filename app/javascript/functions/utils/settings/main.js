@@ -5,6 +5,7 @@ import { set_state_setting_binding_site, get_state_setting_binding_site } from '
 import { save_setting } from 'control_setting';
 import { render_results } from 'render_results';
 import { show_binding_sites } from 'show_binding_sites';
+import { sticked_in_left } from 'sticked_in_left';
 
 // いったんページ切り替えの機能はつけない
 export async function control_setting() {
@@ -182,6 +183,9 @@ export async function control_setting() {
 
             // 結果を描画しなおす
             await render_results();
+
+                // マルチプルアライメントのタンパク質th固定
+                sticked_in_left();
         }
 
     }
