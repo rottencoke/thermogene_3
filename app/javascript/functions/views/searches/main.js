@@ -11,6 +11,7 @@ import { render_results } from 'render_results';
 import { control_setting } from 'settings';
 import { load_setting } from 'control_setting';
 import { save_csv } from 'save_csv';
+import { sticked_in_left } from 'sticked_in_left';
 
 export async function render_searches() {
 
@@ -52,5 +53,8 @@ export async function render_searches() {
 
     // csvファイル保存
     save_csv();
+
+    // マルチプルアライメントのタンパク質th固定
+    sticked_in_left();
 
 }

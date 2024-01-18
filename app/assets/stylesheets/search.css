@@ -150,3 +150,8 @@
 .table_border_td_right {
     border-right: 1px solid var(--color-border-2);
 }
+
+/* マルチアライメントのproteinの最大の横幅 */
+.multialignment_protein {
+    max-width: 100px;
+}

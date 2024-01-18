@@ -73,6 +73,9 @@ pin "save_csv", to: "functions/utils/save_csv/main.js"
 ## utils/link_to_home/
 pin "open_home_page", to: "functions/utils/link_to_home/main.js"
 
+## utils/sticked_in_left/
+pin "sticked_in_left", to: "functions/utils/sticked_in_left/main.js"
+
 ## utils/utils/
 pin "sleep", to: "functions/utils/utils/sleep.js"
 

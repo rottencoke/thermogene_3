@@ -69,3 +69,15 @@ body {
 p {
     margin-bottom: 0;
 }
+
+/* 文字列の改行をなくす */
+.no_wrap {
+    white-space: nowrap;
+}
+
+/* 横スクロールで左側に固定 */
+.sticked_in_left {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}

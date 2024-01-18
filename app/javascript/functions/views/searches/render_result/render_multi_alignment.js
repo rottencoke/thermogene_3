@@ -18,7 +18,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     let blast_result_align_len, blast_result_midline;
     let blast_result_query_from, blast_result_query_to, blast_result_query_strand, blast_result_qseq;
     let blast_result_hit_from, blast_result_hit_to, blast_result_hit_strand, blast_result_hseq;
-    let blast_result_protein, blast_result_locus_tag, blast_id;
+    let blast_result_protein, blast_result_protein_id, blast_result_locus_tag, blast_id;
 
     if (obj.arr_blastn_result_id.length) {
 
@@ -40,6 +40,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
 
         blast_id = blastn_result_id;
         blast_result_protein = obj_blastn_result.protein;
+        blast_result_protein_id = obj_blastn_result.protein_id;
         blast_result_locus_tag = obj_blastn_result.locus_tag;
 
         // locus_tagとblast_idのオブジェクトをstateに保存する
@@ -65,6 +66,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
 
         blast_id = tblastn_result_id;
         blast_result_protein = obj_tblastn_result.protein;
+        blast_result_protein_id = obj_tblastn_result.protein_id;
         blast_result_locus_tag = obj_tblastn_result.locus_tag;
 
         // locus_tagとblast_idのオブジェクトをstateに保存する
@@ -84,16 +86,8 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
     // tableヘッダー
     const th_genus_and_species = "生物種名";
     const th_strain = "株名";
-    const th_topt = "生育温度";
+    const th_topt = "生育<br>温度 [℃]";
     const th_protein = "タンパク質名";
-
-    // 各データの詳細をtitle属性で表示する
-    const text_title = `
-        ${th_genus_and_species} (${th_strain}): ${td_genus_and_species} (${td_strain})
-${th_topt}: ${td_topt_ave}℃ (${td_tmin}℃~${td_tmax}℃)
-${th_protein}: ${blast_result_protein}
-クリックするとNCBIの該当タンパク質のページを開きます。
-    `;
 
     // マルチアライメント作成（table）
     let html_multi_alignment = ``;
@@ -152,7 +146,9 @@ ${th_protein}: ${blast_result_protein}
 
         html_multi_alignment = /*html*/`
             <tr class="table_border_top_td_bottom">
-                <th></td>
+                <th>${th_genus_and_species} (${th_strain})</th>
+                <th class="no_wrap">${th_topt}</th>
+                <th class="sticked_in_left">${th_protein}</th>
                 <th class="table_border_th_right">Query<br>1~${arr_search_sequence.length}</th>
                 ${html_qseq_td}
             </tr>        
@@ -181,8 +177,12 @@ ${th_protein}: ${blast_result_protein}
         arr_deletion_hit[i] = arr_deletion[i+1];
     }
 
-    // タンパク質のリンク作成
-    const url_protein = `https://www.ncbi.nlm.nih.gov/protein/?term=${blast_result_locus_tag}[locus_tag]`;
+    // リンク作成
+    const url_strain = `https://www.ncbi.nlm.nih.gov/datasets/genome/${obj_tempura.assembly_or_accession}/`;
+    const url_protein = `https://www.ncbi.nlm.nih.gov/protein/${blast_result_protein_id}`;
+
+    // リンク説明
+    const text_url_strain = "NCBI該当菌株ページ (genome assembly)";
     const text_url_protein = "NCBI該当タンパク質ページ (protein)";
 
     // 配列表示部分の要素の数だけ繰り返す
@@ -229,14 +229,29 @@ ${th_protein}: ${blast_result_protein}
     html_multi_alignment += /*html*/`
         <tr>
             <th>
-                <p title="${text_title}">
+                <p>
                     <a
-                        class="less_styled_link"
-                        href="${url_protein}"
-                        title="${text_title}"
+                        class="no_wrap fs_7 less_styled_link"
+                        href="${url_strain}"
+                        title="${text_url_strain}"
                         target="_blank"
                     >
-                        #${index + 1}
+                        ${td_genus_and_species} (${td_strain})
+                    </a>
+                </p>
+            </th>
+            <th>
+                <p class="no_wrap fs_7">${td_topt_ave}</p>
+            </th>
+            <th class="sticked_in_left">
+                <p>
+                    <a
+                        class="no_wrap fs_7 less_styled_link"
+                        href="${url_protein}"
+                        title="${text_url_protein}"
+                        target="_blank"
+                    >
+                        ${blast_result_protein.split('{')[0]}
                     </a>
                 </p>
             </th>

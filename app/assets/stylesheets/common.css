@@ -11,6 +11,8 @@
     --color-border-2: rgb(187, 184, 184);
     --color-background-table-raw-1: rgb(220, 220, 220);
     --color-background-table-raw-2: rgb(245, 245, 245);
+    --color-background-table-raw-1-lightened: rgb(230, 230, 230);
+    --color-background-table-raw-2-lightened: rgb(250, 250, 250);
     --color-text-link: rgb(92, 33, 160);
     --color-text-link-hover: rgb(159, 77, 253);
     --color-text-less-emphasized: rgb(119, 119, 119);
