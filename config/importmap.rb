@@ -78,6 +78,7 @@ pin "sticked_in_left", to: "functions/utils/sticked_in_left/main.js"
 
 ## utils/utils/
 pin "sleep", to: "functions/utils/utils/sleep.js"
+pin "shorten_text", to: "functions/utils/utils/shorten_text.js"
 
 ## view/icons/
 pin "icons", to: "functions/views/icons/icons.js"
