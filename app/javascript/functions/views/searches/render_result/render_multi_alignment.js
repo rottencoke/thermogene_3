@@ -3,6 +3,7 @@ import { get_tblastn_result } from 'get_tblastn_result';
 import { get_tempura } from 'get_tempura';
 import { get_search } from 'get_search';
 import { push_state_obj_locus_tag } from 'state';
+import { shorten_text } from 'shorten_text';
 
 // アライメント描画
 // 関数内でblast_engine判別
@@ -251,7 +252,7 @@ export async function render_multi_alignment(obj, index, arr_deletion) {
                         title="${text_url_protein}"
                         target="_blank"
                     >
-                        ${blast_result_protein.split('{')[0]}
+                        ${shorten_text(blast_result_protein, 30)}
                     </a>
                 </p>
             </th>
