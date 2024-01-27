@@ -122,7 +122,7 @@ export async function save_csv() {
                 const accession = obj_blast_result.accession;
                 const gene = obj_blast_result.gene;
                 const locus_tag = obj_blast_result.locus_tag;
-                const protein = obj_blast_result.protein;
+                const protein = obj_blast_result.protein.replace(/,/g, '');
                 const protein_id = obj_blast_result.protein_id;
                 const location = obj_blast_result.location;
                 const gbkey = obj_blast_result.gbkey;
