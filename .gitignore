@@ -11,6 +11,11 @@
 /log/*
 !/log/.keep
 
+# Ignore BLAST DB, but keep the directory
+!/lib/assets/blast/blast_db/blast_db_nucleotide/
+/lib/assets/blast/blast_db/blast_db_nucleotide/*
+!/lib/assets/blast/blast_db/blast_db_nucleotide/.keep
+
 # Ignore all tempfiles.
 /tmp/*
 !/tmp/.keep
